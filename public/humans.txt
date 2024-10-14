@@ -1,0 +1,10 @@
+# TEAM
+
+    Václav Vančura -- designer, coder -- @vancura
+    Adam Kliment -- owner -- @netmilk
+
+# TECHNOLOGY COLOPHON
+
+    Engine: Astro
+    Server: Vercel
+    Repo: GitHub

@@ -1,0 +1,62 @@
+---
+import { Head } from 'astro-capo';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer/Footer.astro';
+import NavBar from '../components/NavBar/NavBar.astro';
+
+import '../styles/tailwind.css';
+
+export interface Props {
+    title: string;
+    description: string;
+    permalink: string;
+    current?: string;
+    opengraph?: string;
+    opengraphAlt?: string;
+    darkThemeOnly?: boolean;
+}
+
+const { title, description, permalink, opengraph = '', opengraphAlt = '', darkThemeOnly = false } = Astro.props;
+---
+
+<html lang="en" class={darkThemeOnly ? 'dark-theme-only' : ''}>
+    <Head>
+        <BaseHead
+            title={title}
+            description={description}
+            permalink={permalink}
+            opengraph={opengraph}
+            opengraphAlt={opengraphAlt}
+            darkThemeOnly={darkThemeOnly}
+        />
+    </Head>
+
+    <body>
+        <NavBar />
+
+        <main>
+            <slot />
+        </main>
+
+        <Footer />
+
+        <style is:global lang="scss">
+            @import '../scss/settings';
+            @import '../scss/mixins';
+            @import '../scss/mixins-buttons';
+            @import '../scss/fonts';
+            @import '../scss/typography';
+        </style>
+
+        <style lang="scss">
+            @import '../../src/scss/mixins';
+
+            body {
+                display: grid;
+                grid-template-rows: [navbar-start] var(--navbar-height) [content-start] auto [footer-start] min-content [footer-end];
+                min-height: 100vh;
+                overflow-x: hidden;
+            }
+        </style>
+    </body>
+</html>

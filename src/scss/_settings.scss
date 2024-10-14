@@ -1,0 +1,75 @@
+:root {
+    --page-bg-color: #f7f7f8;
+    --page-text-color: #1a1a1a;
+    --page-secondary-text-color: #717171;
+    --link-text-color: #0079af;
+    --link-secondary-text-color: #4a788c;
+    --link-block-text-color: white;
+    --link-block-secondary-text-color: #eef9ff;
+    --em-color: #dfecf5;
+    --separator: rgba(0, 0, 0, 0.1);
+    --navbar-bg-color: rgba(247, 247, 248, 0.8);
+    --selection-bg-color: #2c2c2e;
+    --selection-text-color: white;
+    --hr-color: rgba(0, 0, 0, 0.15);
+
+    --page-bg-color-dark: #2c2c2e;
+    --page-text-color-dark: #eaeaea;
+    --page-secondary-text-color-dark: #8f9397;
+    --link-text-color-dark: color(display-p3 0.9686 0.7294 0);
+    --link-secondary-text-color-dark: #b98c04;
+    --link-block-text-color-dark: #2a2106;
+    --link-block-secondary-text-color-dark: #654d00;
+    --em-color-dark: #009be3;
+    --hr-color-dark: rgba(255, 255, 255, 0.15);
+
+    --navbar-height: 75px;
+    --gap: 32px;
+    --page-max-width: 1200px;
+    --page-side-padding: 96px;
+
+    @media (prefers-reduced-transparency: reduce) {
+        --navbar-bg-color: rgb(247, 247, 248);
+    }
+
+    @media (max-width: 1199px) {
+        --page-max-width: 1115px;
+        --page-side-padding: 54px;
+    }
+
+    @media (max-width: 809px) {
+        --navbar-height: 45px;
+        --page-side-padding: 24px;
+        --gap: 24px;
+    }
+}
+
+@mixin dark-theme {
+    --page-bg-color: var(--page-bg-color-dark);
+    --page-text-color: var(--page-text-color-dark);
+    --page-secondary-text-color: var(--page-secondary-text-color-dark);
+    --link-text-color: var(--link-text-color-dark);
+    --link-secondary-text-color: var(--link-secondary-text-color-dark);
+    --link-block-text-color: var(--link-block-text-color-dark);
+    --link-block-secondary-text-color: var(--link-block-secondary-text-color-dark);
+    --em-color: var(--em-color-dark);
+    --hr-color: var(--hr-color-dark);
+    --separator: rgba(255, 255, 255, 0.1);
+    --navbar-bg-color: rgba(44, 44, 46, 0.8);
+    --selection-bg-color: #f7f7f8;
+    --selection-text-color: black;
+
+    @media (prefers-reduced-transparency: reduce) {
+        --navbar-bg-color: rgb(44, 44, 46);
+    }
+}
+
+:root.dark-theme-only {
+    @include dark-theme;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        @include dark-theme;
+    }
+}

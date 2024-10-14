@@ -1,0 +1,229 @@
+body {
+    background: var(--page-bg-color);
+    color: var(--page-text-color);
+
+    @include font-metrics(1.25rem, 1.5em);
+
+    @media (max-width: 809px) {
+        @include font-metrics(1.125rem, 1.4em);
+    }
+}
+
+a {
+    border-bottom: 1.5px solid currentColor;
+    text-decoration: none;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: var(--link-text-color);
+    }
+
+    &::selection {
+        background: var(--link-text-color);
+        color: var(--selection-text-color);
+    }
+
+    .mdx-content & {
+        border-bottom: 2px solid currentColor;
+        text-decoration: none;
+        white-space: nowrap;
+
+        &::selection {
+            background: var(--link-text-color);
+            color: var(--selection-text-color);
+        }
+    }
+}
+
+h1 {
+    @include hed;
+
+    .mdx-content & {
+        @include content-padder(60px, 60px);
+
+        @media (max-width: 809px) {
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+    }
+}
+
+h2 {
+    @include hed;
+
+    .mdx-content & {
+        @include content-padder(1.5em, 0.5em);
+
+        text-wrap: balance;
+
+        a {
+            border-bottom-width: 3px;
+
+            @media (max-width: 809px) {
+                border-bottom-width: 2px;
+            }
+        }
+    }
+}
+
+h3 {
+    @include hed(1.75rem, 1.1em, 1.375rem, 1.15em);
+
+    .mdx-content & {
+        @include content-padder(1.5em, 1em);
+    }
+}
+
+strong {
+    .mdx-content & {
+        @include font-metrics(1.125rem, 1.5em);
+
+        @media (max-width: 809px) {
+            @include font-metrics(1rem, 1.4em);
+        }
+
+        font-weight: normal;
+    }
+}
+
+p {
+    margin: 0 0 1em;
+
+    .mdx-content & {
+        @include content-padder(0, 1em);
+    }
+
+    .is-floater & {
+        @include meta(0.9375rem, 1.5em, 8.4375rem, 1.4em);
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .is-floater.is-left & {
+        padding-left: var(--gap);
+    }
+
+    .is-floater.is-right & {
+        padding-right: var(--gap);
+    }
+}
+
+em {
+    .mdx-content & {
+        border-radius: 0.2em;
+        background: var(--em-color);
+        padding: 0.1em 0.2em;
+        font-style: normal;
+    }
+}
+
+ul {
+    .mdx-content & {
+        @include content-padder(0, 1em) {
+            list-style-type: none;
+
+            li {
+                position: relative;
+                margin-left: -1.5em;
+                padding-left: 1.5em;
+
+                &::before {
+                    position: absolute;
+                    left: 0;
+                    margin-right: 0.5em;
+                    content: '→';
+                }
+
+                @media (max-width: 809px) {
+                    margin-left: -1em;
+                }
+            }
+        }
+    }
+}
+
+hr {
+    margin: 60px auto;
+    border: none;
+    border-bottom: 2px solid var(--hr-color);
+    width: 300px;
+}
+
+dl {
+    margin: 0;
+}
+
+img {
+    @include meta(0.8125rem);
+
+    width: 100%;
+    color: var(--page-secondary-text-color);
+    text-decoration: none;
+
+    &:not([alt]) {
+        outline: 4px dashed #f0f; // no alt defined
+    }
+}
+
+figure {
+    margin: 0;
+
+    .mdx-content & {
+        padding: 0 var(--page-side-padding);
+
+        @media (max-width: 809px) {
+            padding-right: 0;
+            padding-left: 0;
+        }
+    }
+}
+
+picture {
+    display: block;
+    line-height: 0;
+}
+
+ul {
+    margin-top: 0;
+    padding-left: 1em;
+
+    .mdx-content & {
+        @media (max-width: 809px) {
+            padding-left: 42px;
+        }
+    }
+}
+
+pre {
+    @include meta(0.75rem, 1.2em, 0.75rem, 1.2em);
+
+    display: inline-block;
+    margin: 4px;
+    border: 1px solid var(--page-secondary-text-color);
+    border-radius: 6px;
+    padding: 0 16px 16px;
+    color: var(--page-secondary-text-color);
+    white-space: pre-line;
+}
+
+::selection {
+    background: var(--selection-bg-color);
+    color: var(--selection-text-color);
+
+    // Hard-codes fallback text selection for issue #18, color is Chrome’s per via http://stackoverflow.com/a/16094931/864799
+    text-shadow: inherit;
+}
+
+.hidden {
+    position: absolute;
+    margin: -1px;
+    padding: 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: none;
+}

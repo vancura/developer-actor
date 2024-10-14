@@ -1,0 +1,49 @@
+{
+    "name": "@apify/actor-developer",
+    "author": "Apify (https://github.com/apify)",
+    "description": "Actor Developer",
+    "private": false,
+    "engines": {
+        "node": "18.x"
+    },
+    "scripts": {
+        "dev": "astro dev --host",
+        "start": "astro dev",
+        "build": "astro build",
+        "preview": "astro preview",
+        "astro": "astro",
+        "clean": "rimraf dist node_modules",
+        "format": "prettier --write --plugin-search-dir=. ."
+    },
+    "dependencies": {
+        "astro": "^4.16.3",
+        "astro-compress": "^2.3.3",
+        "astro-meta-tags": "^0.3.1",
+        "sharp": "0.33.4"
+    },
+    "devDependencies": {
+        "@astrojs/check": "^0.9.4",
+        "@astrojs/mdx": "^3.1.8",
+        "@astrojs/rss": "^4.0.8",
+        "@astrojs/sitemap": "^3.2.0",
+        "@astrojs/tailwind": "^5.1.2",
+        "astro-capo": "^0.0.1",
+        "autoprefixer": "^10.4.20",
+        "postcss": "^8.4.47",
+        "prettier": "^3.3.3",
+        "prettier-plugin-astro": "^0.14.1",
+        "prettier-plugin-astro-organize-imports": "^0.4.10",
+        "prettier-plugin-css-order": "^2.1.2",
+        "prettier-plugin-organize-attributes": "^1.0.0",
+        "prettier-plugin-organize-imports": "^4.1.0",
+        "prettier-plugin-tailwindcss": "^0.6.8",
+        "remark-smartypants": "^3.0.2",
+        "sass": "^1.79.5",
+        "tailwindcss": "^3.4.13",
+        "vite-plugin-restart": "^0.4.1"
+    },
+    "resolutions": {
+        "sharp": "0.33.0"
+    },
+    "packageManager": "npm@10.9.0"
+}
