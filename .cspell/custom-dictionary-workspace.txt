@@ -9,12 +9,14 @@ dlig
 dnom
 figcaption
 icns
+iframe
 keydown
 Kliment
 labelledby
 layouting
 liga
 lightbox
+lightgreen
 netmilk
 noopener
 nowrap
