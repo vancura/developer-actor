@@ -1,3 +1,6 @@
+@import 'mixins-typography';
+@import 'mixins-layout';
+
 body {
     background: var(--page-bg-color);
     color: var(--page-text-color);
