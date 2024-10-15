@@ -9,7 +9,7 @@ module.exports = {
 
     tabWidth: 4,
     useTabs: false,
-    printWidth: 160,
+    printWidth: 120,
     proseWrap: 'always',
     singleQuote: true,
     semi: true,
