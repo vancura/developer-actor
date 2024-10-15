@@ -174,7 +174,8 @@ pre {
     background: var(--selection-bg-color);
     color: var(--selection-text-color);
 
-    // Hard-codes fallback text selection for issue #18, color is Chrome’s per via http://stackoverflow.com/a/16094931/864799
+    // Hard-codes fallback text selection for issue #18,
+    // color is Chrome’s per via http://stackoverflow.com/a/16094931/864799
     text-shadow: inherit;
 }
 
