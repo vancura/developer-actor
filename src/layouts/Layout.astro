@@ -1,7 +1,6 @@
 ---
 import { Head } from 'astro-capo';
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer/Footer.astro';
 import NavBar from '../components/NavBar/NavBar.astro';
 
 import '../styles/tailwind.css';
@@ -37,8 +36,6 @@ const { title, description, permalink, opengraph = '', opengraphAlt = '', darkTh
         <main>
             <slot />
         </main>
-
-        <Footer />
 
         <style is:global lang="scss">
             @import '../scss/settings';
