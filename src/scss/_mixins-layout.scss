@@ -33,30 +33,6 @@
     video {
         margin: 0 auto;
         border-radius: 4px;
-
-        &.has-light-border {
-            border: 1px transparent solid; // color is defined in the style attribute
-
-            @media (prefers-color-scheme: dark) {
-                border-width: 0;
-            }
-
-            :root.dark-theme-only & {
-                border-width: 0;
-            }
-        }
-
-        &.has-border {
-            border: 1px transparent solid; // color is defined in the style attribute
-        }
-
-        &.has-shadow-fix {
-            margin-bottom: -22px;
-
-            @media (max-width: 809px) {
-                margin-bottom: -11px;
-            }
-        }
     }
 
     figcaption,
@@ -78,28 +54,5 @@
             padding-right: var(--page-side-padding);
             padding-left: var(--page-side-padding);
         }
-    }
-
-    &.is-edge-to-edge {
-        border-radius: 0;
-        padding-right: 0;
-        padding-left: 0;
-
-        img {
-            border-radius: 0;
-        }
-    }
-
-    &.has-edge-gap {
-        img {
-            padding-right: 10px;
-            padding-left: 10px;
-        }
-    }
-
-    &.is-content-fill {
-        margin: 0 auto;
-        padding: 0 var(--page-side-padding);
-        max-width: var(--page-max-width);
     }
 }
