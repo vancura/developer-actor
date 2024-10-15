@@ -49,11 +49,13 @@ import FooterLink from './FooterLink.astro';
     .wrapper {
         @include content-padder;
 
-        display: flex;
-        place-content: center space-between;
-        margin-top: 60px;
-        margin-bottom: 60px;
-        width: 100%;
+        & {
+            display: flex;
+            place-content: center space-between;
+            margin-top: 60px;
+            margin-bottom: 60px;
+            width: 100%;
+        }
 
         @media (max-width: 809px) {
             display: block;

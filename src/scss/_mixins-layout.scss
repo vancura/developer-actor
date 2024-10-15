@@ -1,8 +1,10 @@
 @mixin content-padder($top: 0, $bottom: 0) {
-    display: block;
-    margin: $top auto $bottom;
-    padding: 0 var(--page-side-padding);
-    max-width: var(--page-max-width);
+    & {
+        display: block;
+        margin: $top auto $bottom;
+        padding: 0 var(--page-side-padding);
+        max-width: var(--page-max-width);
+    }
 
     @content;
 }

@@ -40,12 +40,13 @@ import NavBarItem from './NavBarItem.astro';
     .wrapper {
         @include content-padder;
 
-        display: flex;
-        align-items: center;
-        gap: var(--gap);
-        margin: 0;
-        width: 100%;
-        height: var(--navbar-height);
-        list-style: none;
+        & {
+            display: flex;
+            align-items: center;
+            gap: var(--gap);
+            margin: 0;
+            width: 100%;
+            height: var(--navbar-height);
+        }
     }
 </style>

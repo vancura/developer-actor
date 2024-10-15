@@ -1,8 +1,6 @@
 body {
-    & {
-        background: var(--page-bg-color);
-        color: var(--page-text-color);
-    }
+    background: var(--page-bg-color);
+    color: var(--page-text-color);
 
     @include font-metrics(1.25rem, 1.5em);
 
@@ -11,62 +9,29 @@ body {
     }
 }
 
-a {
-    border-bottom: 1.5px solid currentColor;
-    text-decoration: none;
-
-    &:hover,
-    &:active,
-    &:focus {
-        color: var(--link-text-color);
-    }
-
-    &::selection {
-        background: var(--link-text-color);
-        color: var(--selection-text-color);
-    }
-
-    .mdx-content & {
-        border-bottom: 2px solid currentColor;
-        text-decoration: none;
-        white-space: nowrap;
-
-        &::selection {
-            background: var(--link-text-color);
-            color: var(--selection-text-color);
-        }
-    }
-}
-
 h1 {
     @include hed;
+    @include content-padder(60px, 60px);
 
-    .mdx-content & {
-        @include content-padder(60px, 60px);
-
-        @media (max-width: 809px) {
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
+    @media (max-width: 809px) {
+        margin-top: 40px;
+        margin-bottom: 40px;
     }
 }
 
 h2 {
     @include hed;
+    @include content-padder(1.5em, 0.5em);
 
-    .mdx-content & {
-        @include content-padder(1.5em, 0.5em);
+    & {
+        text-wrap: balance;
+    }
 
-        & {
-            text-wrap: balance;
-        }
+    a {
+        border-bottom-width: 3px;
 
-        a {
-            border-bottom-width: 3px;
-
-            @media (max-width: 809px) {
-                border-bottom-width: 2px;
-            }
+        @media (max-width: 809px) {
+            border-bottom-width: 2px;
         }
     }
 }
@@ -74,99 +39,88 @@ h2 {
 h3,
 h4 {
     @include hed(1.75rem, 1.1em, 1.375rem, 1.15em);
+    @include content-padder(1.5em, 1em);
+}
 
-    .mdx-content & {
-        @include content-padder(1.5em, 1em);
+.mdx-content a {
+    border-bottom: 2px solid currentColor;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &::selection {
+        background: var(--link-text-color);
+        color: var(--selection-text-color);
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: var(--link-text-color);
     }
 }
 
-strong {
-    .mdx-content & {
-        @include font-metrics(1.125rem, 1.5em);
-
-        @media (max-width: 809px) {
-            @include font-metrics(1rem, 1.4em);
-        }
-
-        & {
-            font-weight: normal;
-        }
-    }
-}
-
-p {
+.mdx-content p {
     margin: 0 0 1em;
 
-    .mdx-content & {
-        @include content-padder(0, 1em);
+    @include content-padder(0, 1em);
+}
+
+.mdx-content strong {
+    @include font-metrics(1.125rem, 1.5em);
+
+    @media (max-width: 809px) {
+        @include font-metrics(1rem, 1.4em);
     }
 
-    .is-floater & {
-        @include meta(0.9375rem, 1.5em, 8.4375rem, 1.4em);
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-    }
-
-    .is-floater.is-left & {
-        padding-left: var(--gap);
-    }
-
-    .is-floater.is-right & {
-        padding-right: var(--gap);
+    & {
+        font-weight: normal;
     }
 }
 
-em {
-    .mdx-content & {
-        border-radius: 0.2em;
-        background: var(--em-color);
-        padding: 0.1em 0.2em;
-        font-style: normal;
-    }
+.mdx-content em {
+    border-radius: 0.2em;
+    background: var(--em-color);
+    padding: 0.1em 0.2em;
+    font-style: normal;
 }
 
-ul {
+.mdx-content ul {
     margin-top: 0;
     padding-left: 1em;
+    list-style-type: none;
 
-    .mdx-content & {
-        @include content-padder(0, 1em) {
-            list-style-type: none;
+    li {
+        position: relative;
+        margin-left: -1.5em;
+        padding-left: 1.5em;
 
-            li {
-                position: relative;
-                margin-left: -1.5em;
-                padding-left: 1.5em;
-
-                &::before {
-                    position: absolute;
-                    left: 0;
-                    margin-right: 0.5em;
-                    content: '→';
-                }
-
-                @media (max-width: 809px) {
-                    margin-left: -1em;
-                }
-            }
+        &::before {
+            position: absolute;
+            left: 0;
+            margin-right: 0.5em;
+            content: '→';
         }
 
         @media (max-width: 809px) {
-            padding-left: 42px;
+            margin-left: -1em;
         }
+    }
+
+    @include content-padder(0, 1em);
+
+    @media (max-width: 809px) {
+        padding-left: 42px;
     }
 }
 
-hr {
+.mdx-content hr {
     margin: 60px auto;
     border: none;
     border-bottom: 2px solid var(--hr-color);
     width: 300px;
 }
 
-dl {
+.mdx-content dl {
     margin: 0;
 }
 
@@ -186,14 +140,11 @@ img {
 
 figure {
     margin: 0;
+    padding: 0 var(--page-side-padding);
 
-    .mdx-content & {
-        padding: 0 var(--page-side-padding);
-
-        @media (max-width: 809px) {
-            padding-right: 0;
-            padding-left: 0;
-        }
+    @media (max-width: 809px) {
+        padding-right: 0;
+        padding-left: 0;
     }
 }
 
@@ -204,23 +155,15 @@ picture {
 
 pre {
     @include meta(0.75rem, 1.2em, 0.75rem, 1.2em);
+    @include content-padder(0, 1em);
 
     & {
         display: inline-block;
         margin: 4px;
         border: 1px solid var(--page-secondary-text-color);
         border-radius: 6px;
-        padding: 0 16px 16px;
+        padding: 16px;
         color: var(--page-secondary-text-color);
-        white-space: pre-line;
-    }
-
-    .mdx-content & {
-        @include content-padder(0, 1em);
-
-        & {
-            padding: 16px;
-        }
     }
 }
 
