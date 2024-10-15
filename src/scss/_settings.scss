@@ -4,24 +4,22 @@
     --page-secondary-text-color: #717171;
     --link-text-color: #0079af;
     --link-secondary-text-color: #4a788c;
-    --link-block-text-color: white;
-    --link-block-secondary-text-color: #eef9ff;
     --em-color: #dfecf5;
-    --separator: rgba(0, 0, 0, 0.1);
+    --separator-color: rgba(0, 0, 0, 0.15);
     --navbar-bg-color: rgba(247, 247, 248, 0.8);
     --selection-bg-color: #2c2c2e;
     --selection-text-color: white;
-    --hr-color: rgba(0, 0, 0, 0.15);
 
     --page-bg-color-dark: #2c2c2e;
     --page-text-color-dark: #eaeaea;
     --page-secondary-text-color-dark: #8f9397;
     --link-text-color-dark: color(display-p3 0.9686 0.7294 0);
     --link-secondary-text-color-dark: #b98c04;
-    --link-block-text-color-dark: #2a2106;
-    --link-block-secondary-text-color-dark: #654d00;
     --em-color-dark: #009be3;
-    --hr-color-dark: rgba(255, 255, 255, 0.15);
+    --separator-color-dark: rgba(255, 255, 255, 0.15);
+    --navbar-bg-color-dark: rgba(44, 44, 46, 0.8);
+    --selection-bg-color-dark: #f7f7f8;
+    --selection-text-color-dark: black;
 
     --navbar-height: 75px;
     --gap: 32px;
@@ -50,14 +48,11 @@
     --page-secondary-text-color: var(--page-secondary-text-color-dark);
     --link-text-color: var(--link-text-color-dark);
     --link-secondary-text-color: var(--link-secondary-text-color-dark);
-    --link-block-text-color: var(--link-block-text-color-dark);
-    --link-block-secondary-text-color: var(--link-block-secondary-text-color-dark);
     --em-color: var(--em-color-dark);
-    --hr-color: var(--hr-color-dark);
-    --separator: rgba(255, 255, 255, 0.1);
-    --navbar-bg-color: rgba(44, 44, 46, 0.8);
-    --selection-bg-color: #f7f7f8;
-    --selection-text-color: black;
+    --separator-color: var(--separator-color-dark);
+    --navbar-bg-color: var(--navbar-bg-color-dark);
+    --selection-bg-color: var(--selection-bg-color-dark);
+    --selection-text-color: var(--selection-text-color-dark);
 
     @media (prefers-reduced-transparency: reduce) {
         --navbar-bg-color: rgb(44, 44, 46);
