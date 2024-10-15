@@ -16,7 +16,7 @@
         "format": "prettier --write --plugin-search-dir=. ."
     },
     "dependencies": {
-        "astro": "^4.16.3",
+        "astro": "^4.16.4",
         "astro-compress": "^2.3.3",
         "astro-meta-tags": "^0.3.1",
         "sharp": "0.33.4"
@@ -25,7 +25,7 @@
         "@astrojs/check": "^0.9.4",
         "@astrojs/mdx": "^3.1.8",
         "@astrojs/rss": "^4.0.8",
-        "@astrojs/sitemap": "^3.2.0",
+        "@astrojs/sitemap": "^3.2.1",
         "@astrojs/tailwind": "^5.1.2",
         "astro-capo": "^0.0.1",
         "autoprefixer": "^10.4.20",
@@ -39,7 +39,7 @@
         "prettier-plugin-tailwindcss": "^0.6.8",
         "remark-smartypants": "^3.0.2",
         "sass": "^1.79.5",
-        "tailwindcss": "^3.4.13",
+        "tailwindcss": "^3.4.14",
         "vite-plugin-restart": "^0.4.1"
     },
     "resolutions": {
