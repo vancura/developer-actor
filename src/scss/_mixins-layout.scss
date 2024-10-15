@@ -63,13 +63,15 @@
     .caption {
         @include meta(0.9375rem, 1.5em, 0.84375rem, 1.4em);
 
-        margin: 15px auto 0;
-        padding: 0 calc(var(--page-side-padding) * 2);
-        max-width: var(--page-max-width);
-        color: var(--page-text-color);
-        text-align: center;
-        text-wrap: balance;
-        white-space: normal; // .mdx-content>a disables these
+        & {
+            margin: 15px auto 0;
+            padding: 0 calc(var(--page-side-padding) * 2);
+            max-width: var(--page-max-width);
+            color: var(--page-text-color);
+            text-align: center;
+            text-wrap: balance;
+            white-space: normal; // .mdx-content>a disables these
+        }
 
         @media (max-width: 809px) {
             margin-bottom: 5px; // content on mobile is too compressed (this is zero normally)

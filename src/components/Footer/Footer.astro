@@ -27,12 +27,14 @@ import FooterLink from './FooterLink.astro';
         @include user-select;
         @include meta;
 
-        display: flex;
-        place-content: center;
-        box-shadow: 8px -1px 0 0 var(--separator);
-        padding-top: 20px;
-        padding-bottom: 40px;
-        color: var(--page-secondary-text-color);
+        & {
+            display: flex;
+            place-content: center;
+            box-shadow: 8px -1px 0 0 var(--separator);
+            padding-top: 20px;
+            padding-bottom: 40px;
+            color: var(--page-secondary-text-color);
+        }
 
         @media (max-width: 809px) {
             margin-top: 40px;
@@ -70,8 +72,10 @@ import FooterLink from './FooterLink.astro';
             .title {
                 @include meta;
 
-                padding-bottom: 15px;
-                color: var(--page-secondary-text-color);
+                & {
+                    padding-bottom: 15px;
+                    color: var(--page-secondary-text-color);
+                }
             }
 
             &.primary {

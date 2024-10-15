@@ -22,8 +22,10 @@
 }
 
 @mixin user-select($value: none) {
-    user-select: $value;
-    -webkit-user-select: $value;
+    & {
+        user-select: $value;
+        -webkit-user-select: $value;
+    }
 }
 
 @mixin no-focus-rects {

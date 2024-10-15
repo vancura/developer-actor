@@ -17,16 +17,18 @@ import NavBarItem from './NavBarItem.astro';
         @include user-select;
         @include meta;
 
-        display: flex;
-        position: fixed;
-        top: 0;
-        place-content: center;
-        z-index: 1000;
-        backdrop-filter: blur(40px);
-        -webkit-backdrop-filter: blur(40px);
-        box-shadow: 0 1px 0 0 var(--separator);
-        background-color: var(--navbar-bg-color);
-        width: 100vw;
+        & {
+            display: flex;
+            position: fixed;
+            top: 0;
+            place-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            box-shadow: 0 1px 0 0 var(--separator);
+            background-color: var(--navbar-bg-color);
+            width: 100vw;
+        }
 
         @media (prefers-reduced-transparency: reduce) {
             backdrop-filter: none;

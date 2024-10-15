@@ -9,6 +9,7 @@
         sans-serif;
 
     @include font-metrics($font-size, $line-height);
+
     @content;
 }
 
@@ -16,8 +17,10 @@
 // -------------
 
 @mixin font-metrics($font-size, $line-height: 1em) {
-    font-size: $font-size;
-    line-height: $line-height;
+    & {
+        font-size: $font-size;
+        line-height: $line-height;
+    }
 
     @content;
 }
@@ -25,14 +28,16 @@
 // TYPOGRAPHY ELEMENTS
 // -------------------
 
-@mixin hed($font-size: 5rem, $line-height: 0.95em, $font-size-mobile: 2.1875rem, $line-height-mobile: 1em) {
+@mixin hed($font-size: 4rem, $line-height: 0.95em, $font-size-mobile: 2.1875rem, $line-height-mobile: 1em) {
     @include font-walsheim-regular($font-size, $line-height) {
-        text-wrap: balance;
+        & {
+            text-wrap: balance;
 
-        em {
-            border-bottom: none !important; // there's a border-bottom coming from the general <em> styling
-            color: var(--page-secondary-text-color);
-            font-style: normal;
+            em {
+                border-bottom: none !important; // there's a border-bottom coming from the general <em> styling
+                color: var(--page-secondary-text-color);
+                font-style: normal;
+            }
         }
 
         @media (max-width: 809px) {
