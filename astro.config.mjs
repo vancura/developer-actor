@@ -1,14 +1,12 @@
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
-import compress from 'astro-compress';
 import metaTags from 'astro-meta-tags';
-import { defineConfig } from 'astro/config';
 import remarkSmartypants from 'remark-smartypants';
 import ViteRestart from 'vite-plugin-restart';
 
 // https://astro.build/config
-export default defineConfig({
+export default {
     site: 'https://developer.actor',
     prefetch: true,
     integrations: [
@@ -21,11 +19,17 @@ export default defineConfig({
             },
             remarkPlugins: [remarkSmartypants]
         }),
-        compress({
-            Exclude: ['download', 'images', 'opengraph']
-        }),
         metaTags(),
-        tailwind()
+        tailwind(),
+        (await import('@playform/compress')).default({
+            Exclude: ['download', 'images', 'opengraph'],
+            CSS: false,
+            HTML: {
+                'html-minifier-terser': {
+                    removeAttributeQuotes: false
+                }
+            }
+        })
     ],
     vite: {
         ssr: {
@@ -38,4 +42,4 @@ export default defineConfig({
         ]
     },
     redirects: {}
-});
+};
