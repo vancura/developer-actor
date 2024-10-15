@@ -3,7 +3,7 @@ import NavBarItem from './NavBarItem.astro';
 ---
 
 <div>
-    <section role="navigation">
+    <section role="navigation" class="select-none">
         <div class="wrapper">
             <NavBarItem href="/" label="Home" />
         </div>
@@ -11,10 +11,10 @@ import NavBarItem from './NavBarItem.astro';
 </div>
 
 <style lang="scss">
-    @import '../../../src/scss/mixins';
+    @import '../../../src/scss/mixins-layout';
+    @import '../../../src/scss/mixins-typography';
 
     section {
-        @include user-select;
         @include meta;
 
         & {
@@ -25,7 +25,7 @@ import NavBarItem from './NavBarItem.astro';
             z-index: 1000;
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
-            box-shadow: 0 1px 0 0 var(--separator);
+            box-shadow: 0 1px 0 0 var(--separator-color);
             background-color: var(--navbar-bg-color);
             width: 100vw;
         }

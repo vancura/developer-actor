@@ -5,16 +5,7 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title={`404 • ${strings.title}`} description="Page not found." permalink={Astro.url.toString()}>
-    <header class="mdx-content" role="banner">
+    <header class="mb-8 select-none md:mb-16 mdx-content" role="banner">
         <Content />
     </header>
 </Layout>
-
-<style lang="scss">
-    @import '../../src/scss/mixins';
-
-    header {
-        @include pre-footer(70px, 30px);
-        @include user-select;
-    }
-</style>
