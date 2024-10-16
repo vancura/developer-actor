@@ -3,7 +3,7 @@
 
 @mixin font-walsheim-regular($font-size: inherit, $line-height: inherit) {
     font-family:
-        'Walsheim-Regular',
+        'Walsheim Regular',
         -apple-system,
         system-ui,
         sans-serif;
@@ -31,6 +31,7 @@
 @mixin hed($font-size: 4rem, $line-height: 0.95em, $font-size-mobile: 2.1875rem, $line-height-mobile: 1em) {
     @include font-walsheim-regular($font-size, $line-height) {
         & {
+            letter-spacing: -0.03em;
             text-wrap: balance;
 
             em {
