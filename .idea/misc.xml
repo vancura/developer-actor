@@ -7,7 +7,6 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <created>1698325751135</created>
@@ -21,5 +20,4 @@
   <component name="TimeTrackingManager">
     <option name="totallyTimeSpent" value="51000" />
   </component>
-  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
 </project>
