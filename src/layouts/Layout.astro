@@ -12,13 +12,12 @@ export interface Props {
     current?: string;
     opengraph?: string;
     opengraphAlt?: string;
-    darkThemeOnly?: boolean;
 }
 
-const { title, description, permalink, opengraph = '', opengraphAlt = '', darkThemeOnly = false } = Astro.props;
+const { title, description, permalink, opengraph = '', opengraphAlt = '' } = Astro.props;
 ---
 
-<html lang="en" class={darkThemeOnly ? 'dark-theme-only' : ''}>
+<html lang="en">
     <Head>
         <BaseHead
             title={title}
@@ -26,7 +25,6 @@ const { title, description, permalink, opengraph = '', opengraphAlt = '', darkTh
             permalink={permalink}
             opengraph={opengraph}
             opengraphAlt={opengraphAlt}
-            darkThemeOnly={darkThemeOnly}
         />
     </Head>
 
