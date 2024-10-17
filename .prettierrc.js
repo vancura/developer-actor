@@ -1,10 +1,12 @@
 module.exports = {
     plugins: [
         require.resolve('prettier-plugin-astro'),
+        require.resolve('prettier-plugin-astro-organize-imports'),
         require.resolve('prettier-plugin-css-order'),
         require.resolve('prettier-plugin-organize-attributes'),
         require.resolve('prettier-plugin-organize-imports'),
-        require.resolve('prettier-plugin-astro-organize-imports')
+        require.resolve('prettier-plugin-astro-organize-imports'),
+        require.resolve('prettier-plugin-tailwindcss')
     ],
 
     tabWidth: 4,
