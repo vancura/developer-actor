@@ -64,6 +64,10 @@ h3 {
         'numr' 0;
 }
 
+h1 {
+    font-size: 4rem;
+}
+
 abbr {
     font-feature-settings:
         'kern' 1,
