@@ -1,7 +1,6 @@
 ---
 import { Head } from 'astro-capo';
 import BaseHead from '../components/BaseHead.astro';
-import NavBar from '../components/NavBar/NavBar.astro';
 
 import '../styles/tailwind.css';
 
@@ -29,7 +28,6 @@ const { title, description, permalink, opengraph = '', opengraphAlt = '' } = Ast
     </Head>
 
     <body class="grid h-lvh overflow-x-hidden">
-        <NavBar />
 
         <main>
             <slot />
