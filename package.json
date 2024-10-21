@@ -1,7 +1,7 @@
 {
     "name": "@apify/actor-developer",
     "author": "Apify (https://github.com/apify)",
-    "description": "Actor Developer",
+    "description": "Actor Programming Model",
     "private": false,
     "scripts": {
         "dev": "astro dev --host",
