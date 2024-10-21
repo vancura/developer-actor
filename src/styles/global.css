@@ -1,0 +1,13 @@
+@font-face {
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/GT-Walsheim-Regular.woff2') format('woff2');
+    font-family: 'Walsheim Regular';
+    font-display: swap;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Walsheim Regular', sans-serif;
+}
