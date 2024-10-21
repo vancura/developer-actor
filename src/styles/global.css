@@ -1,3 +1,5 @@
+/* Fonts */
+
 @font-face {
     font-style: normal;
     font-weight: normal;
@@ -6,8 +8,189 @@
     font-display: swap;
 }
 
+/* Global Styles */
+
+:root {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+    cursor: default;
+}
+
+html,
+body {
+    /* Make sure to override to not conflict with GSAP */
+    scroll-behavior: initial;
+}
+
+* {
+    -webkit-font-smoothing: inherit;
+}
+
+/* Typography */
+
+html,
+body,
+table {
+    font-feature-settings:
+        'kern' 1,
+        'liga' 1,
+        'calt' 1,
+        'pnum' 1,
+        'tnum' 0,
+        'onum' 1,
+        'lnum' 0,
+        'dlig' 0;
+}
+
 h1,
 h2,
 h3 {
     font-family: 'Walsheim Regular', sans-serif;
+    font-variant-numeric: oldstyle-nums proportional-nums stacked-fractions;
+    font-feature-settings:
+        'liga' 1,
+        'dlig' 1,
+        'onum' 1,
+        'frac' 0,
+        'case' 1,
+        'ss01' 0,
+        'ss02' 0,
+        'ss03' 0,
+        'ss04' 0,
+        'kern' 1,
+        'numr' 0;
+}
+
+abbr {
+    font-feature-settings:
+        'kern' 1,
+        'liga' 1,
+        'calt' 1,
+        'pnum' 1,
+        'tnum' 0,
+        'onum' 1,
+        'lnum' 0,
+        'smcp' 1,
+        'c2sc' 1;
+    text-transform: uppercase;
+}
+
+time {
+    font-feature-settings:
+        'kern' 1,
+        'liga' 1,
+        'calt' 1,
+        'pnum' 1,
+        'tnum' 0,
+        'onum' 1,
+        'lnum' 0;
+}
+
+pre,
+kbd,
+samp,
+code {
+    font-feature-settings:
+        'kern' 0,
+        'liga' 0,
+        'calt' 1,
+        'dlig' 0,
+        'pnum' 0,
+        'tnum' 1,
+        'onum' 0,
+        'lnum' 1,
+        'zero' 1;
+}
+
+sup {
+    font-feature-settings:
+        'kern' 1,
+        'liga' 1,
+        'calt' 1,
+        'pnum' 1,
+        'tnum' 0,
+        'onum' 1,
+        'lnum' 0,
+        'dlig' 0,
+        'sups' 1;
+}
+
+sub {
+    font-feature-settings:
+        'kern' 1,
+        'liga' 1,
+        'calt' 1,
+        'pnum' 1,
+        'tnum' 0,
+        'onum' 1,
+        'lnum' 0,
+        'dlig' 0,
+        'subs' 1;
+}
+
+input[type='color'],
+input[type='date'],
+input[type='datetime'],
+input[type='datetime-local'],
+input[type='number'],
+input[type='range'],
+input[type='tel'],
+input[type='week'] {
+    font-feature-settings:
+        'kern' 0,
+        'liga' 1,
+        'calt' 1,
+        'pnum' 1,
+        'tnum' 0,
+        'onum' 0,
+        'lnum' 1,
+        'zero' 0;
+}
+
+tbody,
+caption {
+    font-feature-settings:
+        'kern' 1,
+        'liga' 1,
+        'calt' 1,
+        'pnum' 0,
+        'tnum' 1,
+        'onum' 0,
+        'lnum' 1,
+        'zero' 1;
+}
+
+dd,
+dt {
+    display: inline-block;
+    margin: 0;
+}
+
+/* Quotes */
+
+:lang(en) q {
+    quotes: '\201C' '\201D' '\2018' '\2019' '\201C' '\201D' '\2018' '\2019';
+}
+
+:lang(cs) q {
+    quotes: '\201E' '\201C' '\201A' '\2018' '\201E' '\201C' '\201A' '\2018';
+}
+
+q::before {
+    content: open-quote;
+}
+
+q::after {
+    content: close-quote;
+}
+
+/* Definition Lists */
+
+dd,
+dt {
+    display: inline-block;
+    margin: 0;
 }
