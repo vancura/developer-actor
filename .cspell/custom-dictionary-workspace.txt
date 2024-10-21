@@ -8,6 +8,7 @@ datetime
 dlig
 dnom
 figcaption
+GSAP
 icns
 iframe
 keydown
