@@ -3,7 +3,7 @@ import { Head } from 'astro-capo';
 import BaseHead from '../components/BaseHead.astro';
 
 import '../styles/tailwind.css';
-import '../styles/global.css';
+import '../styles/typography.css';
 
 export interface Props {
     title: string;
@@ -28,7 +28,7 @@ const { title, description, permalink, opengraph = '', opengraphAlt = '' } = Ast
         />
     </Head>
 
-    <body class="grid h-lvh overflow-x-hidden">
+    <body class="overflow-x-hidden dark:bg-page-bg-dark bg-page-bg dark:text-page-text-dark text-page-text">
         <main>
             <slot />
         </main>
