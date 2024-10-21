@@ -1,0 +1,236 @@
+You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web development.
+
+---
+
+# Key Principles
+
+-   **Write Concise and Technical Code**: Ensure your code is clear, efficient, and adheres to modern web development
+    standards.
+-   **Leverage Astro's Strengths**: Utilize Astro's static site generation, partial hydration, and content-focused
+    approach for optimal performance and SEO.
+-   **Prioritize Performance and SEO**: Aim for minimal JavaScript, fast load times, efficient resource management, and
+    implement SEO best practices.
+-   **Produce High-Quality Content**: Focus on creating valuable, informative, and relevant content that resonates with
+    your target audience.
+-   **Use Descriptive Naming**: Adopt clear and descriptive variable and function names.
+-   **Organize Files Logically**: Structure your project using Astro's file-based routing and component system, ensuring
+    consistency and maintainability.
+
+---
+
+# Project Structure
+
+-   **Recommended Astro Project Layout**:
+    ```
+    - src/
+      - components/
+      - layouts/
+      - pages/
+      - styles/
+      - content/
+    - public/
+    - astro.config.mjs
+    - tailwind.config.cjs
+    ```
+-   **Components**: Place reusable UI components in `src/components/`.
+-   **Layouts**: Store layout components in `src/layouts/` and use them to ensure a consistent look and feel across
+    pages.
+-   **Pages**: Organize page components in `src/pages/` using Astro's routing conventions.
+-   **Styles**: Keep global styles in `src/styles/`.
+-   **Content**: Store content files like Markdown or MDX in `src/content/` or an appropriate directory.
+
+---
+
+# Code Style and Structure
+
+-   **Functional Programming**: Use functional and declarative programming patterns.
+-   **Avoid Unnecessary Complexity**: Keep components and functions focused, avoiding over-engineering.
+-   **TypeScript First**: Use TypeScript for type safety and enhanced developer experience.
+-   **Modularization**: Break down code into reusable modules and components.
+-   **Comments and Documentation**: Write meaningful comments and maintain clear documentation.
+
+---
+
+# Naming Conventions
+
+-   **Files and Folders**: Use kebab-case for file and folder names (e.g., `user-profile.astro`).
+-   **Components**: Use PascalCase for component names (e.g., `UserProfile`).
+-   **Variables and Functions**: Use camelCase (e.g., `fetchData`, `isLoaded`).
+-   **Constants**: Use UPPER_SNAKE_CASE for constants (e.g., `MAX_ITEMS`).
+-   **Props and Events**: Prefix boolean props with `is` or `has` (e.g., `isActive`, `hasError`).
+
+---
+
+# TypeScript Usage
+
+-   **Strict Mode**: Enable strict mode in your `tsconfig.json` for better type checking.
+-   **Interfaces over Types**: Prefer `interface` declarations over `type` aliases for object shapes.
+-   **Avoid `any` and `unknown`**: Strive for precise typings; avoid using `any` or `unknown`.
+-   **Generics**: Use generics for functions and components when appropriate.
+-   **Type Assertions**: Avoid using `as` for type assertions unless necessary.
+
+---
+
+# Astro Best Practices
+
+-   **Component Development**:
+    -   Use `.astro` files for components.
+    -   Utilize Astro's component props for data passing.
+    -   **Use Layouts for Consistency**: Implement layout components in `src/layouts/` to ensure a consistent header,
+        footer, and main content across pages.
+    -   Leverage Astro's built-in components and features.
+-   **Routing and Pages**:
+    -   Use file-based routing in `src/pages/`.
+    -   Implement dynamic routes with `[param].astro` syntax.
+    -   Handle 404 errors with a custom `404.astro` page.
+-   **Content Management**:
+    -   Use Markdown (`.md`) or MDX (`.mdx`) files for content-heavy pages.
+    -   Leverage Astro's support for frontmatter in Markdown files.
+    -   Implement content collections for organized content management.
+-   **SEO Components**:
+    -   **Create an SEO Component**: Develop a reusable SEO component to manage meta tags, title tags, and structured
+        data.
+    -   Use frontmatter or component props to pass SEO-related data.
+-   **Data Fetching**:
+    -   Fetch data at build time using `Astro.fetchContent` or `getStaticPaths()`.
+    -   Use `Astro.glob()` for importing multiple files.
+    -   Implement proper error handling for data fetching operations.
+
+---
+
+# Performance Optimization
+
+-   **Minimal JavaScript**: Reduce client-side JavaScript to essential functionality.
+-   **Partial Hydration**: Use Astro's client directives for interactive components:
+    -   `client:load` for components that need immediate hydration.
+    -   `client:idle` for non-critical components.
+    -   `client:visible` for components that hydrate upon visibility.
+-   **Asset Optimization**:
+    -   Optimize images using Astro's image integration (`@astrojs/image`).
+    -   **Implement Lazy Loading**: Use lazy loading for off-screen images and other assets.
+    -   **Image Compression**: Compress images to balance quality and performance.
+-   **Code Splitting**: Leverage dynamic imports to split code for faster load times.
+-   **Caching**: Use HTTP caching headers for static assets.
+-   **Optimize Builds**:
+    -   Minify HTML, CSS, and JavaScript in production builds.
+    -   **Post-Build Optimizations**: Create post-build scripts to remove unwanted files or perform further
+        optimizations.
+-   **Page Speed Optimization**:
+    -   Regularly audit and improve page load times.
+    -   Use tools like Google PageSpeed Insights for recommendations.
+
+---
+
+# SEO Best Practices
+
+-   **High-Quality Content**:
+    -   Focus on creating valuable, informative, and relevant content.
+    -   Perform keyword research to identify relevant search terms.
+-   **Technical SEO**:
+    -   Ensure clean and well-structured code.
+    -   **Generate Sitemaps**: Use Astro's sitemap integration (`@astrojs/sitemap`) to generate a `sitemap.xml`.
+    -   **Internal Linking**: Implement internal links to guide search engines through your content.
+-   **On-Page Optimization**:
+    -   Optimize title tags and meta descriptions for each page.
+    -   Use heading tags (`<h1>` to `<h6>`) appropriately to structure content.
+    -   Use frontmatter or props to manage SEO metadata.
+-   **Image Optimization**:
+    -   Use descriptive `alt` text for images to improve accessibility and SEO.
+    -   Optimize image file sizes and formats.
+-   **Structured Data Markup**:
+    -   Utilize schema.org markup to provide rich information to search engines.
+    -   Implement structured data using JSON-LD in your SEO component.
+-   **Mobile-Friendliness**:
+    -   Ensure responsive design for various screen sizes.
+    -   Test mobile-friendliness using tools like Google's Mobile-Friendly Test.
+-   **Backlinks and Content Promotion**:
+    -   Create high-quality content that naturally attracts backlinks.
+    -   Promote content through appropriate channels to enhance visibility.
+-   **Stay Updated**:
+    -   Keep abreast of SEO trends and search engine algorithm changes.
+
+---
+
+# UI and Styling with Tailwind CSS
+
+-   **Integration**:
+    -   Set up Tailwind CSS using the `@astrojs/tailwind` integration.
+    -   Configure Tailwind in `tailwind.config.cjs`.
+-   **Utility-First Approach**:
+    -   Use Tailwind's utility classes directly in your components.
+    -   Avoid custom CSS when Tailwind utilities suffice.
+-   **Responsive Design**:
+    -   Utilize Tailwind's responsive prefixes (`sm:`, `md:`, `lg:`, `xl:`).
+    -   Ensure your design adapts to various devices and screen sizes.
+-   **Custom Themes**:
+    -   Extend Tailwind's default theme when necessary.
+    -   Keep theme customizations minimal and consistent.
+-   **Avoid `@apply` Directive**:
+    -   Do not use `@apply`; prefer utility classes for styling.
+-   **Use `class:list` Over External Libraries**:
+    -   **Use Astro's `class:list` Directive**: Utilize `class:list` for conditional classes instead of packages like
+        `classNames`.
+    -   **Example**:
+        ```astro
+        <div class:list={{ active: isActive, disabled: isDisabled }}>...</div>
+        ```
+
+---
+
+# Build and Deployment
+
+-   **Environment Variables**:
+    -   Use environment variables for configuration.
+    -   Access variables securely in Astro using `import.meta.env`.
+-   **Static Hosting**:
+    -   Deploy to platforms like Netlify, Vercel, or Cloudflare Pages.
+    -   Ensure your build command is correctly set (usually `astro build`).
+-   **Continuous Integration/Continuous Deployment (CI/CD)**:
+    -   Set up automated builds and tests in your CI/CD pipeline.
+    -   Use deployment previews for testing before going live.
+-   **Optimizations**:
+    -   Minify and compress assets in production builds.
+    -   Implement prefetching and prerendering where appropriate.
+-   **Robots.txt and Sitemap**:
+    -   **Generate a `robots.txt` File**: Inform crawlers how to navigate your site.
+    -   Use Astro's sitemap integration to generate a `sitemap.xml`.
+
+---
+
+# Testing and Accessibility
+
+-   **Testing**:
+    -   Write unit tests for critical functions and components.
+    -   Use end-to-end testing tools like Cypress for user flow testing.
+    -   Implement integration tests for complex interactions.
+-   **Accessibility (A11y)**:
+    -   Use semantic HTML elements.
+    -   Provide alternative text for images.
+    -   Ensure keyboard navigability.
+    -   Implement ARIA attributes where necessary.
+    -   **Test with Accessibility Tools**: Use tools like Lighthouse or Axe to evaluate accessibility.
+
+---
+
+# Key Conventions and Best Practices
+
+1. **Follow Official Documentation**: Always refer to Astro and Tailwind CSS official docs for guidance.
+2. **Consistent Formatting**: Use tools like Prettier and ESLint to maintain code consistency.
+3. **Version Control**: Commit early and often with clear commit messages.
+4. **Code Reviews**: Encourage peer reviews to maintain code quality.
+5. **Performance Monitoring**: Regularly audit performance using Lighthouse or WebPageTest.
+6. **Security Practices**: Sanitize user input and protect against common vulnerabilities.
+7. **Progressive Enhancement**: Ensure the website is usable without JavaScript enabled.
+8. **Optimize Builds**: Continuously optimize builds and bundles for performance.
+9. **Stay Updated**: Keep your dependencies up to date and monitor for security patches.
+
+---
+
+# Additional Resources
+
+-   **Astro Documentation**: [https://docs.astro.build](https://docs.astro.build)
+-   **Tailwind CSS Documentation**: [https://tailwindcss.com/docs](https://tailwindcss.com/docs)
+-   **Astro SEO Guide**: [Astro SEO Best Practices](https://docs.astro.build/en/guides/seo/)
+-   **Web Performance**: [Google Web Fundamentals](https://developers.google.com/web/fundamentals/performance)
+-   **Accessibility Guidelines**: [WCAG 2.1 Standards](https://www.w3.org/TR/WCAG21/)
+-   **Mobile-Friendly Test**: [Google Mobile-Friendly Test](https://search.google.com/test/mobile-friendly)
