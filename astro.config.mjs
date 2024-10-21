@@ -3,7 +3,6 @@ import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import metaTags from 'astro-meta-tags';
 import remarkSmartypants from 'remark-smartypants';
-import ViteRestart from 'vite-plugin-restart';
 
 // https://astro.build/config
 export default {
@@ -34,12 +33,7 @@ export default {
     vite: {
         ssr: {
             external: ['svgo']
-        },
-        plugins: [
-            ViteRestart({
-                restart: ['src/scss/**/*.scss']
-            })
-        ]
+        }
     },
     redirects: {}
 };
