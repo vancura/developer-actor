@@ -28,22 +28,9 @@ const { title, description, permalink, opengraph = '', opengraphAlt = '' } = Ast
         />
     </Head>
 
-    <body class="grid h-lvh overflow-x-hidden">
-
+    <body class="grid overflow-x-hidden h-lvh">
         <main>
             <slot />
         </main>
-
-        <style is:global lang="scss">
-            @import '../scss/settings';
-            @import '../scss/fonts';
-            @import '../scss/typography';
-        </style>
-
-        <style lang="scss">
-            body {
-                grid-template-rows: [navbar-start] var(--navbar-height) [content-start] auto;
-            }
-        </style>
     </body>
 </html>
