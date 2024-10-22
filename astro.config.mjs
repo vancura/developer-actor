@@ -21,7 +21,7 @@ export default {
         metaTags(),
         tailwind(),
         (await import('@playform/compress')).default({
-            Exclude: ['download', 'images', 'opengraph'],
+            Exclude: [],
             CSS: false,
             HTML: {
                 'html-minifier-terser': {
