@@ -9,23 +9,14 @@ export interface Props {
     title: string;
     description: string;
     permalink: string;
-    current?: string;
-    opengraph?: string;
-    opengraphAlt?: string;
 }
 
-const { title, description, permalink, opengraph = '', opengraphAlt = '' } = Astro.props;
+const { title, description, permalink } = Astro.props;
 ---
 
 <html lang="en">
     <Head>
-        <BaseHead
-            title={title}
-            description={description}
-            permalink={permalink}
-            opengraph={opengraph}
-            opengraphAlt={opengraphAlt}
-        />
+        <BaseHead title={title} description={description} permalink={permalink} />
     </Head>
 
     <body class="overflow-x-hidden dark:bg-page-bg-dark bg-page-bg dark:text-page-text-dark text-page-text">

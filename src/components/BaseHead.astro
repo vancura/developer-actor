@@ -5,16 +5,11 @@ export interface Props {
     title: string;
     description: string;
     permalink: string;
-    opengraph?: string;
-    opengraphAlt?: string;
 }
 
-const { title, description, permalink, opengraph, opengraphAlt } = Astro.props;
+const { title, description, permalink } = Astro.props;
 
 const siteDomain = Astro.url.origin;
-
-const opengraphURL = opengraph === '' ? `${siteDomain}/opengraph.png` : `${siteDomain}/opengraph/${opengraph}`;
-const opengraphAltSafe = opengraphAlt === '' ? title : opengraphAlt;
 
 let canonical = Astro.url.toString();
 
@@ -43,15 +38,11 @@ if (canonical.endsWith('/')) {
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:site_name" content={strings.title} />
-<meta property="og:image" content={opengraphURL} />
-<meta property="og:image:alt" content={opengraphAltSafe} />
 <meta property="og:author" content="Apify" />
 
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={permalink} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={opengraphURL} />
-<meta property="twitter:image:alt" content={opengraphAltSafe} />
 
 <meta property="article:author" content="Apify" />
