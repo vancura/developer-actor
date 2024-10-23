@@ -12,6 +12,7 @@ automations
 autoplay
 AutoscaledPool
 callout
+calt
 Čurn
 datetime
 dlig
@@ -29,6 +30,7 @@ layouting
 liga
 lightbox
 lightgreen
+lnum
 Marek
 MBYTES
 Metamorph
@@ -54,6 +56,7 @@ squircle
 srcset
 tailwindcss
 tileset
+tnum
 transformative
 Trunkát
 Václav
