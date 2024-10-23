@@ -13,7 +13,10 @@ export default {
         mdx({
             syntaxHighlight: 'shiki',
             shikiConfig: {
-                theme: 'dracula',
+                themes: {
+                    light: 'light-plus',
+                    dark: 'dark-plus'
+                },
                 wrap: true
             },
             remarkPlugins: [remarkSmartypants]
