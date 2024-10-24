@@ -850,10 +850,10 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@playform/compress@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@playform/compress/-/compress-0.1.4.tgz#4a54d6192b8d90c60fec368494850bf9a27b3718"
-  integrity sha512-THFexa9FgZprjPYo22daFNYPQIo+P84xOHIWU2Po8GWyg8VTGSFzXpeczlQDUKZSius56ZNpYBzxGhntqFGg4g==
+"@playform/compress@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@playform/compress/-/compress-0.1.6.tgz#d55bfd825cff8bc31a2aa34035bd045c7429b645"
+  integrity sha512-T76ABM/naxhIEYQ9D4z+6MS9OW6IGxChlUd8gBPGa5ipTxsQTRV3QkB5v2/l7ZOnds/JoaXqzr0J6xThKXjm7Q==
   dependencies:
     "@playform/pipe" "0.1.1"
     "@types/csso" "5.0.4"
@@ -868,7 +868,7 @@
     lightningcss "1.27.0"
     sharp "0.33.5"
     svgo "3.3.2"
-    terser "5.34.1"
+    terser "5.36.0"
 
 "@playform/pipe@0.1.1":
   version "0.1.1"
@@ -1246,7 +1246,7 @@ acorn-jsx@^5.0.0:
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.2.tgz#7ed5bb55908b3b2f1bc55c6af1653bada7f07937"
   integrity sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==
 
-acorn@^8.0.0, acorn@^8.12.1, acorn@^8.8.2:
+acorn@^8.0.0, acorn@^8.12.1, acorn@^8.13.0, acorn@^8.8.2:
   version "8.13.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.13.0.tgz#2a30d670818ad16ddd6a35d3842dacec9e5d7ca3"
   integrity sha512-8zSiw54Oxrdym50NlZ9sUusyO1Z1ZchgRLWRaK6c86XJFClyCgFKetdowBg5bKxyp/u+CDBJG4Mpp0m3HLZl9w==
@@ -1354,7 +1354,7 @@ astro-meta-tags@^0.3.1:
   resolved "https://registry.yarnpkg.com/astro-meta-tags/-/astro-meta-tags-0.3.1.tgz#334c71d7f3b1d4c28acc9892f69dab6266756efa"
   integrity sha512-6g/SfAVTV7BsGlfWU+s/Kvo6atyn9DpfI7Dq3fE/ck3ppfg30aoeT2Uxu7UH4yla3QXAUWaJIher7fGjewf0ew==
 
-astro@*, astro@^4.16.4:
+astro@*:
   version "4.16.6"
   resolved "https://registry.yarnpkg.com/astro/-/astro-4.16.6.tgz#ed09c86c4ecd0afa7fa688c5a28af616cda87128"
   integrity sha512-LMMbjr+4aN26MOyJzTdjM+Y+srpAIkx7IX9IcdF3eHQLGr8PgkioZp+VQExRfioDIyA2HY6ottVg3QccTzJqYA==
@@ -1410,6 +1410,76 @@ astro@*, astro@^4.16.4:
     semver "^7.6.3"
     shiki "^1.22.0"
     tinyexec "^0.3.0"
+    tsconfck "^3.1.4"
+    unist-util-visit "^5.0.0"
+    vfile "^6.0.3"
+    vite "^5.4.9"
+    vitefu "^1.0.3"
+    which-pm "^3.0.0"
+    xxhash-wasm "^1.0.2"
+    yargs-parser "^21.1.1"
+    zod "^3.23.8"
+    zod-to-json-schema "^3.23.3"
+    zod-to-ts "^1.2.0"
+  optionalDependencies:
+    sharp "^0.33.3"
+
+astro@^4.16.7:
+  version "4.16.7"
+  resolved "https://registry.yarnpkg.com/astro/-/astro-4.16.7.tgz#7896148d638dab4e7f0e5eec8816a446c1178e3e"
+  integrity sha512-nON+8MUEkWTFwXbS4zsQIq4t0Fs42eulM4x236AL+qNnWfqNAOOqAnFxO1dxfJ1q+XopIBbbT9Mtev+0zH47PQ==
+  dependencies:
+    "@astrojs/compiler" "^2.10.3"
+    "@astrojs/internal-helpers" "0.4.1"
+    "@astrojs/markdown-remark" "5.3.0"
+    "@astrojs/telemetry" "3.1.0"
+    "@babel/core" "^7.25.8"
+    "@babel/plugin-transform-react-jsx" "^7.25.7"
+    "@babel/types" "^7.25.8"
+    "@oslojs/encoding" "^1.1.0"
+    "@rollup/pluginutils" "^5.1.2"
+    "@types/babel__core" "^7.20.5"
+    "@types/cookie" "^0.6.0"
+    acorn "^8.13.0"
+    aria-query "^5.3.2"
+    axobject-query "^4.1.0"
+    boxen "8.0.1"
+    ci-info "^4.0.0"
+    clsx "^2.1.1"
+    common-ancestor-path "^1.0.1"
+    cookie "^0.7.2"
+    cssesc "^3.0.0"
+    debug "^4.3.7"
+    deterministic-object-hash "^2.0.2"
+    devalue "^5.1.1"
+    diff "^5.2.0"
+    dlv "^1.1.3"
+    dset "^3.1.4"
+    es-module-lexer "^1.5.4"
+    esbuild "^0.21.5"
+    estree-walker "^3.0.3"
+    fast-glob "^3.3.2"
+    flattie "^1.1.1"
+    github-slugger "^2.0.0"
+    gray-matter "^4.0.3"
+    html-escaper "^3.0.3"
+    http-cache-semantics "^4.1.1"
+    js-yaml "^4.1.0"
+    kleur "^4.1.5"
+    magic-string "^0.30.12"
+    magicast "^0.3.5"
+    micromatch "^4.0.8"
+    mrmime "^2.0.0"
+    neotraverse "^0.6.18"
+    ora "^8.1.0"
+    p-limit "^6.1.0"
+    p-queue "^8.0.1"
+    preferred-pm "^4.0.0"
+    prompts "^2.4.2"
+    rehype "^13.0.2"
+    semver "^7.6.3"
+    shiki "^1.22.0"
+    tinyexec "^0.3.1"
     tsconfck "^3.1.4"
     unist-util-visit "^5.0.0"
     vfile "^6.0.3"
@@ -3789,6 +3859,11 @@ prettier-plugin-organize-imports@^4.1.0:
   resolved "https://registry.yarnpkg.com/prettier-plugin-organize-imports/-/prettier-plugin-organize-imports-4.1.0.tgz#f3d3764046a8e7ba6491431158b9be6ffd83b90f"
   integrity sha512-5aWRdCgv645xaa58X8lOxzZoiHAldAPChljr/MT0crXVOWTZ+Svl4hIWlz+niYSlO6ikE5UXkN1JrRvIP2ut0A==
 
+prettier-plugin-tailwindcss@^0.6.8:
+  version "0.6.8"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-tailwindcss/-/prettier-plugin-tailwindcss-0.6.8.tgz#8a178e1679e3f941cc9de396f109c6cffea676d8"
+  integrity sha512-dGu3kdm7SXPkiW4nzeWKCl3uoImdd5CTZEJGxyypEPL37Wj0HT2pLqjrvSei1nTeuQfO4PUfjeW5cTUNRLZ4sA==
+
 prettier@2.8.7:
   version "2.8.7"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.7.tgz#bb79fc8729308549d28fe3a98fce73d2c0656450"
@@ -4462,17 +4537,7 @@ tailwindcss@^3.4.14:
     resolve "^1.22.2"
     sucrase "^3.32.0"
 
-terser@5.34.1:
-  version "5.34.1"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-5.34.1.tgz#af40386bdbe54af0d063e0670afd55c3105abeb6"
-  integrity sha512-FsJZ7iZLd/BXkz+4xrRTGJ26o/6VTjQytUk8b8OxkwcD2I+79VPJlz7qss1+zE7h8GNIScFqXcDyJ/KqBYZFVA==
-  dependencies:
-    "@jridgewell/source-map" "^0.3.3"
-    acorn "^8.8.2"
-    commander "^2.20.0"
-    source-map-support "~0.5.20"
-
-terser@^5.15.1:
+terser@5.36.0, terser@^5.15.1:
   version "5.36.0"
   resolved "https://registry.yarnpkg.com/terser/-/terser-5.36.0.tgz#8b0dbed459ac40ff7b4c9fd5a3a2029de105180e"
   integrity sha512-IYV9eNMuFAV4THUspIRXkLakHnV6XO7FEdtKjf/mDyrnqUg9LnlOn6/RwRvM9SZjR4GUq8Nk8zj67FzVARr74w==
@@ -4496,7 +4561,7 @@ thenify-all@^1.0.0:
   dependencies:
     any-promise "^1.0.0"
 
-tinyexec@^0.3.0:
+tinyexec@^0.3.0, tinyexec@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/tinyexec/-/tinyexec-0.3.1.tgz#0ab0daf93b43e2c211212396bdb836b468c97c98"
   integrity sha512-WiCJLEECkO18gwqIp6+hJg0//p23HXp4S+gGtAKu3mI2F2/sXC4FvHvXvB0zJVVaTPhx1/tOwdbRsa1sOBIKqQ==
