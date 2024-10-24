@@ -1,20 +1,115 @@
-ul li {
-    position: relative;
-
-    &::before {
-        position: absolute;
-        left: -1.4em;
-        content: '→';
-    }
+@font-face {
+    src: url('/fonts/GT-Walsheim-Regular.woff2') format('woff2');
+    font-family: 'Walsheim Regular';
+    font-display: swap;
 }
 
-ol li {
-    position: relative;
+:root {
+    @apply antialiased;
+}
 
-    &::before {
-        position: absolute;
-        left: -1.4em;
-        content: counter(list-item) '.';
+::selection {
+    @apply bg-selection text-selection-text shadow-none dark:bg-selection-dark dark:text-selection-dark-text;
+}
+
+a {
+    @apply text-link hover:text-link-hover selection:bg-link dark:text-link-dark dark:hover:text-link-dark-hover dark:selection:bg-link-dark;
+}
+
+.mdx-content {
+    & a {
+        @apply border-b-[0.1em] font-medium;
+    }
+
+    & strong {
+        @apply font-medium text-strong dark:text-strong-dark selection:bg-strong dark:selection:bg-strong-dark;
+    }
+
+    & em {
+        @apply font-medium not-italic text-strong dark:text-strong-dark border-b-[0.1em] selection:bg-strong dark:selection:bg-strong-dark;
+    }
+
+    & h1,
+    & h2,
+    & h3 {
+        @apply font-headline oldstyle-nums proportional-nums stacked-fractions tracking-tight text-balance;
+    }
+
+    & h1 {
+        @apply pb-4 text-4xl lg:text-5xl lg:pb-6;
+    }
+
+    & h2 {
+        @apply mt-10 pt-8 mb-3 lg:mb-6 text-3xl lg:text-4xl border-t-[3px] border-hr lg:mt-14 lg:pt-12 dark:border-hr-dark;
+    }
+
+    & h3 {
+        @apply pt-3 pb-4 text-2xl lg:text-3xl lg:pt-4 lg:pb-6;
+    }
+
+    & h4 {
+        @apply pt-3 pb-4 text-xl lg:text-2xl lg:pt-4 lg:pb-6;
+    }
+
+    & p,
+    & ul,
+    & ol,
+    & pre,
+    & kbd,
+    & samp,
+    & code,
+    & table {
+        @apply lg:text-base leading-[1.35rem] lg:leading-[1.7rem] mb-4 lg:mb-6;
+    }
+
+    & ul li {
+        @apply relative before:absolute before:left-[-1.4em] before:content-['→'];
+    }
+
+    & ol li {
+        @apply relative before:absolute before:left-[-1.4em];
+
+        &::before {
+            content: counter(list-item) '.';
+        }
+    }
+
+    & p code,
+    & table code {
+        @apply py-[0.1em] px-[0.4em] border-code-stroke border bg-code-bg font-source text-[0.91em] rounded-md dark:bg-code-bg-dark dark:border-code-stroke-dark;
+    }
+
+    & pre {
+        @apply p-4 rounded-md overflow-x-auto bg-code-bg dark:bg-code-bg-dark border-code-stroke border  dark:border-code-stroke-dark;
+
+        * {
+            @apply text-[0.97em] font-source;
+        }
+    }
+
+    & table {
+        @apply w-full;
+
+        & thead th:first-child,
+        & thead th:nth-child(3) {
+            @apply w-1/3;
+        }
+
+        & tr {
+            @apply border-hr dark:border-hr-dark border-b last:border-b-0;
+        }
+
+        & td {
+            @apply py-3 align-top;
+        }
+
+        & th {
+            @apply border-b border-text dark:border-text-dark pb-2 text-left font-normal;
+        }
+    }
+
+    & blockquote {
+        @apply border-l-4 border-hr pl-4 text-pretty;
     }
 }
 
