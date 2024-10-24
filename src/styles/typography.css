@@ -9,7 +9,7 @@
 }
 
 ::selection {
-    @apply bg-selection text-selection-text shadow-none dark:bg-selection-dark dark:text-selection-dark-text;
+    @apply shadow-none bg-selection text-selection-text dark:bg-selection-dark dark:text-selection-dark-text;
 }
 
 a {
@@ -34,7 +34,7 @@ a {
     & h1,
     & h2,
     & h3 {
-        @apply font-headline oldstyle-nums proportional-nums stacked-fractions tracking-tight text-balance;
+        @apply tracking-tight font-headline oldstyle-nums proportional-nums stacked-fractions text-balance;
     }
 
     & h1 {
@@ -82,7 +82,7 @@ a {
     }
 
     & pre {
-        @apply p-4 rounded-md overflow-x-auto bg-code-bg dark:bg-code-bg-dark border-code-stroke border  dark:border-code-stroke-dark;
+        @apply p-4 overflow-x-auto border rounded-md bg-code-bg dark:bg-code-bg-dark border-code-stroke dark:border-code-stroke-dark;
 
         * {
             @apply text-[0.97em] font-source;
@@ -98,7 +98,7 @@ a {
         }
 
         & tr {
-            @apply border-hr dark:border-hr-dark border-b last:border-b-0;
+            @apply border-b border-hr dark:border-hr-dark last:border-b-0;
         }
 
         & td {
@@ -106,12 +106,12 @@ a {
         }
 
         & th {
-            @apply border-b border-text dark:border-text-dark pb-2 text-left font-normal;
+            @apply pb-2 font-normal text-left border-b border-text dark:border-text-dark;
         }
     }
 
     & blockquote {
-        @apply border-l-4 border-hr pl-4 text-pretty;
+        @apply pl-4 border-l-4 border-hr text-pretty dark:border-hr-dark;
     }
 }
 
