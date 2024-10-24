@@ -4,8 +4,6 @@
 
 By [Jan Čurn](https://apify.com/jancurn), [Marek Trunkát](https://apify.com/mtrunkat), [Ondra Urban](https://apify.com/mnmkng), and the [Apify](https://apify.com/store) team.
 
----
-
 Version 0.99 (September 2024)
 
 ## Introduction
@@ -64,8 +62,6 @@ The input object represents a standardized way for the caller to control the Act
 In order to specify what kind of input object an Actor expects, the Actor developer can define an [Input schema file](#input-schema-file).
 
 The input schema is used by the system to generate user interface, API examples, and simplify integrations with external systems.
-
-#### Example of auto-generated Actor input UI
 
 ### Run environment
 
@@ -520,7 +516,7 @@ exit(1);
 Actors have access to standard process environment variables. The Apify platform uses environment variables prefixed with `ACTOR_` to pass the Actors information about the execution context.
 
 | Environment variable               | Description                                                                                                                                                                                      |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --- | --- |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `ACTOR_ID`                         | ID of the Actor.                                                                                                                                                                                 |
 | `ACTOR_RUN_ID`                     | ID of the Actor run.                                                                                                                                                                             |
 | `ACTOR_BUILD_ID`                   | ID of the Actor build.                                                                                                                                                                           |
@@ -536,7 +532,7 @@ Actors have access to standard process environment variables. The Apify platform
 | `ACTOR_EVENTS_WEBSOCKET_URL`       | Websocket URL where Actor may listen for events from Actor platform. See [System events](#system-events) for details.                                                                            |
 | `ACTOR_WEB_SERVER_PORT`            | TCP port on which the Actor can start a HTTP server to receive messages from the outside world, either as [Live view web server](#live-view-web-server) or in the [Standby mode](#standby-mode). |
 | `ACTOR_WEB_SERVER_URL`             | A unique hard-to-guess URL under which the current Actor run's web server is accessible from the outside world. See [Live view web server](#live-view-web-server) section for details.           |
-| `ACTOR_STANDBY_URL`                | A general public URL under which the Actor can be started and its web server accessed in the [Standby mode](#standby-mode).                                                                      |     |     |
+| `ACTOR_STANDBY_URL`                | A general public URL under which the Actor can be started and its web server accessed in the [Standby mode](#standby-mode).                                                                      |
 | `ACTOR_MAX_PAID_DATASET_ITEMS`     | A maximum number of results that will be charged to the user using a pay-per-result Actor.                                                                                                       |
 | `ACTOR_MAX_TOTAL_CHARGE_USD`       | The maximum amount of money in USD an Actor can charge its user. See [Charging money](#charging-money) for details.                                                                              |
 
