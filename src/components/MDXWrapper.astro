@@ -1,0 +1,22 @@
+---
+interface Props {
+    showFallback?: boolean;
+}
+
+const { showFallback = true } = Astro.props;
+---
+
+<div class="mdx-content">
+    {
+        showFallback ? (
+            <slot />
+        ) : (
+            <Fragment>
+                <slot />
+                <slot name="fallback">
+                    <p>Failed to load content. Please try refreshing the page.</p>
+                </slot>
+            </Fragment>
+        )
+    }
+</div>
