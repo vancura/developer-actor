@@ -4,12 +4,13 @@ import tailwind from '@astrojs/tailwind';
 import metaTags from 'astro-meta-tags';
 import remarkSmartypants from 'remark-smartypants';
 
-// https://astro.build/config
 export default {
     site: 'https://developer.actor',
     prefetch: true,
+
     integrations: [
         sitemap(),
+
         mdx({
             syntaxHighlight: 'shiki',
             shikiConfig: {
@@ -21,8 +22,11 @@ export default {
             },
             remarkPlugins: [remarkSmartypants]
         }),
+
         metaTags(),
+
         tailwind(),
+
         (await import('@playform/compress')).default({
             Exclude: [],
             CSS: false,
@@ -33,10 +37,12 @@ export default {
             }
         })
     ],
+
     vite: {
         ssr: {
             external: ['svgo']
         }
     },
+
     redirects: {}
 };
