@@ -1,19 +1,18 @@
 ---
 import strings from '../../strings.mjs';
+import type { SEOMetadata } from '../types';
 
-export interface Props {
+export interface Props extends SEOMetadata {
     title: string;
     description: string;
     permalink: string;
+    ogImage?: string;
 }
 
-const { title, description, permalink } = Astro.props;
+const { title, description, permalink, ogImage = '/default-og-image.jpg' } = Astro.props;
 
-let canonical = Astro.url.toString();
-
-if (canonical.endsWith('/')) {
-    canonical = canonical.slice(0, -1);
-}
+let canonical = new URL(permalink).toString();
+canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
 ---
 
 <meta charset="utf-8" />
