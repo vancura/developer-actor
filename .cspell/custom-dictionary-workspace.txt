@@ -13,6 +13,7 @@ autoplay
 AutoscaledPool
 callout
 calt
+crossorigin
 Čurn
 datetime
 dlig
@@ -47,14 +48,17 @@ Ondra
 onum
 opengraph
 padder
+playform
 playsinline
 pnum
+preconnect
 rebranded
 rects
 shiki
 smcp
 squircle
 srcset
+stylesheet
 tailwindcss
 tileset
 tnum
