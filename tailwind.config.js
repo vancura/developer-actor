@@ -1,29 +1,41 @@
-const plugin = require('tailwindcss/plugin');
+import plugin from 'tailwindcss/plugin';
 
 const colors = {
     debug: '#f0f',
     temp: 'rgba(255, 0, 255, 0.25)',
 
-    'page-bg': {
+    bg: {
         DEFAULT: '#F5F5F5',
-        dark: '#333333'
+        dark: '#222'
     },
 
-    'page-text': {
+    text: {
         DEFAULT: '#333333',
         dark: '#F5F5F5'
     },
 
     link: {
-        DEFAULT: '#8e2da9',
-        hover: '#c163db',
-        dark: '#e278ff',
-        'dark-hover': '#eba1ff'
+        DEFAULT: '#2833FF',
+        hover: '#8C3FFF',
+        dark: '#ABAFFF',
+        'dark-hover': '#CAA6FF'
+    },
+
+    strong: {
+        DEFAULT: '#D200A3',
+        dark: '#FF7DE2'
     },
 
     hr: {
-        DEFAULT: 'rgba(0, 0, 0, 0.1)',
-        dark: 'rgba(255, 255, 255, 0.1)'
+        DEFAULT: 'rgba(0, 0, 0, 0.15)',
+        dark: 'rgba(255, 255, 255, 0.15)'
+    },
+
+    selection: {
+        DEFAULT: '#222',
+        text: '#F5F5F5',
+        dark: '#F5F5F5',
+        'dark-text': '#222'
     }
 };
 
@@ -57,66 +69,125 @@ const customBase = ({ addBase, theme }) => {
 
         '*': { WebkitFontSmoothing: 'inherit' },
 
+        '::selection': {
+            backgroundColor: theme('colors.selection.DEFAULT'),
+            color: theme('colors.selection.text'),
+            textShadow: 'inherit', // hard-codes fallback text selection, color is Chrome per via http://stackoverflow.com/a/16094931/864799
+            '@media (prefers-color-scheme: dark)': {
+                backgroundColor: theme('colors.selection.dark'),
+                color: theme('colors.selection.dark-text')
+            }
+        },
+
+        a: {
+            color: theme('colors.link.DEFAULT'),
+            '&:hover': { color: theme('colors.link.hover') },
+            '&::selection': { backgroundColor: theme('colors.link.DEFAULT') },
+            '@media (prefers-color-scheme: dark)': {
+                color: theme('colors.link.dark'),
+                '&:hover': { color: theme('colors.link.dark-hover') },
+                '&::selection': { backgroundColor: theme('colors.link.dark') }
+            }
+        },
+
         'html, body, table': {
             fontFeatureSettings: fontFeatureSettings.default
+        },
+
+        '.mdx-content a': {
+            fontWeight: '500',
+            borderBottom: '0.1em solid'
+        },
+
+        '.mdx-content strong': {
+            fontWeight: '500',
+            color: theme('colors.strong.DEFAULT'),
+            '&::selection': { backgroundColor: theme('colors.strong.DEFAULT') },
+            '@media (prefers-color-scheme: dark)': {
+                color: theme('colors.strong.dark'),
+                '&::selection': { backgroundColor: theme('colors.strong.dark') }
+            }
+        },
+
+        '.mdx-content em': {
+            fontStyle: 'normal',
+            fontWeight: '500',
+            color: theme('colors.strong.DEFAULT'),
+            borderBottom: '1.5px solid',
+            '&::selection': { backgroundColor: theme('colors.strong.DEFAULT') },
+            '@media (prefers-color-scheme: dark)': {
+                color: theme('colors.strong.dark'),
+                '&::selection': { backgroundColor: theme('colors.strong.dark') }
+            }
         },
 
         '.mdx-content h1, .mdx-content h2, .mdx-content h3': {
             fontFamily: theme('fontFamily.headline'),
             fontVariantNumeric: 'oldstyle-nums proportional-nums stacked-fractions',
             fontFeatureSettings: fontFeatureSettings.headings,
-            letterSpacing: '-0.03em'
+            letterSpacing: '-0.03em',
+            textWrap: 'balance'
         },
 
         '.mdx-content h1': {
-            paddingTop: '1em',
+            paddingBottom: '1.2rem',
             fontSize: theme('fontSize.4xl'),
             lineHeight: '1.1em',
-            '@media (min-width: 768px)': {
+            '@media (min-width: 1024px)': {
+                paddingBottom: '1.6rem',
                 fontSize: theme('fontSize.5xl')
             }
         },
 
         '.mdx-content h2': {
-            paddingTop: '3rem',
-            paddingBottom: '1rem',
+            marginTop: '2.9rem',
+            paddingTop: '2.4rem',
+            paddingBottom: '1.2rem',
             fontSize: theme('fontSize.3xl'),
             lineHeight: '1.1em',
-            '@media (min-width: 768px)': {
+            borderTop: `3px solid ${theme('colors.hr.DEFAULT')}`,
+            '@media (min-width: 1024px)': {
+                marginTop: '3.6rem',
+                paddingTop: '3.2rem',
+                paddingBottom: '1.2rem',
                 fontSize: theme('fontSize.4xl')
+            },
+            '@media (prefers-color-scheme: dark)': {
+                borderTop: `3px solid ${theme('colors.hr.dark')}`
             }
         },
 
         '.mdx-content h3': {
-            paddingTop: '3rem',
-            paddingBottom: '1rem',
+            paddingTop: '1.0rem',
+            paddingBottom: '1.2rem',
             fontSize: theme('fontSize.2xl'),
             lineHeight: '1.1em',
-            '@media (min-width: 768px)': {
+            '@media (min-width: 1024px)': {
+                paddingTop: '1.2rem',
+                paddingBottom: '1.4rem',
                 fontSize: theme('fontSize.3xl')
             }
         },
 
         '.mdx-content h4': {
-            paddingTop: '3rem',
-            paddingBottom: 0,
+            paddingTop: '1.0rem',
+            paddingBottom: '1.2rem',
             fontSize: theme('fontSize.xl'),
             lineHeight: '1.1em',
-            '@media (min-width: 768px)': {
+            '@media (min-width: 1024px)': {
+                paddingTop: '1.2rem',
+                paddingBottom: '1.4rem',
                 fontSize: theme('fontSize.2xl')
             }
         },
 
         '.mdx-content p, .mdx-content ul, .mdx-content ol, .mdx-content pre, .mdx-content kbd, .mdx-content samp, .mdx-content code, .mdx-content table': {
-            marginTop: '1em'
-        },
-
-        a: {
-            color: theme('colors.link.DEFAULT'),
-            '&:hover': { color: theme('colors.link.hover') },
-            '@media (prefers-color-scheme: dark)': {
-                color: theme('colors.link.dark'),
-                '&:hover': { color: theme('colors.link.dark-hover') }
+            lineHeight: '1.35rem',
+            marginBottom: '1.4rem',
+            '@media (min-width: 1024px)': {
+                fontSize: '1.1rem',
+                lineHeight: '1.7rem',
+                marginBottom: '1.7rem'
             }
         },
 
@@ -164,40 +235,47 @@ const customBase = ({ addBase, theme }) => {
             }
         },
 
-        '.mdx-content a': {
-            borderBottom: `1px solid`
-        },
-
-        '.mdx-content p code': {
+        '.mdx-content p code, .mdx-content table code': {
             padding: '0.1em 0.4em',
+            border: '1px solid rgba(0, 0, 0, 0.1)',
             backgroundColor: 'white',
-            fontFamily: 'Fira Code, monospace',
+            fontFamily: 'IBM Plex Mono, monospace',
             fontOpticalSizing: 'auto',
+            fontSize: '0.91em',
             borderRadius: theme('borderRadius.md'),
-            boxShadow: theme('boxShadow.sm'),
             '@media (prefers-color-scheme: dark)': {
-                backgroundColor: 'rgba(0, 0, 0, 0.3)'
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                border: '1px solid rgba(255, 255, 255, 0.15)'
             }
         },
 
         '.mdx-content pre': {
             padding: theme('spacing.4'),
+            border: '1px solid rgba(0, 0, 0, 0.1)',
             borderRadius: theme('borderRadius.md'),
-            boxShadow: theme('boxShadow.sm'),
             '*': {
                 fontSize: '0.97em',
-                fontFamily: 'Fira Code, monospace',
+                fontFamily: 'IBM Plex Mono, monospace',
                 fontOpticalSizing: 'auto'
             },
             '@media (prefers-color-scheme: dark)': {
-                boxShadow: 'none'
+                border: '1px solid rgba(255, 255, 255, 0.15)'
             }
         },
 
         '.mdx-content table': {
             width: '100%',
 
+            'thead th:first-child': {
+                width: '33%'
+            },
+
+            'thead th:nth-child(3)': {
+                width: '33%'
+            },
+
             tr: {
+                margin: '0.75rem 0',
                 '&:not(:last-child)': {
                     borderBottom: `1px solid ${theme('colors.hr.DEFAULT')}`
                 },
@@ -207,13 +285,12 @@ const customBase = ({ addBase, theme }) => {
             },
 
             td: {
-                width: '50%',
-                display: 'inline-block',
-                padding: '0.5em 0'
+                padding: '0.75rem 0',
+                verticalAlign: 'top'
             },
 
             th: {
-                borderBottom: `1px solid ${theme('colors.hr.DEFAULT')}`,
+                borderBottom: `1px solid ${theme('colors.text.DEFAULT')}`,
                 padding: '0 0 0.5em',
                 textAlign: 'left',
                 fontWeight: 'normal',

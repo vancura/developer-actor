@@ -1,12 +1,20 @@
-ul {
-    li {
-        position: relative;
+ul li {
+    position: relative;
 
-        &::before {
-            position: absolute;
-            left: -1.4em;
-            content: '→';
-        }
+    &::before {
+        position: absolute;
+        left: -1.4em;
+        content: '→';
+    }
+}
+
+ol li {
+    position: relative;
+
+    &::before {
+        position: absolute;
+        left: -1.4em;
+        content: counter(list-item) '.';
     }
 }
 
