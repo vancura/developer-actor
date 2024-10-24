@@ -6,14 +6,14 @@ You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web d
 
 -   **Write Concise and Technical Code**: Ensure your code is clear, efficient, and adheres to modern web development
     standards.
--   **Leverage Astro's Strengths**: Utilize Astro's static site generation, partial hydration, and content-focused
+-   **Leverage Astro Strengths**: Utilize Astro static site generation, partial hydration, and content-focused
     approach for optimal performance and SEO.
 -   **Prioritize Performance and SEO**: Aim for minimal JavaScript, fast load times, efficient resource management, and
     implement SEO best practices.
 -   **Produce High-Quality Content**: Focus on creating valuable, informative, and relevant content that resonates with
     your target audience.
 -   **Use Descriptive Naming**: Adopt clear and descriptive variable and function names.
--   **Organize Files Logically**: Structure your project using Astro's file-based routing and component system, ensuring
+-   **Organize Files Logically**: Structure your project using Astro file-based routing and component system, ensuring
     consistency and maintainability.
 
 ---
@@ -35,7 +35,7 @@ You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web d
 -   **Components**: Place reusable UI components in `src/components/`.
 -   **Layouts**: Store layout components in `src/layouts/` and use them to ensure a consistent look and feel across
     pages.
--   **Pages**: Organize page components in `src/pages/` using Astro's routing conventions.
+-   **Pages**: Organize page components in `src/pages/` using Astro routing conventions.
 -   **Styles**: Keep global styles in `src/styles/`.
 -   **Content**: Store content files like Markdown or MDX in `src/content/` or an appropriate directory.
 
@@ -75,17 +75,17 @@ You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web d
 
 -   **Component Development**:
     -   Use `.astro` files for components.
-    -   Utilize Astro's component props for data passing.
+    -   Utilize Astro component props for data passing.
     -   **Use Layouts for Consistency**: Implement layout components in `src/layouts/` to ensure a consistent header,
         footer, and main content across pages.
-    -   Leverage Astro's built-in components and features.
+    -   Leverage Astro built-in components and features.
 -   **Routing and Pages**:
     -   Use file-based routing in `src/pages/`.
     -   Implement dynamic routes with `[param].astro` syntax.
     -   Handle 404 errors with a custom `404.astro` page.
 -   **Content Management**:
     -   Use Markdown (`.md`) or MDX (`.mdx`) files for content-heavy pages.
-    -   Leverage Astro's support for frontmatter in Markdown files.
+    -   Leverage Astro support for frontmatter in Markdown files.
     -   Implement content collections for organized content management.
 -   **SEO Components**:
     -   **Create an SEO Component**: Develop a reusable SEO component to manage meta tags, title tags, and structured
@@ -101,12 +101,12 @@ You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web d
 # Performance Optimization
 
 -   **Minimal JavaScript**: Reduce client-side JavaScript to essential functionality.
--   **Partial Hydration**: Use Astro's client directives for interactive components:
+-   **Partial Hydration**: Use Astro client directives for interactive components:
     -   `client:load` for components that need immediate hydration.
     -   `client:idle` for non-critical components.
     -   `client:visible` for components that hydrate upon visibility.
 -   **Asset Optimization**:
-    -   Optimize images using Astro's image integration (`@astrojs/image`).
+    -   Optimize images using Astro image integration (`@astrojs/image`).
     -   **Implement Lazy Loading**: Use lazy loading for off-screen images and other assets.
     -   **Image Compression**: Compress images to balance quality and performance.
 -   **Code Splitting**: Leverage dynamic imports to split code for faster load times.
@@ -128,7 +128,7 @@ You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web d
     -   Perform keyword research to identify relevant search terms.
 -   **Technical SEO**:
     -   Ensure clean and well-structured code.
-    -   **Generate Sitemaps**: Use Astro's sitemap integration (`@astrojs/sitemap`) to generate a `sitemap.xml`.
+    -   **Generate Sitemaps**: Use Astro sitemap integration (`@astrojs/sitemap`) to generate a `sitemap.xml`.
     -   **Internal Linking**: Implement internal links to guide search engines through your content.
 -   **On-Page Optimization**:
     -   Optimize title tags and meta descriptions for each page.
@@ -168,7 +168,7 @@ You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web d
 -   **Avoid `@apply` Directive**:
     -   Do not use `@apply`; prefer utility classes for styling.
 -   **Use `class:list` Over External Libraries**:
-    -   **Use Astro's `class:list` Directive**: Utilize `class:list` for conditional classes instead of packages like
+    -   **Use Astro `class:list` Directive**: Utilize `class:list` for conditional classes instead of packages like
         `classNames`.
     -   **Example**:
         ```astro
@@ -193,7 +193,7 @@ You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web d
     -   Implement prefetching and prerendering where appropriate.
 -   **Robots.txt and Sitemap**:
     -   **Generate a `robots.txt` File**: Inform crawlers how to navigate your site.
-    -   Use Astro's sitemap integration to generate a `sitemap.xml`.
+    -   Use Astro sitemap integration to generate a `sitemap.xml`.
 
 ---
 
