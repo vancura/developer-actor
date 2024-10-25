@@ -2,11 +2,16 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import metaTags from 'astro-meta-tags';
+import { defineConfig, sharpImageService } from 'astro/config';
 import remarkSmartypants from 'remark-smartypants';
 
-export default {
+export default defineConfig({
     site: 'https://developer.actor',
     prefetch: true,
+
+    image: {
+        service: sharpImageService()
+    },
 
     integrations: [
         sitemap(),
@@ -45,4 +50,4 @@ export default {
     },
 
     redirects: {}
-};
+});
