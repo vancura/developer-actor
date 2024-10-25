@@ -1,9 +1,4 @@
 <script>
-    interface TooltipOptions {
-        text: string; // text to display in the tooltip
-        duration: number; // duration of the tooltip display
-    }
-
     /**
      * Manager for heading links.
      */
@@ -25,40 +20,6 @@
                     behavior: 'smooth'
                 });
             }
-        }
-
-        /**
-         * Create a tooltip element.
-         * @param text - Text to display in the tooltip.
-         * @returns Tooltip element.
-         */
-        private createTooltip(text: string): HTMLSpanElement {
-            const tooltip = document.createElement('span');
-
-            tooltip.textContent = text;
-
-            return tooltip;
-        }
-
-        /**
-         * Show a tooltip.
-         * @param anchor - Anchor element to attach the tooltip to.
-         * @param options - Options for the tooltip.
-         */
-        private showTooltip(anchor: HTMLAnchorElement, options: TooltipOptions): void {
-            const tooltip = this.createTooltip(options.text);
-
-            anchor.appendChild(tooltip);
-
-            // Animate the tooltip in.
-            requestAnimationFrame(() => {
-                tooltip.style.opacity = '1';
-
-                // Remove the tooltip after the duration.
-                setTimeout(() => {
-                    tooltip.remove();
-                }, options.duration);
-            });
         }
 
         /**
