@@ -67,7 +67,8 @@ a {
     & kbd,
     & samp,
     & code,
-    & table {
+    & table,
+    & img {
         @apply lg:text-base leading-[1.35rem] lg:leading-[1.7rem] mb-4 lg:mb-6;
     }
 
@@ -93,6 +94,18 @@ a {
 
         * {
             @apply text-[0.97em] font-source;
+        }
+    }
+
+    & img {
+        @apply border rounded-md bg-code-bg dark:bg-code-bg-dark border-code-stroke dark:border-code-stroke-dark;
+
+        &.is-wide {
+            @apply rounded-none;
+
+            &.is-wide {
+                @apply relative -mx-[100vw] left-[50%] right-[50%] ml-[-50vw] mr-[-50vw] w-screen max-w-[100vw] rounded-none border-x-0;
+            }
         }
     }
 

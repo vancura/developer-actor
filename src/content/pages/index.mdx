@@ -1,3 +1,8 @@
+import { Picture } from 'astro:assets';
+import apifyActorDrawing from './apify-actor-drawing.png';
+import takerInput from './taker-input.png';
+import apifyStore from './apify-store.png';
+
 # The Web Actor Programming Model Whitepaper
 
 **This whitepaper describes a new concept for building serverless microapps called _Actors_, which are easy to develop, share, integrate, and build upon. Actors are a reincarnation of the UNIX philosophy for programs running in the cloud.**
@@ -20,9 +25,7 @@ The goal of this whitepaper is to be the north star showing what the Actor progr
 
 ### Overview
 
-Actors are serverless programs running in the cloud. They can perform anything from simple actions such as filling out a web form or sending an email, to complex operations such as crawling an entire website, or removing duplicates from a large dataset. Actors can persist their state and be restarted, and thus they can run as short or as long as necessary, from seconds to hours, even infinitely.
-
-Basically, Actors are programs packaged as Docker images, which accept a well-defined JSON input, perform an action, and optionally produce a well-defined JSON output.
+Actors are serverless programs running in the cloud. They can perform anything from simple actions such as filling out a web form or sending an email, to complex operations such as crawling an entire website, or removing duplicates from a large dataset. Actors can persist their state and be restarted, and thus they can run as short or as long as necessary, from seconds to hours, even infinitely. Do Basically, Actors are programs packaged as Docker images, which accept a well-defined JSON input, perform an action, and optionally produce a well-defined JSON output.
 
 Actors have the following elements:
 
@@ -33,6 +36,8 @@ Actors have the following elements:
 -   **Metadata** such as the Actor name, description, author, and version.
 
 The documentation and the input/output schemas make it possible for people to easily understand what the Actor does, enter the required inputs both in user interface or API, and integrate the results of the Actor into their other workflows. Actors can easily call and interact with each other, enabling building more complex systems on top of simple ones.
+
+<Picture src={apifyActorDrawing} alt="Actor drawing" formats={['avif', 'webp']} class="is-wide" />
 
 ### Apify platform
 
@@ -62,6 +67,10 @@ The input object represents a standardized way for the caller to control the Act
 In order to specify what kind of input object an Actor expects, the Actor developer can define an [Input schema file](#input-schema-file).
 
 The input schema is used by the system to generate user interface, API examples, and simplify integrations with external systems.
+
+#### Example of auto-generated Actor input UI
+
+<Picture src={takerInput} alt="Taker input" formats={['avif', 'webp']} />
 
 ### Run environment
 
@@ -1229,6 +1238,8 @@ Actorization of existing code gives the developers an easy way to give their cod
 Once an Actor is developed, the Actor platform lets you share it with other specific users, and decide whether you want to make its source code open or closed.
 
 You can also publish the Actor for anyone to use on a marketplace like [Apify Store](https://apify.com/store). The Actor will get its public landing page like `https://apify.com/bob/screenshot-taker`, showing its README, description of inputs, outputs, API examples, etc. Once published, your Actor is automatically exposed to organic traffic of users and potential customers.
+
+<Picture src={apifyStore} alt="Apify Store" formats={['avif', 'webp']} />
 
 ### Monetization
 
