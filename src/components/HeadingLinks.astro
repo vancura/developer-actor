@@ -1,0 +1,132 @@
+<script>
+    interface TooltipOptions {
+        text: string; // text to display in the tooltip
+        duration: number; // duration of the tooltip display
+    }
+
+    /**
+     * Manager for heading links.
+     */
+    class HeadingLinksManager {
+        private static readonly HEADING_SELECTOR = '.mdx-content h1, .mdx-content h2, .mdx-content h3, .mdx-content h4';
+        private static readonly ID_REGEX = /[^a-z0-9]+/g;
+        private static readonly TRIM_REGEX = /(^-|-$)/g;
+
+        /**
+         * Create a tooltip element.
+         * @param text - Text to display in the tooltip.
+         * @returns Tooltip element.
+         */
+        private createTooltip(text: string): HTMLSpanElement {
+            const tooltip = document.createElement('span');
+
+            tooltip.textContent = text;
+
+            return tooltip;
+        }
+
+        /**
+         * Show a tooltip.
+         * @param anchor - Anchor element to attach the tooltip to.
+         * @param options - Options for the tooltip.
+         */
+        private showTooltip(anchor: HTMLAnchorElement, options: TooltipOptions): void {
+            const tooltip = this.createTooltip(options.text);
+
+            anchor.appendChild(tooltip);
+
+            // Animate the tooltip in.
+            requestAnimationFrame(() => {
+                tooltip.style.opacity = '1';
+
+                // Remove the tooltip after the duration.
+                setTimeout(() => {
+                    tooltip.remove();
+                }, options.duration);
+            });
+        }
+
+        /**
+         * Generate a heading ID.
+         * @param text - Text to generate an ID from.
+         * @returns Heading ID.
+         */
+        private generateHeadingId(text: string | null): string | null {
+            if (!text) return null;
+
+            // Replace non-alphanumeric characters with a dash and trim leading/trailing dashes.
+            return text.toLowerCase().replace(HeadingLinksManager.ID_REGEX, '-').replace(HeadingLinksManager.TRIM_REGEX, '');
+        }
+
+        /**
+         * Create an anchor element.
+         * @param id - ID to link to.
+         * @returns Anchor element.
+         */
+        private createAnchorElement(id: string): HTMLAnchorElement {
+            const anchor = document.createElement('a');
+
+            anchor.className = 'anchor absolute left-1 font-source text-[10pt] border-none hover:bg-link px-2 rounded-full hover:text-bg';
+            anchor.href = `#${id}`;
+            anchor.innerHTML = '#';
+            anchor.setAttribute('aria-hidden', 'true');
+
+            return anchor;
+        }
+
+        /**
+         * Handle an anchor click.
+         * @param e - Mouse event.
+         * @param id - ID to link to.
+         * @param anchor - Anchor element.
+         */
+        private handleAnchorClick(e: MouseEvent, id: string, anchor: HTMLAnchorElement): void {
+            e.preventDefault();
+
+            const url = `${window.location.origin}${window.location.pathname}#${id}`;
+
+            // Copy the URL to the clipboard.
+            navigator.clipboard
+                .writeText(url)
+                .then(() => {
+                    this.showTooltip(anchor, {
+                        text: 'Link copied!',
+                        duration: 2000
+                    });
+                })
+                .catch((error) => {
+                    console.error('Failed to copy URL:', error);
+                    this.showTooltip(anchor, {
+                        text: 'Failed to copy link',
+                        duration: 2000
+                    });
+                });
+        }
+
+        /**
+         * Add heading links to all headings.
+         */
+        public addHeadingLinks(): void {
+            const headings = document.querySelectorAll<HTMLHeadingElement>(HeadingLinksManager.HEADING_SELECTOR);
+            headings.forEach((heading) => {
+                const id = this.generateHeadingId(heading.textContent);
+
+                if (!id) return; // skip headings without text
+
+                heading.id = id;
+                const anchor = this.createAnchorElement(id);
+                anchor.addEventListener('click', (e) => this.handleAnchorClick(e, id, anchor));
+                heading.insertBefore(anchor, heading.firstChild);
+            });
+        }
+    }
+
+    const manager = new HeadingLinksManager();
+
+    manager.addHeadingLinks(); // run on initial page load
+
+    // Re-run when navigating between pages (for View Transitions).
+    document.addEventListener('astro:page-load', () => {
+        manager.addHeadingLinks();
+    });
+</script>

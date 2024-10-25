@@ -1,6 +1,7 @@
 ---
 import { Head } from 'astro-capo';
 import BaseHead from '../components/BaseHead.astro';
+import HeadingLinks from '../components/HeadingLinks.astro';
 
 import '../styles/tailwind.css';
 import '../styles/typography.css';
@@ -23,5 +24,7 @@ const { title, description, permalink } = Astro.props;
         <main>
             <slot />
         </main>
+
+        <HeadingLinks />
     </body>
 </html>
