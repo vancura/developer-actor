@@ -22,13 +22,11 @@ a {
     }
 
     & strong {
-        @apply font-medium text-strong dark:text-strong-dark;
-        /* @apply selection:bg-strong dark:selection:bg-strong-dark; */
+        @apply font-medium text-strong dark:text-strong-dark selection:bg-strong dark:selection:bg-strong-dark;
     }
 
     & em {
-        @apply font-medium not-italic text-strong dark:text-strong-dark border-b-[0.1em];
-        /* @apply selection:bg-strong dark:selection:bg-strong-dark; */
+        @apply font-medium not-italic text-strong dark:text-strong-dark border-b-[0.1em] selection:bg-strong dark:selection:bg-strong-dark;
     }
 
     & h1,
