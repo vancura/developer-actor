@@ -7,6 +7,8 @@
         private static readonly ID_REGEX = /[^a-z0-9]+/g;
         private static readonly TRIM_REGEX = /(^-|-$)/g;
 
+        private usedIds: Map<string, number> = new Map(); // map to track used IDs and their counts
+
         /**
          * Smoothly scroll to the target element.
          * @param targetId - ID of the target element to scroll to.
@@ -30,8 +32,19 @@
         private generateHeadingId(text: string | null): string | null {
             if (!text) return null;
 
-            // Replace non-alphanumeric characters with a dash and trim leading/trailing dashes.
-            return text.toLowerCase().replace(HeadingLinksManager.ID_REGEX, '-').replace(HeadingLinksManager.TRIM_REGEX, '');
+            // Generate the base ID.
+            const baseId = text.toLowerCase().replace(HeadingLinksManager.ID_REGEX, '-').replace(HeadingLinksManager.TRIM_REGEX, '');
+
+            // If this is the first occurrence, use the base ID.
+            if (!this.usedIds.has(baseId)) {
+                this.usedIds.set(baseId, 1);
+                return baseId;
+            }
+
+            // For subsequent occurrences, append a number.
+            const count = this.usedIds.get(baseId)! + 1;
+            this.usedIds.set(baseId, count);
+            return `${baseId}-${count}`;
         }
 
         /**
@@ -72,6 +85,9 @@
          * Add heading links to all headings.
          */
         public addHeadingLinks(): void {
+            // Reset the used IDs map for each new page.
+            this.usedIds = new Map();
+
             const headings = document.querySelectorAll<HTMLHeadingElement>(HeadingLinksManager.HEADING_SELECTOR);
             headings.forEach((heading) => {
                 const id = this.generateHeadingId(heading.textContent);
