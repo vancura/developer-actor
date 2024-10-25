@@ -81,7 +81,7 @@
         private createAnchorElement(id: string): HTMLAnchorElement {
             const anchor = document.createElement('a');
 
-            anchor.className = 'anchor absolute left-1 font-source text-[10pt] border-none hover:bg-link px-2 rounded-full hover:text-bg';
+            anchor.className = 'anchor absolute left-1 px-2 rounded-full border-none hover:bg-link dark:hover:bg-link-dark font-source text-[10pt] hover:text-bg dark:hover:text-bg-dark';
             anchor.href = `#${id}`;
             anchor.innerHTML = '#';
             anchor.setAttribute('aria-hidden', 'true');
