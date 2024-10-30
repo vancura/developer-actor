@@ -1,6 +1,6 @@
 <script>
-    import { tocHeadlineStore } from '../stores/toc-headline';
-    import type { TocHeadline } from '../types';
+    import { headingStore } from '../stores/heading';
+    import type { HeadingEntry } from '../types';
 
     /**
      * Manager for heading links in MDX content.
@@ -32,7 +32,7 @@
                     behavior: 'smooth'
                 });
             } else {
-                console.error(`[heading-links] Heading link target not found: ${targetId}`);
+                console.error(`[heading-links] Heading target not found: ${targetId}`);
             }
         }
 
@@ -108,16 +108,16 @@
             const headings = document.querySelectorAll<HTMLHeadingElement>(HeadingLinksManager.HEADING_SELECTOR);
 
             // Add heading links to each heading.
-            headings.forEach((heading) => {
-                const id = this.generateHeadingId(heading.textContent);
+            headings.forEach((headingElement) => {
+                const id = this.generateHeadingId(headingElement.textContent);
 
                 if (!id) return; // skip headings without text
 
                 const anchor = this.createAnchorElement(id);
                 anchor.addEventListener('click', (e) => this.handleAnchorClick(e, id));
 
-                heading.insertAdjacentElement('afterbegin', anchor);
-                heading.id = id;
+                headingElement.insertAdjacentElement('afterbegin', anchor);
+                headingElement.id = id;
             });
         }
 
@@ -125,8 +125,8 @@
          * Collect headings from the page.
          * @returns Array of headings
          */
-        public collectHeadings(): TocHeadline[] {
-            const headings: TocHeadline[] = [];
+        public collectHeadings(): HeadingEntry[] {
+            const headings: HeadingEntry[] = [];
             const headingElements = document.querySelectorAll(HeadingLinksManager.HEADING_SELECTOR);
 
             this.usedIds = new Map();
@@ -138,7 +138,7 @@
                 const depth = parseInt(heading.tagName.charAt(1));
 
                 if (id && text) {
-                    // Remove the # prefix, since that's the headline activation hyperlink.
+                    // Remove the # prefix, since that's the heading activation hyperlink.
                     headings.push({ id, text: text!.replace(/^#/, ''), depth });
                 } else {
                     console.error(`[heading-links] Heading link text not found: ${heading.textContent}`);
@@ -169,7 +169,7 @@
 
             console.log(`[heading-links] Found ${validHeadings.length} valid headings`);
 
-            tocHeadlineStore.set(validHeadings);
+            headingStore.set(validHeadings);
         };
     }
 

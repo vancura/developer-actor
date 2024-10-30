@@ -15,7 +15,7 @@
     & h2,
     & h3,
     & h4 {
-        @apply tracking-tight font-headline oldstyle-nums proportional-nums stacked-fractions text-balance relative px-8 -mx-8;
+        @apply tracking-tight font-heading oldstyle-nums proportional-nums stacked-fractions text-balance relative px-8 -mx-8;
 
         & .anchor {
             @apply opacity-0;

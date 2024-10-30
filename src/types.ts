@@ -22,13 +22,13 @@ export interface SEOMetadata {
 }
 
 /**
- * Interface for table of contents headline entries.
+ * Interface for the table of contents heading entries.
  */
-export interface TocHeadline {
-    /** Unique identifier for the headline */
+export interface HeadingEntry {
+    /** Unique identifier for the heading */
     id: string;
 
-    /** Display text of the headline */
+    /** Display text of the heading */
     text: string;
 
     /** Heading level (h1-h6) */

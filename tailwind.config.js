@@ -2,7 +2,7 @@ module.exports = {
     content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
     theme: {
         fontFamily: {
-            headline: ['Walsheim Regular', 'sans-serif'],
+            heading: ['Walsheim Regular', 'sans-serif'],
             source: ['IBM Plex Mono', 'monospace']
         },
 
