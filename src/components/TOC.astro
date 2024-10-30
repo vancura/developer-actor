@@ -74,8 +74,27 @@
     // Update visual state of TOC when active heading changes.
     function updateActiveHeading(id: string) {
         activeId = id;
+
         document.querySelectorAll('.toc-item').forEach((item) => {
-            item.classList.toggle('is-active', item.querySelector(`a[href="#${id}"]`) !== null);
+            const isActive = item.querySelector(`a[href="#${id}"]`) !== null;
+
+            item.classList.toggle('is-active', isActive);
+
+            // If this item became active, ensure it's visible in the TOC.
+            if (isActive && nav && tocList) {
+                const tocRect = tocList.getBoundingClientRect();
+                const itemRect = item.getBoundingClientRect();
+                const visibleBottom = Math.min(tocRect.bottom, window.innerHeight);
+                const isAbove = itemRect.top < 0;
+                const isBelow = itemRect.bottom > visibleBottom;
+
+                if (isAbove || isBelow) {
+                    item.scrollIntoView({
+                        behavior: 'smooth',
+                        block: isAbove ? 'center' : 'center'
+                    });
+                }
+            }
         });
     }
 
