@@ -3,6 +3,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import metaTags from 'astro-meta-tags';
 import { defineConfig, sharpImageService } from 'astro/config';
+import remarkGfm from 'remark-gfm';
 import remarkSmartypants from 'remark-smartypants';
 
 export default defineConfig({
@@ -25,7 +26,7 @@ export default defineConfig({
                 },
                 wrap: true
             },
-            remarkPlugins: [remarkSmartypants]
+            remarkPlugins: [remarkGfm, remarkSmartypants]
         }),
 
         metaTags(),
