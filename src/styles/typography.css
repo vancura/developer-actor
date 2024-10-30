@@ -50,7 +50,7 @@ a {
     }
 
     & h2 {
-        @apply mt-10 pt-8 mb-3 lg:mb-6 text-3xl lg:text-4xl border-t-[3px] border-hr lg:mt-14 lg:pt-12 dark:border-hr-dark;
+        @apply mt-10 pt-8 mb-3 lg:mb-6 text-3xl lg:text-4xl border-t-4 border-hr lg:mt-14 lg:pt-12 dark:border-hr-dark;
     }
 
     & h3 {
