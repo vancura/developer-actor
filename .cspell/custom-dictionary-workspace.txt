@@ -38,6 +38,7 @@ MBYTES
 Metamorph
 Microapps
 myuser
+nanostores
 netmilk
 noopener
 nowrap
