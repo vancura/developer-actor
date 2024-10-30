@@ -1,17 +1,27 @@
 <script>
+    import { tocHeadlineStore } from '../stores/toc-headline';
+    import type { TocHeadline } from '../types';
+
     /**
-     * Manager for heading links.
+     * Manager for heading links in MDX content.
+     * Handles heading ID generation, anchor creation, and table of contents management.
      */
     class HeadingLinksManager {
+        /** Selector for finding headings in MDX content */
         private static readonly HEADING_SELECTOR = '.mdx-content h1, .mdx-content h2, .mdx-content h3, .mdx-content h4';
+
+        /** Regex for converting text to URL-friendly format */
         private static readonly ID_REGEX = /[^a-z0-9]+/g;
+
+        /** Regex for trimming hyphens from start and end */
         private static readonly TRIM_REGEX = /(^-|-$)/g;
 
-        private usedIds: Map<string, number> = new Map(); // map to track used IDs and their counts
+        /** Map to track used IDs and their counts for duplicate prevention */
+        private usedIds: Map<string, number> = new Map();
 
         /**
          * Smoothly scroll to the target element.
-         * @param targetId - ID of the target element to scroll to.
+         * @param targetId - ID of the target element to scroll to
          */
         private smoothScrollTo(targetId: string): void {
             const targetElement = document.getElementById(targetId);
@@ -21,13 +31,15 @@
                     top: targetElement.offsetTop,
                     behavior: 'smooth'
                 });
+            } else {
+                console.error(`[heading-links] Heading link target not found: ${targetId}`);
             }
         }
 
         /**
          * Generate a heading ID.
-         * @param text - Text to generate an ID from.
-         * @returns Heading ID.
+         * @param text - Text to generate an ID from
+         * @returns Heading ID
          */
         private generateHeadingId(text: string | null): string | null {
             if (!text) return null;
@@ -44,13 +56,14 @@
             // For subsequent occurrences, append a number.
             const count = this.usedIds.get(baseId)! + 1;
             this.usedIds.set(baseId, count);
+
             return `${baseId}-${count}`;
         }
 
         /**
          * Create an anchor element.
-         * @param id - ID to link to.
-         * @returns Anchor element.
+         * @param id - ID to link to
+         * @returns Anchor element
          */
         private createAnchorElement(id: string): HTMLAnchorElement {
             const anchor = document.createElement('a');
@@ -65,18 +78,22 @@
 
         /**
          * Handle an anchor click.
-         * @param e - Mouse event.
-         * @param id - ID to link to.
+         * @param e - Mouse event
+         * @param id - ID to link to
          */
         private handleAnchorClick(e: MouseEvent, id: string): void {
             e.preventDefault();
 
+            // Construct the URL with the heading ID.
             const url = `${window.location.origin}${window.location.pathname}#${id}`;
+
+            // Scroll to the heading and update the URL.
             this.smoothScrollTo(id);
             window.history.pushState({}, '', url);
 
+            // Copy the URL to the clipboard.
             navigator.clipboard.writeText(url).catch((error) => {
-                console.error('Failed to copy URL:', error);
+                console.error('[heading-links] Failed to copy URL:', error);
             });
         }
 
@@ -87,14 +104,16 @@
             // Reset the used IDs map for each new page.
             this.usedIds = new Map();
 
+            // Collect headings from the page.
             const headings = document.querySelectorAll<HTMLHeadingElement>(HeadingLinksManager.HEADING_SELECTOR);
+
+            // Add heading links to each heading.
             headings.forEach((heading) => {
                 const id = this.generateHeadingId(heading.textContent);
 
                 if (!id) return; // skip headings without text
 
                 const anchor = this.createAnchorElement(id);
-
                 anchor.addEventListener('click', (e) => this.handleAnchorClick(e, id));
 
                 heading.insertAdjacentElement('afterbegin', anchor);
@@ -104,21 +123,25 @@
 
         /**
          * Collect headings from the page.
-         * @returns Array of headings.
+         * @returns Array of headings
          */
-        public collectHeadings(): Array<{ id: string | null; text: string | null; depth: number }> {
-            const headings: Array<{ id: string | null; text: string | null; depth: number }> = [];
+        public collectHeadings(): TocHeadline[] {
+            const headings: TocHeadline[] = [];
             const headingElements = document.querySelectorAll(HeadingLinksManager.HEADING_SELECTOR);
 
             this.usedIds = new Map();
 
+            // Collect headings from the page.
             headingElements.forEach((heading) => {
                 const text = heading.textContent;
                 const id = this.generateHeadingId(text);
                 const depth = parseInt(heading.tagName.charAt(1));
 
-                if (id) {
-                    headings.push({ id, text, depth });
+                if (id && text) {
+                    // Remove the # prefix, since that's the headline activation hyperlink.
+                    headings.push({ id, text: text!.replace(/^#/, ''), depth });
+                } else {
+                    console.error(`[heading-links] Heading link text not found: ${heading.textContent}`);
                 }
             });
 
@@ -128,19 +151,30 @@
         /**
          * Refresh the heading links.
          */
-        public refresh() {
-            console.log('[doc] Refreshing heading links...');
+        public refresh = (): void => {
+            console.log('[heading-links] Refreshing heading links');
 
-            manager.addHeadingLinks();
-            const headings = manager.collectHeadings();
-            document.dispatchEvent(new CustomEvent('headingsCollected', { detail: headings }));
+            // Add heading links to the page.
+            this.addHeadingLinks();
 
-            console.log(`[doc] refreshed ${headings.length} heading links`);
-        }
+            // Collect headings from the page.
+            const headings = this.collectHeadings();
+
+            // Filter out headings without an ID or text.
+            const validHeadings = headings.filter((h) => h.id && h.text) as Array<{
+                id: string;
+                text: string;
+                depth: number;
+            }>;
+
+            console.log(`[heading-links] Found ${validHeadings.length} valid headings`);
+
+            tocHeadlineStore.set(validHeadings);
+        };
     }
 
+    // Initialize heading manager and set up page load refresh
     const manager = new HeadingLinksManager();
-
     manager.refresh();
-    document.addEventListener('astro:page-load', manager.refresh);
+    document.addEventListener('astro:page-load', () => manager.refresh());
 </script>
