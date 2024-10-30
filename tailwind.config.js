@@ -85,11 +85,11 @@ module.exports = {
                 64: '16rem'
             },
             padding: {
-                'toc-y': '0.2rem',
-                'toc-d1': '16px',
-                'toc-d2': '32px',
-                'toc-d3': '48px',
-                'toc-d4': '64px'
+                'toc-y': '0.25rem',
+                'toc-d1': '1rem',
+                'toc-d2': '2rem',
+                'toc-d3': '3rem',
+                'toc-d4': '4rem'
             }
         }
     },

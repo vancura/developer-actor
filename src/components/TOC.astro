@@ -1,10 +1,10 @@
 <nav class="fixed top-0 right-0 w-64 h-screen overflow-y-auto shadow-xl bg-toc-bg dark:bg-toc-bg-dark" id="toc-nav" aria-label="Table of Contents">
-    <div class="flex items-center justify-between">
-        <button id="dock-button" aria-label="Toggle Table of Contents">Dock</button>
-        <input type="text" id="toc-filter" placeholder="Search..." aria-label="Search TOC" />
+    <div class="sticky top-0 left-0 flex items-center justify-between p-4 bg-toc-bg dark:bg-toc-bg-dark">
+        <button id="dock-button" aria-label="Toggle Table of Contents">&rarr;</button>
+        <input type="text" id="toc-filter" placeholder="Filter..." aria-label="Filter TOC" class="px-2 py-1 rounded-md text-toc-item" />
     </div>
 
-    <ul id="toc-list" class="my-2 text-toc-item"></ul>
+    <ul id="toc-list" class="mb-8 text-toc-item"></ul>
 </nav>
 
 <script>
@@ -62,7 +62,7 @@
         isDocked = !isDocked;
         nav?.classList.toggle('docked');
         nav?.classList.toggle('hover-toggle', !isDocked);
-        dockButton.textContent = isDocked ? 'Undock' : 'Dock';
+        dockButton.innerHTML = isDocked ? '&larr;' : '&rarr;';
     });
 
     // Filter TOC entries based on search input.
@@ -110,7 +110,7 @@
             .map(
                 (heading: { depth: any; id: string; text: any }) => `
                 <li class="toc-item  ${heading.id === activeId ? 'is-active' : ''}">
-                    <a class="block text-toc-text dark:text-toc-text-dark py-toc-y px-toc-item-x pl-toc-d${heading.depth - 1}" href="#${heading.id}">${heading.text}</a>
+                    <a class="text-balance block text-toc-text dark:text-toc-text-dark py-toc-y px-toc-item-x pl-toc-d${heading.depth - 1}" href="#${heading.id}">${heading.text}</a>
                 </li>
             `
             )
