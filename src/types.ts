@@ -20,3 +20,17 @@ export interface SEOMetadata {
     /** ISO 8601 date string for article last modification */
     articleModifiedTime?: string;
 }
+
+/**
+ * Interface for table of contents headline entries.
+ */
+export interface TocHeadline {
+    /** Unique identifier for the headline */
+    id: string;
+
+    /** Display text of the headline */
+    text: string;
+
+    /** Heading level (h1-h6) */
+    depth: number;
+}
