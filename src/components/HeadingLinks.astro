@@ -67,9 +67,8 @@
          * Handle an anchor click.
          * @param e - Mouse event.
          * @param id - ID to link to.
-         * @param anchor - Anchor element.
          */
-        private handleAnchorClick(e: MouseEvent, id: string, anchor: HTMLAnchorElement): void {
+        private handleAnchorClick(e: MouseEvent, id: string): void {
             e.preventDefault();
 
             const url = `${window.location.origin}${window.location.pathname}#${id}`;
@@ -96,7 +95,7 @@
 
                 const anchor = this.createAnchorElement(id);
 
-                anchor.addEventListener('click', (e) => this.handleAnchorClick(e, id, anchor));
+                anchor.addEventListener('click', (e) => this.handleAnchorClick(e, id));
 
                 heading.insertAdjacentElement('afterbegin', anchor);
                 heading.id = id;
