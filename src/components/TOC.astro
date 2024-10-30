@@ -1,0 +1,110 @@
+<nav class="fixed top-0 right-0 w-64 h-screen overflow-y-auto shadow-xl bg-toc-bg dark:bg-toc-bg-dark" id="toc-nav" aria-label="Table of Contents">
+    <div class="flex items-center justify-between">
+        <button id="dock-button" aria-label="Toggle Table of Contents">Dock</button>
+        <input type="text" id="toc-filter" placeholder="Search..." aria-label="Search TOC" />
+    </div>
+
+    <ul id="toc-list" class="my-2 text-toc-item"></ul>
+</nav>
+
+<script>
+    import { headingStore } from '../stores/heading';
+
+    // State management.
+    let isDocked = false;
+    let activeId = '';
+
+    // DOM element references.
+    const nav = document.getElementById('toc-nav');
+    const filterInput = document.getElementById('toc-filter');
+    const dockButton = document.getElementById('dock-button');
+    const tocList = document.getElementById('toc-list');
+
+    // Subscribe to changes in the headings store.
+    // This ensures TOC updates when headings change.
+    headingStore.subscribe((headings: string | any[]) => {
+        if (headings.length > 0) {
+            console.log(`[toc] ${headings.length} headings found, rendering TOC`);
+            renderTOC();
+        } else {
+            console.error('[toc] No headings found');
+        }
+    });
+
+    // Intersection Observer: Tracks which headings are visible in viewport.
+    // rootMargin creates a detection zone in top 20% of viewport.
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    updateActiveHeading(entry.target.id);
+                }
+            });
+        },
+        { rootMargin: '0px 0px -80% 0px' }
+    );
+
+    // Initialize TOC by observing all heading elements.
+    function setupTOC() {
+        headingStore.get().forEach((heading: { id: string }) => {
+            const element = document.getElementById(heading.id);
+            if (element) observer.observe(element);
+        });
+    }
+
+    // Setup TOC on initial load and after page transitions.
+    setupTOC();
+    document.addEventListener('astro:page-load', setupTOC);
+    document.dispatchEvent(new CustomEvent('tocReady'));
+
+    // Toggle TOC docking state.
+    dockButton?.addEventListener('click', () => {
+        isDocked = !isDocked;
+        nav?.classList.toggle('docked');
+        nav?.classList.toggle('hover-toggle', !isDocked);
+        dockButton.textContent = isDocked ? 'Undock' : 'Dock';
+    });
+
+    // Filter TOC entries based on search input.
+    filterInput?.addEventListener('input', (event) => {
+        const filter = (event.target as HTMLInputElement).value.toLowerCase();
+        renderTOC(filter);
+    });
+
+    // Update visual state of TOC when active heading changes.
+    function updateActiveHeading(id: string) {
+        activeId = id;
+        document.querySelectorAll('.toc-item').forEach((item) => {
+            item.classList.toggle('is-active', item.querySelector(`a[href="#${id}"]`) !== null);
+        });
+    }
+
+    // Render TOC list with optional filtering.
+    function renderTOC(filter = '') {
+        if (!tocList) return;
+
+        tocList.innerHTML = headingStore
+            .get()
+            // Filter headings based on search text
+            .filter((heading: { text: string }) => heading.text.toLowerCase().includes(filter))
+            // Generate HTML for each heading
+            .map(
+                (heading: { depth: any; id: string; text: any }) => `
+                <li class="toc-item  ${heading.id === activeId ? 'is-active' : ''}">
+                    <a class="block text-toc-text dark:text-toc-text-dark py-toc-y px-toc-item-x pl-toc-d${heading.depth - 1}" href="#${heading.id}">${heading.text}</a>
+                </li>
+            `
+            )
+            .join('');
+    }
+</script>
+
+<style is:global>
+    #toc-list > li.is-active {
+        @apply bg-toc-active-bg dark:bg-toc-active-bg-dark shadow-sm;
+
+        & a {
+            @apply text-toc-active-text dark:text-toc-active-text-dark;
+        }
+    }
+</style>

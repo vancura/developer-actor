@@ -27,7 +27,7 @@
     }
 
     & h1 {
-        @apply pb-4 text-4xl lg:text-5xl lg:pb-6;
+        @apply pb-4 text-4xl lg:text-5xl lg:pb-6 pt-8 lg:pt-12;
     }
 
     & h2 {

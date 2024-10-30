@@ -52,17 +52,47 @@ module.exports = {
             'code-bg': {
                 DEFAULT: 'white',
                 dark: 'rgba(0, 0, 0, 0.3)'
+            },
+
+            'toc-bg': {
+                DEFAULT: '#f6f6f6',
+                dark: '#111'
+            },
+
+            'toc-text': {
+                DEFAULT: '#333',
+                dark: '#fafafa'
+            },
+
+            'toc-active-bg': {
+                DEFAULT: 'white',
+                dark: 'rgba(255, 255, 255, 0.15)'
+            },
+
+            'toc-active-text': {
+                DEFAULT: '#2833FF',
+                dark: '#ABAFFF'
             }
         },
 
         extend: {
             fontSize: {
-                base: '1.1rem'
+                base: '1.1rem',
+                'toc-item': '0.75rem'
             },
             spacing: {
                 128: '32rem',
                 64: '16rem'
+            },
+            padding: {
+                'toc-y': '0.2rem',
+                'toc-d1': '16px',
+                'toc-d2': '32px',
+                'toc-d3': '48px',
+                'toc-d4': '64px'
             }
         }
-    }
+    },
+
+    safelist: ['pl-toc-d1', 'pl-toc-d2', 'pl-toc-d3', 'pl-toc-d4']
 };
