@@ -1,4 +1,4 @@
-<nav class="fixed top-0 right-0 w-64 h-screen overflow-y-auto shadow-xl bg-toc-bg dark:bg-toc-bg-dark" id="toc-nav" aria-label="Table of Contents">
+<nav class="[&.is-docked]:-right-[214px] [&.is-docked]:shadow-none [&.is-docked]:bg-toc-bg-docked dark:[&.is-docked]:bg-toc-bg-docked-dark fixed top-0 right-0 w-64 h-screen overflow-y-auto shadow-xl bg-toc-bg dark:bg-toc-bg-dark" id="toc-nav" aria-label="Table of Contents">
     <div class="sticky top-0 left-0 flex items-center justify-between p-4 bg-toc-bg dark:bg-toc-bg-dark">
         <button id="dock-button" aria-label="Toggle Table of Contents">&rarr;</button>
         <input type="text" id="toc-filter" placeholder="Filter..." aria-label="Filter TOC" class="px-2 py-1 rounded-md text-toc-item" />
@@ -60,8 +60,7 @@
     // Toggle TOC docking state.
     dockButton?.addEventListener('click', () => {
         isDocked = !isDocked;
-        nav?.classList.toggle('docked');
-        nav?.classList.toggle('hover-toggle', !isDocked);
+        nav?.classList.toggle('is-docked');
         dockButton.innerHTML = isDocked ? '&larr;' : '&rarr;';
     });
 

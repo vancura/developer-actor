@@ -59,6 +59,11 @@ module.exports = {
                 dark: '#111'
             },
 
+            'toc-bg-docked': {
+                DEFAULT: 'transparent',
+                dark: 'transparent'
+            },
+
             'toc-text': {
                 DEFAULT: '#333',
                 dark: '#fafafa'
