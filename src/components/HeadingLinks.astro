@@ -103,6 +103,29 @@
         }
 
         /**
+         * Collect headings from the page.
+         * @returns Array of headings.
+         */
+        public collectHeadings(): Array<{ id: string | null; text: string | null; depth: number }> {
+            const headings: Array<{ id: string | null; text: string | null; depth: number }> = [];
+            const headingElements = document.querySelectorAll(HeadingLinksManager.HEADING_SELECTOR);
+
+            this.usedIds = new Map();
+
+            headingElements.forEach((heading) => {
+                const text = heading.textContent;
+                const id = this.generateHeadingId(text);
+                const depth = parseInt(heading.tagName.charAt(1));
+
+                if (id) {
+                    headings.push({ id, text, depth });
+                }
+            });
+
+            return headings;
+        }
+
+        /**
          * Refresh the heading links.
          */
         public refresh() {
@@ -118,12 +141,6 @@
 
     const manager = new HeadingLinksManager();
 
-    manager.addHeadingLinks(); // run on initial page load
-
-    // Re-run when navigating between pages (for View Transitions).
-    document.addEventListener('astro:page-load', () => {
-        manager.addHeadingLinks();
-    });
     manager.refresh();
     document.addEventListener('astro:page-load', manager.refresh);
 </script>
