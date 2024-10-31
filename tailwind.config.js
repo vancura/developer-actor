@@ -59,11 +59,6 @@ module.exports = {
                 dark: 'rgba(17, 17, 17, 1)'
             },
 
-            'toc-bg-docked': {
-                DEFAULT: 'transparent',
-                dark: 'transparent'
-            },
-
             'toc-text': {
                 DEFAULT: '#333',
                 dark: '#fafafa'
@@ -79,7 +74,7 @@ module.exports = {
                 dark: '#ABAFFF'
             },
 
-            'toc-header-bg': {
+            'toc-toolbar-bg': {
                 DEFAULT: 'rgba(246, 246, 246, 0.9)',
                 dark: 'rgba(17, 17, 17, 0.9)'
             },
