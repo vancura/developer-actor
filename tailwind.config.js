@@ -71,12 +71,17 @@ module.exports = {
 
             'toc-active-bg': {
                 DEFAULT: 'white',
-                dark: 'rgba(255, 255, 255, 0.15)'
+                dark: 'rgba(255, 255, 255, 0.1)'
             },
 
             'toc-active-text': {
                 DEFAULT: '#2833FF',
                 dark: '#ABAFFF'
+            },
+
+            'toc-filter-bg': {
+                DEFAULT: 'white',
+                dark: 'rgba(255, 255, 255, 0.1)'
             }
         },
 
