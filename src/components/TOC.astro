@@ -6,6 +6,10 @@
     <ul id="toc-list" class="mb-4 text-toc-item"></ul>
 </nav>
 
+<div class="pointer-events-none fixed right-0 top-0 h-full w-16 pr-4" id="toc-progress">
+    <div id="toc-progress-bars" class="relative h-full"></div>
+</div>
+
 <script>
     import { headingStore } from '../stores/heading';
 
@@ -41,18 +45,46 @@
         { rootMargin: '0px 0px -80% 0px' }
     );
 
-    // Initialize TOC by observing all heading elements.
-    function setupTOC() {
-        headingStore.get().forEach((heading: { id: string }) => {
-            const element = document.getElementById(heading.id);
-            if (element) observer.observe(element);
+    // Initialize TOC and progress bars.
+    function initialize() {
+        // Setup TOC and observers. Remove previous observers if any, and add new ones.
+        document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((heading) => {
+            observer.unobserve(heading);
         });
+
+        headingStore.get().forEach((heading) => {
+            const element = document.getElementById(heading.id);
+            if (element) {
+                observer.observe(element);
+            }
+        });
+
+        renderTOC();
+
+        // Find the first visible heading and activate it.
+        const entries = headingStore.get();
+        if (entries.length > 0) {
+            const firstVisibleHeading = entries.find((heading) => {
+                const element = document.getElementById(heading.id);
+                let o = false;
+
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    o = rect.top >= 0 && rect.top <= window.innerHeight * 0.2;
+                }
+
+                return o;
+            });
+
+            updateActiveHeading(firstVisibleHeading?.id || entries[0].id);
+        }
     }
 
-    // Setup TOC on initial load and after page transitions.
-    setupTOC();
-    document.addEventListener('astro:page-load', setupTOC);
-    document.dispatchEvent(new CustomEvent('tocReady'));
+    // Setup on initial load.
+    initialize();
+
+    // Setup after Astro page transitions.
+    document.addEventListener('astro:page-load', initialize);
 
     // Filter TOC entries based on search input.
     filterInput?.addEventListener('input', (event) => {
@@ -79,11 +111,19 @@
 
                 if (isAbove || isBelow) {
                     item.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
+                        behavior: 'instant',
+                        block: 'nearest'
                     });
                 }
             }
+        });
+
+        // Update progress bars.
+        document.querySelectorAll('.progress-bar').forEach((bar) => {
+            const barId = bar.getAttribute('data-heading-id');
+
+            bar.classList.toggle('bg-toc-progress-active', barId === id);
+            bar.classList.toggle('bg-toc-progress', barId !== id);
         });
     }
 
@@ -103,7 +143,119 @@
                 )
                 .join('');
         }
+
+        // Always render progress bars after TOC updates.
+        requestAnimationFrame(renderProgressBars);
     }
+
+    // Render progress bars alongside TOC.
+    function renderProgressBars() {
+        const progressContainer = document.getElementById('toc-progress-bars');
+
+        if (progressContainer) {
+            const headings = headingStore.get();
+            const spacing = 4;
+            const barHeight = 2;
+            const totalSpacing = (headings.length - 1) * spacing;
+            const totalBarsHeight = headings.length * barHeight;
+            const containerHeight = totalBarsHeight + totalSpacing;
+
+            progressContainer.innerHTML = headings
+                .map(
+                    (heading: { depth: number; id: string }, index: number) => `
+                        <div
+                            data-heading-id="${heading.id}"
+                            class="progress-bar absolute right-0 ${heading.id === activeId ? 'bg-toc-progress-active dark:bg-toc-progress-active-dark' : 'bg-toc-progress dark:bg-toc-progress-dark'}"
+                            style="
+                                width: ${(5 - heading.depth) * 8}px;
+                                height: ${barHeight}px;
+                                top: ${index * (barHeight + spacing)}px;
+                            "
+                        ></div>
+                    `
+                )
+                .join('');
+
+            progressContainer.style.height = `${containerHeight}px`;
+            progressContainer.style.top = '50%';
+            progressContainer.style.transform = 'translateY(-50%)';
+        }
+    }
+
+    // Efficient scroll handling with RAF.
+    let rafId: number | null = null;
+
+    function onScroll() {
+        if (rafId) {
+            cancelAnimationFrame(rafId); // cancel previous frame if it hasn't executed yet
+        }
+
+        rafId = requestAnimationFrame(() => {
+            const entries = headingStore.get();
+            const visibleHeading = entries.find((heading) => {
+                const element = document.getElementById(heading.id);
+                let o = false;
+
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    o = rect.top >= -50 && rect.top <= window.innerHeight * 0.3;
+                }
+
+                return o;
+            });
+
+            // Fallback to first/last heading when at page boundaries
+            if (visibleHeading) {
+                if (visibleHeading.id !== activeId) {
+                    updateActiveHeading(visibleHeading.id);
+                }
+            } else {
+                const scrollPosition = window.scrollY;
+                const isAtTop = scrollPosition < 100;
+                const isAtBottom = scrollPosition + window.innerHeight >= document.documentElement.scrollHeight - 100;
+
+                if (isAtTop && entries.length > 0) {
+                    updateActiveHeading(entries[0].id);
+                } else if (isAtBottom && entries.length > 0) {
+                    updateActiveHeading(entries[entries.length - 1].id);
+                }
+            }
+
+            renderProgressBars();
+
+            rafId = null;
+        });
+    }
+
+    // Handle keyboard navigation with more reliable updates.
+    const keyHandler = (e: KeyboardEvent) => {
+        if (['Home', 'End', 'PageUp', 'PageDown', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+            // Multiple checks to ensure we catch the update.
+            setTimeout(onScroll, 10);
+            setTimeout(onScroll, 100);
+            setTimeout(onScroll, 200);
+        }
+    };
+
+    // Use passive scroll listener.
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('keyup', keyHandler);
+
+    // Also check periodically for any missed updates.
+    const intervalId = setInterval(onScroll, 1000);
+
+    // Cleanup on page navigation.
+    document.addEventListener('astro:before-preparation', () => {
+        if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        }
+
+        clearInterval(intervalId);
+
+        window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('keyup', keyHandler);
+    });
 </script>
 
 <style is:global>
