@@ -106,7 +106,7 @@
                 .map(
                     (heading: { depth: any; id: string; text: any }) => `
                         <li class="toc-item  ${heading.id === activeId ? 'is-active' : ''}">
-                            <a class="text-balance block text-toc-text dark:text-toc-text-dark py-toc-y px-toc-item-x pl-toc-d${heading.depth - 1}" href="#${heading.id}">
+                            <a class="py-toc-y px-toc-item-x pl-toc-d${heading.depth - 1} block text-balance text-toc-text dark:text-toc-text-dark" href="#${heading.id}">
                                 ${heading.text}
                             </a>
                         </li>`
