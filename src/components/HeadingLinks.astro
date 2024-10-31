@@ -2,10 +2,7 @@
     import { headingStore } from '../stores/heading';
     import type { HeadingEntry } from '../types';
 
-    /**
-     * Manager for heading links in MDX content.
-     * Handles heading ID generation, anchor creation, and table of contents management.
-     */
+    /** Manager for heading links in MDX content. Handles heading ID generation, anchor creation, and table of contents management. */
     class HeadingLinksManager {
         /** Selector for finding headings in MDX content */
         private static readonly HEADING_SELECTOR = '.mdx-content h2, .mdx-content h3, .mdx-content h4';
@@ -21,6 +18,7 @@
 
         /**
          * Smoothly scroll to the target element.
+         *
          * @param targetId - ID of the target element to scroll to
          */
         private smoothScrollTo(targetId: string): void {
@@ -38,6 +36,7 @@
 
         /**
          * Generate a heading ID.
+         *
          * @param text - Text to generate an ID from
          * @returns Heading ID
          */
@@ -62,6 +61,7 @@
 
         /**
          * Create an anchor element.
+         *
          * @param id - ID to link to
          * @returns Anchor element
          */
@@ -78,6 +78,7 @@
 
         /**
          * Handle an anchor click.
+         *
          * @param e - Mouse event
          * @param id - ID to link to
          */
@@ -97,9 +98,7 @@
             });
         }
 
-        /**
-         * Add heading links to all headings.
-         */
+        /** Add heading links to all headings. */
         public addHeadingLinks(): void {
             // Reset the used IDs map for each new page.
             this.usedIds = new Map();
@@ -123,7 +122,8 @@
 
         /**
          * Collect headings from the page.
-         * @returns Array of headings
+         *
+         * @returns Array of headings.
          */
         public collectHeadings(): HeadingEntry[] {
             const headings: HeadingEntry[] = [];
@@ -148,9 +148,7 @@
             return headings;
         }
 
-        /**
-         * Refresh the heading links.
-         */
+        /** Refresh the heading links. */
         public refresh = (): void => {
             console.log('[heading-links] Refreshing heading links');
 

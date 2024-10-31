@@ -4,6 +4,7 @@ import type { HeadingEntry } from '../types';
 
 /**
  * Store for managing table of contents headings.
- * @const headingStore
+ *
+ * @constant headingStore
  */
 export const headingStore = atom<HeadingEntry[]>([]);

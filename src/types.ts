@@ -1,6 +1,4 @@
-/**
- * Interface for SEO metadata used across pages.
- */
+/** Interface for SEO metadata used across pages. */
 export interface SEOMetadata {
     /** Page title */
     title: string;
@@ -21,9 +19,7 @@ export interface SEOMetadata {
     articleModifiedTime?: string;
 }
 
-/**
- * Interface for the table of contents heading entries.
- */
+/** Interface for the table of contents heading entries. */
 export interface HeadingEntry {
     /** Unique identifier for the heading */
     id: string;
