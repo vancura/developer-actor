@@ -9,7 +9,7 @@ export interface Props extends SEOMetadata {
     ogImage?: string;
 }
 
-const { title, description, permalink, ogImage = '/default-og-image.jpg' } = Astro.props;
+const { title, description, permalink } = Astro.props;
 
 let canonical = new URL(permalink).toString();
 canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
