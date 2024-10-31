@@ -1,14 +1,14 @@
-<nav class="pointer-events-none fixed right-4 top-[10%] h-[80%] w-80 overflow-y-auto rounded-xl bg-toc-bg opacity-0 shadow-xl transition-opacity duration-200 dark:bg-toc-bg-dark" id="toc-nav" aria-label="Table of Contents">
+<div class="pointer-events-none fixed right-0 top-0 h-full w-16 min-[1140px]:pr-4" id="toc-progress">
+    <div id="toc-progress-bars" class="relative h-full"></div>
+</div>
+
+<nav class="pointer-events-none fixed right-0 top-[10%] h-[80%] w-80 overflow-y-auto rounded-l-xl bg-toc-bg opacity-0 shadow-xl transition-opacity duration-200 min-[1140px]:right-4 min-[1140px]:rounded-xl dark:bg-toc-bg-dark" id="toc-nav" aria-label="Table of Contents">
     <div class="bg-toc-toolbar-bg dark:bg-toc-toolbar-bg-dark sticky left-0 top-0 flex items-center justify-between p-6">
         <input type="text" id="toc-filter" placeholder="Filter..." aria-label="Filter TOC" class="bg-toc-filter-bg dark:bg-toc-filter-bg-dark w-full rounded-md px-2 py-1 text-toc-item shadow-sm" />
     </div>
 
     <ul id="toc-list" class="mb-4 text-toc-item"></ul>
 </nav>
-
-<div class="pointer-events-none fixed right-0 top-0 h-full w-16 pr-4" id="toc-progress">
-    <div id="toc-progress-bars" class="relative h-full"></div>
-</div>
 
 <script>
     import { headingStore } from '../stores/heading';
