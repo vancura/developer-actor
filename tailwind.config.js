@@ -55,8 +55,8 @@ module.exports = {
             },
 
             'toc-bg': {
-                DEFAULT: '#f6f6f6',
-                dark: '#111'
+                DEFAULT: 'rgba(246, 246, 246, 1)',
+                dark: 'rgba(17, 17, 17, 1)'
             },
 
             'toc-bg-docked': {
@@ -79,6 +79,11 @@ module.exports = {
                 dark: '#ABAFFF'
             },
 
+            'toc-header-bg': {
+                DEFAULT: 'rgba(246, 246, 246, 0.9)',
+                dark: 'rgba(17, 17, 17, 0.9)'
+            },
+
             'toc-filter-bg': {
                 DEFAULT: 'white',
                 dark: 'rgba(255, 255, 255, 0.1)'
@@ -96,10 +101,10 @@ module.exports = {
             },
             padding: {
                 'toc-y': '0.25rem',
-                'toc-d1': '1rem',
-                'toc-d2': '2rem',
-                'toc-d3': '3rem',
-                'toc-d4': '4rem'
+                'toc-d1': '1.5rem',
+                'toc-d2': '2.5rem',
+                'toc-d3': '3.5rem',
+                'toc-d4': '4.5rem'
             }
         }
     },

@@ -1,10 +1,10 @@
-<nav class="fixed right-0 top-0 h-screen w-64 overflow-y-auto bg-toc-bg shadow-xl dark:bg-toc-bg-dark [&.is-docked]:-right-[214px] [&.is-docked]:bg-toc-bg-docked [&.is-docked]:shadow-none dark:[&.is-docked]:bg-toc-bg-docked-dark" id="toc-nav" aria-label="Table of Contents">
-    <div class="sticky left-0 top-0 flex items-center justify-between bg-toc-bg p-4 dark:bg-toc-bg-dark">
+<nav class="fixed right-0 top-[10%] h-[80%] w-80 overflow-y-auto rounded-l-xl bg-toc-bg shadow-xl dark:bg-toc-bg-dark [&.is-docked]:-right-[214px] [&.is-docked]:bg-toc-bg-docked [&.is-docked]:shadow-none dark:[&.is-docked]:bg-toc-bg-docked-dark" id="toc-nav" aria-label="Table of Contents">
+    <div class="bg-toc-header-bg dark:bg-toc-header-bg-dark sticky left-0 top-0 flex items-center justify-between p-6">
         <button id="dock-button" aria-label="Toggle Table of Contents">&rarr;</button>
-        <input type="text" id="toc-filter" placeholder="Filter..." aria-label="Filter TOC" class="bg-toc-filter-bg dark:bg-toc-filter-bg-dark rounded-md px-2 py-1 text-toc-item" />
+        <input type="text" id="toc-filter" placeholder="Filter..." aria-label="Filter TOC" class="bg-toc-filter-bg dark:bg-toc-filter-bg-dark rounded-md px-2 py-1 text-toc-item shadow-sm" />
     </div>
 
-    <ul id="toc-list" class="mb-8 text-toc-item"></ul>
+    <ul id="toc-list" class="mb-4 text-toc-item"></ul>
 </nav>
 
 <script>
