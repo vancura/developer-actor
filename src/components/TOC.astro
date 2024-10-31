@@ -1,12 +1,12 @@
-<nav class="fixed right-4 top-[10%] h-[80%] w-80 overflow-y-auto rounded-xl bg-toc-bg shadow-xl dark:bg-toc-bg-dark" id="toc-nav" aria-label="Table of Contents">
-    <div class="sticky top-0 left-0 flex items-center justify-between p-6 bg-toc-toolbar-bg dark:bg-toc-toolbar-bg-dark">
-        <input type="text" id="toc-filter" placeholder="Filter..." aria-label="Filter TOC" class="w-full px-2 py-1 rounded-md shadow-sm bg-toc-filter-bg text-toc-item dark:bg-toc-filter-bg-dark" />
+<nav class="pointer-events-none fixed right-4 top-[10%] h-[80%] w-80 overflow-y-auto rounded-xl bg-toc-bg opacity-0 shadow-xl transition-opacity duration-200 dark:bg-toc-bg-dark" id="toc-nav" aria-label="Table of Contents">
+    <div class="bg-toc-toolbar-bg dark:bg-toc-toolbar-bg-dark sticky left-0 top-0 flex items-center justify-between p-6">
+        <input type="text" id="toc-filter" placeholder="Filter..." aria-label="Filter TOC" class="bg-toc-filter-bg dark:bg-toc-filter-bg-dark w-full rounded-md px-2 py-1 text-toc-item shadow-sm" />
     </div>
 
     <ul id="toc-list" class="mb-4 text-toc-item"></ul>
 </nav>
 
-<div class="fixed top-0 right-0 w-16 h-full pr-4 pointer-events-none" id="toc-progress">
+<div class="pointer-events-none fixed right-0 top-0 h-full w-16 pr-4" id="toc-progress">
     <div id="toc-progress-bars" class="relative h-full"></div>
 </div>
 
@@ -59,6 +59,7 @@
             }
         });
 
+        initializeMouseTracking();
         renderTOC();
 
         // Find the first visible heading and activate it.
@@ -256,6 +257,45 @@
 
         window.removeEventListener('scroll', onScroll);
         window.removeEventListener('keyup', keyHandler);
+    });
+
+    // Add mouse position tracking.
+    function handleMouseMove(e: MouseEvent) {
+        const tocNav = document.getElementById('toc-nav');
+        if (tocNav) {
+            const mouseX = e.clientX;
+            const viewWidth = window.innerWidth;
+            const tocWidth = tocNav.offsetWidth;
+            const showThreshold = 100;
+            const hideThreshold = tocWidth + 32;
+
+            if (mouseX >= viewWidth - showThreshold) {
+                // Show TOC.
+                tocNav.classList.remove('opacity-0', 'pointer-events-none');
+                tocNav.classList.add('opacity-100', 'pointer-events-auto');
+            } else if (mouseX < viewWidth - hideThreshold) {
+                // Hide TOC.
+                tocNav.classList.remove('opacity-100', 'pointer-events-auto');
+                tocNav.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+    }
+
+    // Initialize mouse tracking.
+    function initializeMouseTracking() {
+        window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    }
+
+    // Update cleanup
+    document.addEventListener('astro:before-preparation', () => {
+        if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        }
+        clearInterval(intervalId);
+        window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('keyup', keyHandler);
+        window.removeEventListener('mousemove', handleMouseMove);
     });
 </script>
 
