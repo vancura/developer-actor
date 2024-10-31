@@ -4,18 +4,18 @@
     }
 
     & strong {
-        @apply font-medium text-strong dark:text-strong-dark selection:bg-strong dark:selection:bg-strong-dark;
+        @apply font-medium text-strong selection:bg-strong dark:text-strong-dark dark:selection:bg-strong-dark;
     }
 
     & em {
-        @apply font-medium not-italic text-strong dark:text-strong-dark border-b-[0.1em] selection:bg-strong dark:selection:bg-strong-dark;
+        @apply border-b-[0.1em] font-medium not-italic text-strong selection:bg-strong dark:text-strong-dark dark:selection:bg-strong-dark;
     }
 
     & h1,
     & h2,
     & h3,
     & h4 {
-        @apply tracking-tight font-heading oldstyle-nums proportional-nums stacked-fractions text-balance relative px-8 -mx-8;
+        @apply relative -mx-8 text-balance px-8 font-heading oldstyle-nums proportional-nums stacked-fractions tracking-tight;
 
         & .anchor {
             @apply opacity-0;
@@ -27,19 +27,19 @@
     }
 
     & h1 {
-        @apply pb-4 text-4xl lg:text-5xl lg:pb-6 pt-8 lg:pt-12;
+        @apply pb-4 pt-8 text-4xl lg:pb-6 lg:pt-12 lg:text-5xl;
     }
 
     & h2 {
-        @apply mt-10 pt-8 mb-3 lg:mb-6 text-3xl lg:text-4xl border-t-4 border-hr lg:mt-14 lg:pt-12 dark:border-hr-dark;
+        @apply mb-3 mt-10 border-t-4 border-hr pt-8 text-3xl lg:mb-6 lg:mt-14 lg:pt-12 lg:text-4xl dark:border-hr-dark;
     }
 
     & h3 {
-        @apply pt-3 pb-4 text-2xl lg:text-3xl lg:pt-4 lg:pb-6;
+        @apply pb-4 pt-3 text-2xl lg:pb-6 lg:pt-4 lg:text-3xl;
     }
 
     & h4 {
-        @apply pt-3 pb-4 text-xl lg:text-2xl lg:pt-4 lg:pb-6;
+        @apply pb-4 pt-3 text-xl lg:pb-6 lg:pt-4 lg:text-2xl;
     }
 
     & p,
@@ -51,7 +51,7 @@
     & code,
     & table,
     & img {
-        @apply lg:text-base leading-[1.35rem] lg:leading-[1.7rem] mb-4 lg:mb-6;
+        @apply mb-4 leading-[1.35rem] lg:mb-6 lg:text-base lg:leading-[1.7rem];
     }
 
     & ul li {
@@ -68,25 +68,25 @@
 
     & p code,
     & table code {
-        @apply py-[0.1em] px-[0.4em] border-code-stroke border bg-code-bg font-source text-[0.91em] rounded-md dark:bg-code-bg-dark dark:border-code-stroke-dark;
+        @apply rounded-md border border-code-stroke bg-code-bg px-[0.4em] py-[0.1em] font-source text-[0.91em] dark:border-code-stroke-dark dark:bg-code-bg-dark;
     }
 
     & pre {
-        @apply p-4 overflow-x-auto border rounded-md bg-code-bg dark:bg-code-bg-dark border-code-stroke dark:border-code-stroke-dark;
+        @apply overflow-x-auto rounded-md border border-code-stroke bg-code-bg p-4 dark:border-code-stroke-dark dark:bg-code-bg-dark;
 
         * {
-            @apply text-[0.97em] font-source;
+            @apply font-source text-[0.97em];
         }
     }
 
     & img {
-        @apply border rounded-md bg-code-bg dark:bg-code-bg-dark border-code-stroke dark:border-code-stroke-dark;
+        @apply rounded-md border border-code-stroke bg-code-bg dark:border-code-stroke-dark dark:bg-code-bg-dark;
 
         &.is-wide {
             @apply rounded-none;
 
             &.is-wide {
-                @apply relative -mx-[100vw] left-[50%] right-[50%] ml-[-50vw] mr-[-50vw] w-screen max-w-[100vw] rounded-none border-x-0;
+                @apply relative left-[50%] right-[50%] -mx-[100vw] ml-[-50vw] mr-[-50vw] w-screen max-w-[100vw] rounded-none border-x-0;
             }
         }
     }
@@ -100,7 +100,7 @@
         }
 
         & tr {
-            @apply border-b border-hr dark:border-hr-dark last:border-b-0;
+            @apply border-b border-hr last:border-b-0 dark:border-hr-dark;
         }
 
         & td {
@@ -108,12 +108,12 @@
         }
 
         & th {
-            @apply pb-2 font-normal text-left border-b border-text dark:border-text-dark;
+            @apply border-b border-text pb-2 text-left font-normal dark:border-text-dark;
         }
     }
 
     & blockquote {
-        @apply pl-4 border-l-4 border-hr text-pretty dark:border-hr-dark;
+        @apply text-pretty border-l-4 border-hr pl-4 dark:border-hr-dark;
     }
 }
 

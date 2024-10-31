@@ -10,9 +10,9 @@
 }
 
 ::selection {
-    @apply shadow-none bg-selection text-selection-text dark:bg-selection-dark dark:text-selection-dark-text;
+    @apply bg-selection text-selection-text shadow-none dark:bg-selection-dark dark:text-selection-dark-text;
 }
 
 a {
-    @apply text-link hover:text-link-hover selection:bg-link dark:text-link-dark dark:hover:text-link-dark-hover dark:selection:bg-link-dark;
+    @apply text-link selection:bg-link hover:text-link-hover dark:text-link-dark dark:selection:bg-link-dark dark:hover:text-link-dark-hover;
 }

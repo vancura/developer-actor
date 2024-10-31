@@ -22,7 +22,7 @@ const { title, description, permalink } = Astro.props;
         <BaseHead title={title} description={description} permalink={permalink} />
     </Head>
 
-    <body class="mx-8 overflow-x-hidden dark:bg-bg-dark bg-bg dark:text-text-dark text-text text-[11pt] pb-24 antialiased">
+    <body class="mx-8 overflow-x-hidden bg-bg pb-24 text-[11pt] text-text antialiased dark:bg-bg-dark dark:text-text-dark">
         <main>
             <slot />
         </main>
