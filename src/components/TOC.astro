@@ -99,21 +99,20 @@
 
     // Render TOC list with optional filtering.
     function renderTOC(filter = '') {
-        if (!tocList) return;
-
-        tocList.innerHTML = headingStore
-            .get()
-            // Filter headings based on search text
-            .filter((heading: { text: string }) => heading.text.toLowerCase().includes(filter))
-            // Generate HTML for each heading
-            .map(
-                (heading: { depth: any; id: string; text: any }) => `
-                <li class="toc-item  ${heading.id === activeId ? 'is-active' : ''}">
-                    <a class="text-balance block text-toc-text dark:text-toc-text-dark py-toc-y px-toc-item-x pl-toc-d${heading.depth - 1}" href="#${heading.id}">${heading.text}</a>
-                </li>
-            `
-            )
-            .join('');
+        if (tocList) {
+            tocList.innerHTML = headingStore
+                .get()
+                .filter((heading: { text: string }) => heading.text.toLowerCase().includes(filter))
+                .map(
+                    (heading: { depth: any; id: string; text: any }) => `
+                        <li class="toc-item  ${heading.id === activeId ? 'is-active' : ''}">
+                            <a class="text-balance block text-toc-text dark:text-toc-text-dark py-toc-y px-toc-item-x pl-toc-d${heading.depth - 1}" href="#${heading.id}">
+                                ${heading.text}
+                            </a>
+                        </li>`
+                )
+                .join('');
+        }
     }
 </script>
 
