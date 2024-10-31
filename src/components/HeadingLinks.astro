@@ -41,22 +41,22 @@
          * @returns Heading ID
          */
         private generateHeadingId(text: string | null): string | null {
-            if (!text) return null;
+            let o = null;
 
-            // Generate the base ID.
-            const baseId = text.toLowerCase().replace(HeadingLinksManager.ID_REGEX, '-').replace(HeadingLinksManager.TRIM_REGEX, '');
+            if (text) {
+                const baseId = text.toLowerCase().replace(HeadingLinksManager.ID_REGEX, '-').replace(HeadingLinksManager.TRIM_REGEX, '');
 
-            // If this is the first occurrence, use the base ID.
-            if (!this.usedIds.has(baseId)) {
-                this.usedIds.set(baseId, 1);
-                return baseId;
+                if (this.usedIds.has(baseId)) {
+                    const count = this.usedIds.get(baseId)! + 1;
+                    this.usedIds.set(baseId, count);
+                    o = `${baseId}-${count}`;
+                } else {
+                    this.usedIds.set(baseId, 1);
+                    o = baseId;
+                }
             }
 
-            // For subsequent occurrences, append a number.
-            const count = this.usedIds.get(baseId)! + 1;
-            this.usedIds.set(baseId, count);
-
-            return `${baseId}-${count}`;
+            return o;
         }
 
         /**
@@ -110,13 +110,12 @@
             headings.forEach((headingElement) => {
                 const id = this.generateHeadingId(headingElement.textContent);
 
-                if (!id) return; // skip headings without text
-
-                const anchor = this.createAnchorElement(id);
-                anchor.addEventListener('click', (e) => this.handleAnchorClick(e, id));
-
-                headingElement.insertAdjacentElement('afterbegin', anchor);
-                headingElement.id = id;
+                if (id) {
+                    const anchor = this.createAnchorElement(id);
+                    anchor.addEventListener('click', (e) => this.handleAnchorClick(e, id));
+                    headingElement.insertAdjacentElement('afterbegin', anchor);
+                    headingElement.id = id;
+                }
             });
         }
 
