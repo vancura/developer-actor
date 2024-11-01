@@ -4,12 +4,97 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()}>
-    <header aria-label="Hero" role="banner" class="bg-hero dark:bg-hero-dark -mx-8 h-96 select-none">
+    <header aria-label="Hero" role="banner" class="-mx-8 h-[100vh] select-none bg-hero dark:bg-hero-dark">
         <iframe src="https://my.spline.design/pegboard-b334347be28048a3697082b19ce508d6/" width="100%" height="100%"></iframe>
     </header>
 
-    <header class="mdx-content mx-auto max-w-screen-lg" role="banner">
-        <h1>Build and experiment with serverless microapps effortlessly</h1>
-        <p>Dive into Actors and start creating powerful applications today.</p>
+    <header class="absolute left-0 top-1/4 flex w-2/3 -translate-y-1/2 select-none flex-col gap-4 rounded-r-2xl bg-index-header p-8 shadow-2xl" role="banner">
+        <h1 class="text-balance text-5xl">Build and experiment with serverless microapps effortlessly</h1>
+
+        <p class="text-balance pb-2 text-3xl">Dive into Actors and start creating powerful applications today.</p>
+
+        <p>
+            <a class="inline-block rounded-md bg-index-header-button px-4 py-2 text-index-header-button-label hover:bg-index-header-button-hover hover:text-index-header-button-label" href="#content" data-smooth-scroll> Learn more </a>
+        </p>
     </header>
+
+    <div id="content"></div>
+
+    <section>
+        <h1 class="py-10 text-4xl">Experiment With Actors Today</h1>
+
+        <div class="grid grid-cols-2 gap-8">
+            <div class="flex items-center gap-4">
+                <div class="flex h-48 w-48 flex-shrink-0 items-center justify-center rounded-md bg-temp">Illustration</div>
+
+                <div class="flex flex-col gap-2 pb-2">
+                    <h2 class="text-2xl">Experiment With Actors Today</h2>
+                    <p>Get hands-on experience with Actors and see how easy it is to build and deploy serverless applications.</p>
+                    <p class="pt-2"><a class="inline-block rounded-md bg-index-header-button px-4 py-2 text-index-header-button-label hover:bg-index-header-button-hover hover:text-index-header-button-label" href="#">Start Experimenting</a></p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="flex h-48 w-48 flex-shrink-0 items-center justify-center rounded-md bg-temp">Illustration</div>
+
+                <div class="flex flex-col gap-2 pb-2">
+                    <h2 class="text-2xl">Read the Actors Whitepaper</h2>
+                    <p>Explore the philosophy and technical details behind Actors to fully understand their potential.</p>
+                    <p class="pt-2"><a class="inline-block rounded-md bg-index-header-button px-4 py-2 text-index-header-button-label hover:bg-index-header-button-hover hover:text-index-header-button-label" href="/whitepaper">Read the Whitepaper</a></p>
+                </div>
+            </div>
+        </div>
+
+        <section class="pt-10">
+            <h1 class="py-10 text-4xl">Benefits</h1>
+
+            <div class="grid grid-cols-2 gap-8">
+                <div class="flex items-center gap-4">
+                    <div class="flex h-48 w-48 flex-shrink-0 items-center justify-center rounded-md bg-temp">Illustration</div>
+
+                    <div class="flex flex-col gap-2 pb-2">
+                        <h2 class="text-2xl">Effortless Development Experience</h2>
+                        <p>Focus on writing code without worrying about infrastructure. Actors make it simple to develop and deploy your applications. <a href="#">Learn more.</a></p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="flex h-48 w-48 flex-shrink-0 items-center justify-center rounded-md bg-temp">Illustration</div>
+
+                    <div class="flex flex-col gap-2 pb-2">
+                        <h2 class="text-2xl">Seamless Scalability</h2>
+                        <p>Handle any workload with confidence. Actors scale automatically to meet your application's demands. <a href="#">Discover how.</a></p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="flex h-48 w-48 flex-shrink-0 items-center justify-center rounded-md bg-temp">Illustration</div>
+
+                    <div class="flex flex-col gap-2 pb-2">
+                        <h2 class="text-2xl">Monetize Your Skills</h2>
+                        <p>Turn your expertise into income by publishing Actors. Reach a global audience and earn passive revenue. <a href="#">See how.</a></p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="flex h-48 w-48 flex-shrink-0 items-center justify-center rounded-md bg-temp">Illustration</div>
+
+                    <div class="flex flex-col gap-2 pb-2">
+                        <h2 class="text-2xl">Build Modular Applications</h2>
+                        <p>Create components that work together flawlessly. Actors promote code reuse and easy integration. <a href="#">Find out more.</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
 </Layout>
+
+<script>
+    document.querySelectorAll('[data-smooth-scroll]').forEach((link) => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const href = link.getAttribute('href');
+            document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+</script>

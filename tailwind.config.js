@@ -54,6 +54,20 @@ module.exports = {
                 dark: 'rgba(0, 0, 0, 0.3)'
             },
 
+            hero: {
+                DEFAULT: 'black',
+                dark: 'white'
+            },
+
+            'index-header': 'white',
+
+            'index-header-button': {
+                DEFAULT: '#2833FF',
+                hover: '#8C3FFF'
+            },
+
+            'index-header-button-label': 'white',
+
             'toc-bg': {
                 DEFAULT: 'rgba(246, 246, 246, 1)',
                 dark: 'rgba(17, 17, 17, 1)'

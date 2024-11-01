@@ -23,13 +23,6 @@ export const COMPONENT_CONFIG = {
         ANCHOR_CLASS: 'anchor absolute left-1 px-2 rounded-full border-none hover:bg-link dark:hover:bg-link-dark font-source text-[10pt] hover:text-bg dark:hover:text-bg-dark'
     },
 
-    // Home Hero constants.
-    HERO: {
-        HEIGHT: 'h-96',
-        MARGIN: '-mx-8',
-        BG_COLOR: 'bg-temp'
-    },
-
     // MDX Wrapper constants.
     MDX: {
         FALLBACK_MESSAGE: 'Failed to load content. Please try refreshing the page.'
