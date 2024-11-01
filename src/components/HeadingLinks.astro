@@ -100,21 +100,24 @@
          * @param e - Mouse event
          * @param id - ID to link to
          */
-        private handleAnchorClick(e: MouseEvent, id: string): void {
+        private handleAnchorClick = (e: MouseEvent, id: string): void => {
             e.preventDefault();
 
             // Construct the URL with the heading ID.
-            const url = `${window.location.origin}${window.location.pathname}#${id}`;
+            const url = new URL(window.location.href);
+            url.hash = id;
 
             // Scroll to the heading and update the URL.
             this.smoothScrollTo(id);
-            window.history.pushState({}, '', url);
+
+            // Update the URL in the browser history.
+            window.history.pushState({}, '', url.toString());
 
             // Copy the URL to the clipboard.
-            navigator.clipboard.writeText(url).catch((error) => {
+            navigator.clipboard.writeText(url.toString()).catch((error) => {
                 logger.error('Failed to copy URL to clipboard', error);
             });
-        }
+        };
 
         /** Add heading links to all headings. */
         public addHeadingLinks(): void {
@@ -140,7 +143,7 @@
          */
         public collectHeadings(): HeadingEntry[] {
             const headings: HeadingEntry[] = [];
-            const headingElements: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(HeadingLinksManager.HEADING_SELECTOR);
+            const headingElements = document.querySelectorAll(HeadingLinksManager.HEADING_SELECTOR);
 
             this.usedIds = new Map<string, number>();
 
@@ -151,7 +154,7 @@
 
                 if (id && text) {
                     // Remove the # prefix, since that's the heading activation hyperlink.
-                    headings.push({ id, text: text!.replace(/^#/, ''), depth });
+                    headings.push({ id, text: text.replace(/^#/, ''), depth });
                 } else {
                     logger.error(`[heading-links] Heading link text not found: ${heading.textContent}`);
                 }
