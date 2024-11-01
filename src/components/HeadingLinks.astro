@@ -1,6 +1,17 @@
 <script>
+    import { createLogger } from '../utils/logger';
+    import type { HeadingEntry, ILogger } from '../types';
     import { headingStore } from '../stores/heading';
-    import type { HeadingEntry } from '../types';
+
+    // Create a logger instance with the 'HeadingLinks' prefix.
+    const logger: ILogger = createLogger({ prefix: 'HeadingLinks' });
+
+    // Define a type for valid headings.
+    interface ValidHeading extends HeadingEntry {
+        id: string; // Heading ID
+        text: string; // Heading text
+        depth: number; // Heading depth
+    }
 
     /** Manager for heading links in MDX content. Handles heading ID generation, anchor creation, and table of contents management. */
     class HeadingLinksManager {
@@ -14,7 +25,12 @@
         private static readonly TRIM_REGEX = /(^-|-$)/g;
 
         /** Map to track used IDs and their counts for duplicate prevention */
-        private usedIds: Map<string, number> = new Map();
+        private usedIds: Map<string, number>;
+
+        /** Constructor for the HeadingLinksManager class. Initializes the usedIds map. */
+        constructor() {
+            this.usedIds = new Map<string, number>();
+        }
 
         /**
          * Smoothly scroll to the target element.
@@ -24,14 +40,15 @@
         private smoothScrollTo(targetId: string): void {
             const targetElement = document.getElementById(targetId);
 
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop,
-                    behavior: 'smooth'
-                });
-            } else {
-                console.error(`[heading-links] Heading target not found: ${targetId}`);
+            if (!targetElement) {
+                logger.error(`Target heading not found: ${targetId}`);
+                return;
             }
+
+            window.scrollTo({
+                top: targetElement.offsetTop,
+                behavior: 'smooth'
+            });
         }
 
         /**
@@ -41,7 +58,7 @@
          * @returns Heading ID
          */
         private generateHeadingId(text: string | null): string | null {
-            let o = null;
+            let o: string | null = null;
 
             if (text) {
                 const baseId = text.toLowerCase().replace(HeadingLinksManager.ID_REGEX, '-').replace(HeadingLinksManager.TRIM_REGEX, '');
@@ -66,7 +83,7 @@
          * @returns Anchor element
          */
         private createAnchorElement(id: string): HTMLAnchorElement {
-            const anchor = document.createElement('a');
+            const anchor: HTMLAnchorElement = document.createElement('a');
 
             anchor.className = 'anchor absolute left-1 px-2 rounded-full border-none hover:bg-link dark:hover:bg-link-dark font-source text-[10pt] hover:text-bg dark:hover:text-bg-dark';
             anchor.href = `#${id}`;
@@ -94,19 +111,15 @@
 
             // Copy the URL to the clipboard.
             navigator.clipboard.writeText(url).catch((error) => {
-                console.error('[heading-links] Failed to copy URL:', error);
+                logger.error('Failed to copy URL to clipboard', error);
             });
         }
 
         /** Add heading links to all headings. */
         public addHeadingLinks(): void {
-            // Reset the used IDs map for each new page.
-            this.usedIds = new Map();
+            this.usedIds = new Map<string, number>();
+            const headings: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(HeadingLinksManager.HEADING_SELECTOR);
 
-            // Collect headings from the page.
-            const headings = document.querySelectorAll<HTMLHeadingElement>(HeadingLinksManager.HEADING_SELECTOR);
-
-            // Add heading links to each heading.
             headings.forEach((headingElement) => {
                 const id = this.generateHeadingId(headingElement.textContent);
 
@@ -126,11 +139,10 @@
          */
         public collectHeadings(): HeadingEntry[] {
             const headings: HeadingEntry[] = [];
-            const headingElements = document.querySelectorAll(HeadingLinksManager.HEADING_SELECTOR);
+            const headingElements: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(HeadingLinksManager.HEADING_SELECTOR);
 
-            this.usedIds = new Map();
+            this.usedIds = new Map<string, number>();
 
-            // Collect headings from the page.
             headingElements.forEach((heading) => {
                 const text = heading.textContent;
                 const id = this.generateHeadingId(text);
@@ -140,7 +152,7 @@
                     // Remove the # prefix, since that's the heading activation hyperlink.
                     headings.push({ id, text: text!.replace(/^#/, ''), depth });
                 } else {
-                    console.error(`[heading-links] Heading link text not found: ${heading.textContent}`);
+                    logger.error(`[heading-links] Heading link text not found: ${heading.textContent}`);
                 }
             });
 
@@ -149,29 +161,46 @@
 
         /** Refresh the heading links. */
         public refresh = (): void => {
-            console.log('[heading-links] Refreshing heading links');
+            logger.info('Refreshing heading links');
 
-            // Add heading links to the page.
-            this.addHeadingLinks();
+            try {
+                this.addHeadingLinks();
+                const headings = this.collectHeadings();
+                const validHeadings: ValidHeading[] = headings.filter((h): h is ValidHeading => Boolean(h.id && h.text));
 
-            // Collect headings from the page.
-            const headings = this.collectHeadings();
+                if (validHeadings.length === 0) {
+                    logger.warn('No headings found in content');
+                } else {
+                    logger.info(`Found ${validHeadings.length} valid headings`);
+                }
 
-            // Filter out headings without an ID or text.
-            const validHeadings = headings.filter((h) => h.id && h.text) as Array<{
-                id: string;
-                text: string;
-                depth: number;
-            }>;
-
-            console.log(`[heading-links] Found ${validHeadings.length} valid headings`);
-
-            headingStore.set(validHeadings);
+                headingStore.set(validHeadings);
+            } catch (error) {
+                logger.error('Failed to refresh heading links', error);
+            }
         };
     }
 
-    // Initialize heading manager and set up page load refresh
-    const manager = new HeadingLinksManager();
-    manager.refresh();
-    document.addEventListener('astro:page-load', () => manager.refresh());
+    // Initialize heading links manager.
+    try {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                const manager = new HeadingLinksManager();
+                manager.refresh();
+
+                document.addEventListener('astro:page-load', () => {
+                    manager.refresh();
+                });
+            });
+        } else {
+            const manager = new HeadingLinksManager();
+            manager.refresh();
+
+            document.addEventListener('astro:page-load', () => {
+                manager.refresh();
+            });
+        }
+    } catch (error) {
+        logger.error('[HeadingLinks] Failed to initialize heading links manager', error);
+    }
 </script>
