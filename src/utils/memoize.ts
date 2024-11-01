@@ -9,14 +9,17 @@ export function memoize<T extends (...args: any[]) => any>(fn: T): (...args: Par
 
     return (...args: Parameters<T>): ReturnType<T> => {
         const key = JSON.stringify(args);
+        let o: ReturnType<T>;
 
         if (cache.has(key)) {
-            return cache.get(key)!;
+            o = cache.get(key)!;
+        } else {
+            const result = fn(...args);
+            cache.set(key, result);
+
+            o = result;
         }
 
-        const result = fn(...args);
-        cache.set(key, result);
-
-        return result;
+        return o;
     };
 }
