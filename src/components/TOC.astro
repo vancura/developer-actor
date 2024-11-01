@@ -6,70 +6,98 @@
     <div class="sticky left-0 top-0 flex items-center justify-between bg-toc-toolbar-bg p-6 dark:bg-toc-toolbar-bg-dark">
         <input type="text" id="toc-filter" placeholder="Filter..." aria-label="Filter TOC" class="w-full rounded-md bg-toc-filter-bg px-2 py-1 text-toc-item shadow-sm dark:bg-toc-filter-bg-dark" />
     </div>
-    <ul id="toc-list" class="mb-4 text-toc-item"></ul>
+
+    <ul id="toc-list" class="mb-4 text-toc-item" role="list"></ul>
 </nav>
 
 <script>
     import { createLogger } from '../utils/logger';
-    import type { HeadingEntry, ILogger } from '../types';
+    import { debounce } from '../utils/debounce';
+    import { safeExecute } from '../utils/safe-execute';
+    import { TOC } from '../config/components';
     import { headingStore } from '../stores/heading';
+    import type { TOCEntry, ProgressBarStyles, HeadingEntry } from '../types/toc';
+    import { safeQuerySelector } from '../utils/dom';
 
     // Create a logger instance with the 'TOC' prefix.
-    const logger: ILogger = createLogger({ prefix: 'TOC' });
+    const logger = createLogger({ prefix: 'TOC' });
+
+    // Add interfaces for better type safety.
+    interface TOCState {
+        isVisible: boolean; // Whether the TOC is visible
+        isScrolling: boolean; // Whether the user is scrolling
+        lastScrollPosition: number; // Last scroll position
+    }
+
+    // Interface for TOC elements.
+    interface TOCElements {
+        nav: HTMLElement | null; // Navigation element
+        filterInput: HTMLElement | null; // Filter input element
+        tocList: HTMLElement | null; // TOC list element
+        progressBars: HTMLElement | null; // Progress bars element
+    }
 
     /** Manager for Table of Contents functionality. */
     class TOCManager {
-        /** ID of the currently active heading */
+        /** ID of the currently active heading. */
         private activeId: string = '';
 
-        /** Request animation frame ID */
-        private rafId: number | null = null;
+        /** State of the TOC manager. */
+        private readonly state: TOCState = {
+            isVisible: false,
+            isScrolling: false,
+            lastScrollPosition: 0
+        };
 
-        /** Reference to the TOC navigation element */
-        private readonly nav: HTMLElement | null;
+        /** Elements of the TOC. */
+        private readonly elements: TOCElements = {
+            nav: document.getElementById('toc-nav'),
+            filterInput: document.getElementById('toc-filter'),
+            tocList: document.getElementById('toc-list'),
+            progressBars: document.getElementById('toc-progress-bars')
+        };
 
-        /** Reference to the filter input element */
-        private readonly filterInput: HTMLElement | null;
-
-        /** Reference to the TOC list element */
-        private readonly tocList: HTMLElement | null;
-
-        /** Interval ID for periodic checks */
-        private readonly intervalId: number;
-
-        /** Observer for tracking heading visibility */
+        /** Intersection observer for tracking heading visibility. */
         private readonly observer: IntersectionObserver;
 
-        /** Constructor for the TOCManager class. Initializes DOM references and the observer. */
+        /** Interval ID for rendering progress bars. */
+        private readonly intervalId: number;
+
+        /** Debounced function to render progress bars. */
+        private readonly debouncedRenderProgressBars: () => void;
+
         constructor() {
-            // Initialize DOM references.
-            this.nav = document.getElementById('toc-nav');
-            this.filterInput = document.getElementById('toc-filter');
-            this.tocList = document.getElementById('toc-list');
+            // Initialize the observer with the appropriate root margin.
+            this.observer = new IntersectionObserver((entries) => this.handleIntersection(entries), { rootMargin: TOC.OBSERVER_MARGIN });
 
-            // Initialize intersection observer.
-            this.observer = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            this.updateActiveHeading(entry.target.id);
-                        }
-                    });
-                },
-                { rootMargin: '0px 0px -80% 0px' }
-            );
+            // Debounce the progress bar rendering.
+            this.debouncedRenderProgressBars = debounce(() => this.renderProgressBars(), TOC.PROGRESS_BAR_DEBOUNCE);
 
-            // Set up event listeners.
+            // Set up event listeners and interval for scroll checking.
             this.setupEventListeners();
-
-            // Initialize periodic check.
-            this.intervalId = window.setInterval(() => this.onScroll(), 1000);
+            this.intervalId = window.setInterval(() => this.onScroll(), TOC.SCROLL_CHECK_INTERVAL);
         }
 
-        /** Set up event listeners for TOC functionality. */
+        /**
+         * Handles intersection events from the observer.
+         *
+         * @param entries - Intersection observer entries
+         */
+        private handleIntersection(entries: IntersectionObserverEntry[]): void {
+            // Update the active heading if the entry is intersecting.
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    // Update the active heading if the entry is intersecting.
+                    this.updateActiveHeading(entry.target.id);
+                }
+            });
+        }
+
+        /** Sets up event listeners for the TOC. */
         private setupEventListeners(): void {
-            // Subscribe to heading store changes.
+            // Subscribe to heading changes.
             headingStore.subscribe((value: readonly HeadingEntry[]) => {
+                // Render the TOC if there are headings.
                 if (value.length > 0) {
                     logger.info(`${value.length} headings found, rendering TOC`);
                     this.renderTOC();
@@ -78,294 +106,329 @@
                 }
             });
 
-            // Filter input handler.
-            this.filterInput?.addEventListener('input', (event) => {
+            // Handle filter input changes.
+            this.elements.filterInput?.addEventListener('input', (event) => {
                 const filter = (event.target as HTMLInputElement).value.toLowerCase();
                 this.renderTOC(filter);
             });
 
-            // Scroll and keyboard handlers.
+            // Add event listeners for scroll and mouse move.
             window.addEventListener('scroll', () => this.onScroll(), { passive: true });
-            window.addEventListener('keyup', this.handleKeyboardNavigation);
-
-            // Mouse tracking.
             window.addEventListener('mousemove', this.handleMouseMove, { passive: true });
         }
 
         /**
-         * Update the active heading in the TOC.
+         * Updates the active heading and toggles the active class on the TOC items.
          *
-         * @param id - ID of the heading to activate
+         * @param id - ID of the active heading
          */
         private updateActiveHeading(id: string): void {
             this.activeId = id;
 
-            document.querySelectorAll('.toc-item').forEach((item) => {
-                const isActive = item.querySelector(`a[href="#${id}"]`) !== null;
+            const tocItems = document.querySelectorAll('.toc-item');
+
+            // Toggle the active class on the TOC items.
+            tocItems.forEach((item) => {
+                const link = safeQuerySelector<HTMLAnchorElement>(`a[href="#${id}"]`, item);
+                const isActive = link !== null;
 
                 item.classList.toggle('is-active', isActive);
 
-                if (isActive && this.nav && this.tocList) {
-                    // Get TOC and item bounding rectangles.
-                    const tocRect = this.tocList.getBoundingClientRect();
-                    const itemRect = item.getBoundingClientRect();
-                    const visibleTop = Math.max(tocRect.top, window.innerHeight * 0.1 + 100);
-                    const visibleBottom = Math.min(tocRect.bottom, window.innerHeight * 0.9);
-                    const isAbove = itemRect.top < visibleTop;
-                    const isBelow = itemRect.bottom > visibleBottom;
-
-                    // Scroll to the item if it's above or below the visible area.
-                    if (isAbove || isBelow) {
-                        item.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'center'
-                        });
-                    }
+                if (isActive) {
+                    // Scroll the active item into view if it's not already visible.
+                    this.scrollActiveItemIntoView(item);
                 }
             });
 
-            this.updateProgressBars(id);
+            // Render the progress bars and update the aria labels.
+            this.renderProgressBars();
+            this.updateAriaLabels();
         }
 
         /**
-         * Update progress bars to reflect current active heading.
+         * Scrolls the active item into view if it's not already visible.
          *
-         * @param activeId - ID of the active heading
+         * @param item - TOC item element
          */
-        private updateProgressBars(activeId: string): void {
-            document.querySelectorAll('.progress-bar').forEach((bar) => {
-                const barId = bar.getAttribute('data-heading-id');
+        private scrollActiveItemIntoView(item: Element): void {
+            if (!this.elements.nav || !this.elements.tocList) return; // return if the navigation element or the TOC list element is not found
 
-                bar.classList.toggle('bg-toc-progress-active', barId === activeId);
-                bar.classList.toggle('bg-toc-progress', barId !== activeId);
-            });
-        }
+            const tocRect = this.elements.tocList.getBoundingClientRect();
+            const itemRect = item.getBoundingClientRect();
+            const visibleTop = Math.max(tocRect.top, window.innerHeight * TOC.VIEWPORT_MARGINS.TOP + 100);
+            const visibleBottom = Math.min(tocRect.bottom, window.innerHeight * TOC.VIEWPORT_MARGINS.BOTTOM);
 
-        /**
-         * Render the TOC with optional filtering.
-         *
-         * @param filter - Optional filter string to filter headings
-         */
-        private renderTOC(filter: string = ''): void {
-            try {
-                if (this.tocList) {
-                    this.tocList.innerHTML = headingStore
-                        .get()
-                        .filter((heading) => heading.text.toLowerCase().includes(filter))
-                        .map(
-                            (heading) => `
-                                <li class="toc-item ${heading.id === this.activeId ? 'is-active' : ''}">
-                                    <a class="py-toc-y px-toc-item-x pl-toc-d${heading.depth - 1} block text-balance text-toc-text dark:text-toc-text-dark" href="#${heading.id}">
-                                        ${heading.text}
-                                    </a>
-                                </li>`
-                        )
-                        .join('');
-                }
-
-                // Render progress bars.
-                requestAnimationFrame(() => this.renderProgressBars());
-            } catch (error) {
-                logger.error('Failed to render TOC', error);
+            // Scroll the item into view if it's not already visible.
+            if (itemRect.top < visibleTop || itemRect.bottom > visibleBottom) {
+                item.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
             }
         }
 
-        /** Render progress bars for the TOC */
+        /** Updates the aria labels on the TOC items. */
+        private updateAriaLabels(): void {
+            const links = document.querySelectorAll('.toc-item a');
+
+            // Update the aria labels on the TOC items.
+            links.forEach((link) => {
+                link.setAttribute('aria-current', link.getAttribute('href') === `#${this.activeId}` ? 'true' : 'false');
+            });
+        }
+
+        /**
+         * Gets the styles for the progress bars.
+         *
+         * @param heading - TOC entry
+         * @param index - Index of the heading
+         * @returns Progress bar styles
+         */
+        private getProgressBarStyles(heading: TOCEntry, index: number): ProgressBarStyles {
+            return {
+                width: (5 - heading.depth) * TOC.PROGRESS_BAR_BASE_WIDTH,
+                height: TOC.PROGRESS_BAR_HEIGHT,
+                top: index * (TOC.PROGRESS_BAR_HEIGHT + TOC.PROGRESS_BAR_SPACING)
+            };
+        }
+
+        /** Renders the progress bars. */
         private renderProgressBars(): void {
-            try {
-                const progressBarsContainer = document.getElementById('toc-progress-bars');
+            safeExecute(
+                () => {
+                    if (!this.elements.progressBars) return; // return if the progress bars element is not found
 
-                if (!progressBarsContainer) return;
+                    const headings = headingStore.get();
+                    const totalSpacing = (headings.length - 1) * TOC.PROGRESS_BAR_SPACING;
+                    const totalBarsHeight = headings.length * TOC.PROGRESS_BAR_HEIGHT;
+                    const containerHeight = totalBarsHeight + totalSpacing;
 
-                // Get headings and calculate the container height.
-                const headings = headingStore.get();
-                const spacing = 4;
-                const barHeight = 2;
-                const totalSpacing = (headings.length - 1) * spacing;
-                const totalBarsHeight = headings.length * barHeight;
-                const containerHeight = totalBarsHeight + totalSpacing;
+                    // Render the progress bars.
+                    this.elements.progressBars.innerHTML = headings
+                        .map((heading, index) => {
+                            const styles = this.getProgressBarStyles(heading, index);
+                            return `
+                                <div
+                                    data-heading-id="${heading.id}"
+                                    class="progress-bar absolute right-0 ${heading.id === this.activeId ? 'bg-toc-progress-active dark:bg-toc-progress-active-dark' : 'bg-toc-progress dark:bg-toc-progress-dark'}"
+                                    style="
+                                        width: ${styles.width}px;
+                                        height: ${styles.height}px;
+                                        top: ${styles.top}px;
+                                    "
+                                ></div>
+                            `;
+                        })
+                        .join('');
 
-                // Render progress bars.
-                progressBarsContainer.innerHTML = headings
-                    .map(
-                        (heading, index) => `
-                        <div
-                            data-heading-id="${heading.id}"
-                            class="progress-bar absolute right-0 ${heading.id === this.activeId ? 'bg-toc-progress-active dark:bg-toc-progress-active-dark' : 'bg-toc-progress dark:bg-toc-progress-dark'}"
-                            style="
-                                width: ${(5 - heading.depth) * 8}px;
-                                height: ${barHeight}px;
-                                top: ${index * (barHeight + spacing)}px;
-                            "
-                        ></div>
-                    `
-                    )
-                    .join('');
+                    // Set the height, top, and transform of the progress bars container.
+                    this.elements.progressBars.style.height = `${containerHeight}px`;
+                    this.elements.progressBars.style.top = '50%';
+                    this.elements.progressBars.style.transform = 'translateY(-50%)';
 
-                // Set progress bar container styles.
-                progressBarsContainer.style.height = `${containerHeight}px`;
-                progressBarsContainer.style.top = '50%';
-                progressBarsContainer.style.transform = 'translateY(-50%)';
-
-                logger.info(`Rendered ${headings.length} progress bars`);
-            } catch (error) {
-                logger.error('Failed to render progress bars', error);
-            }
+                    logger.info(`Rendered ${headings.length} progress bars`);
+                },
+                undefined,
+                'Failed to render progress bars'
+            );
         }
 
-        /**
-         * Handle keyboard navigation.
-         *
-         * @param event - Keyboard event
-         */
-        private handleKeyboardNavigation = (event: KeyboardEvent): void => {
-            if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-                event.preventDefault();
-
-                // Get headings and find the current index.
-                const headings = headingStore.get();
-                const currentIndex = headings.findIndex((h) => h.id === this.activeId);
-
-                if (currentIndex === -1) return;
-
-                // Calculate the new index based on the keyboard event.
-                const newIndex = event.key === 'ArrowUp' ? Math.max(0, currentIndex - 1) : Math.min(headings.length - 1, currentIndex + 1);
-
-                // Get the target ID and element.
-                const targetId = headings[newIndex].id;
-                const targetElement = document.getElementById(targetId);
-
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            }
-        };
-
-        /**
-         * Handle mouse movement for TOC visibility.
-         *
-         * @param event - Mouse event
-         */
+        /** Handles mouse move events. */
         private handleMouseMove = (event: MouseEvent): void => {
-            if (!this.nav) return;
+            if (!this.elements.nav) return; // return if the navigation element is not found
 
-            // Get mouse position and window width.
             const mouseX = event.clientX;
             const windowWidth = window.innerWidth;
-            const threshold = windowWidth - 400;
+            const threshold = windowWidth - TOC.MOUSE_THRESHOLD;
+            const shouldShow = mouseX > threshold;
 
-            // Show TOC if mouse is over the threshold.
-            if (mouseX > threshold) {
-                this.nav.style.pointerEvents = 'auto';
-                this.nav.style.opacity = '1';
-            } else {
-                this.nav.style.pointerEvents = 'none';
-                this.nav.style.opacity = '0';
+            // Toggle the visibility of the TOC based on the mouse position.
+            if (shouldShow !== this.state.isVisible) {
+                this.state.isVisible = shouldShow;
+                this.elements.nav.style.pointerEvents = shouldShow ? 'auto' : 'none';
+                this.elements.nav.style.opacity = shouldShow ? '1' : '0';
             }
         };
 
-        /** Handle scroll events. */
-        private onScroll(): void {
-            if (this.rafId) return;
+        /** ID of the request animation frame. */
+        private rafId: number | null = null;
 
+        /** Handles scroll events. */
+        private onScroll = (): void => {
+            if (this.rafId || this.state.isScrolling) return; // return if an animation frame is already in progress or if the user is scrolling
+
+            this.state.isScrolling = true;
             this.rafId = requestAnimationFrame(() => {
-                try {
-                    // Get headings and calculate the scroll position.
-                    const headings = headingStore.get();
-                    const scrollPosition = window.scrollY + window.innerHeight * 0.2;
+                safeExecute(
+                    () => {
+                        // Get the headings and the scroll position.
+                        const headings = headingStore.get();
+                        const scrollPosition = window.scrollY + window.innerHeight * TOC.VIEWPORT_MARGINS.TOP;
+                        const currentPosition = Math.abs(scrollPosition - this.state.lastScrollPosition);
 
-                    // Find the active heading based on the scroll position.
-                    for (let i = headings.length - 1; i >= 0; i--) {
-                        const element = document.getElementById(headings[i].id);
+                        // Update the last scroll position if the current position is greater than the threshold.
+                        if (currentPosition > TOC.SCROLL_THRESHOLD) {
+                            this.state.lastScrollPosition = scrollPosition;
 
-                        if (element && element.offsetTop <= scrollPosition) {
-                            this.updateActiveHeading(headings[i].id);
-                            break;
+                            // Find the active heading based on the scroll position.
+                            for (let i = headings.length - 1; i >= 0; i--) {
+                                const element = document.getElementById(headings[i].id);
+
+                                if (element && element.offsetTop <= scrollPosition) {
+                                    this.updateActiveHeading(headings[i].id);
+                                    break;
+                                }
+                            }
                         }
-                    }
 
-                    this.rafId = null;
-                } catch (error) {
-                    logger.error('Failed to handle scroll event', error);
-                    this.rafId = null;
-                }
+                        // Render the progress bars and update the aria labels.
+                        this.debouncedRenderProgressBars();
+                        this.updateAriaLabels();
+
+                        // Reset the scrolling state.
+                        this.state.isScrolling = false;
+                        this.rafId = null;
+                    },
+                    undefined,
+                    'Failed to handle scroll event'
+                );
             });
+        };
+
+        /**
+         * Renders the TOC.
+         *
+         * @param filter - Filter string
+         */
+        private renderTOC(filter: string = ''): void {
+            safeExecute(
+                () => {
+                    if (!this.elements.tocList) return; // return if the TOC list element is not found
+
+                    // Get the headings and filter them based on the filter string.
+                    const headings = headingStore.get().filter((heading) => heading.text.toLowerCase().includes(filter));
+
+                    // Render the TOC items.
+                    this.elements.tocList.innerHTML = headings
+                        .map(
+                            (heading) => `
+                            <li class="toc-item ${heading.id === this.activeId ? 'is-active' : ''}"
+                                role="listitem">
+                                <a class="block py-toc-y px-toc-item-x pl-toc-d${heading.depth - 1} text-balance text-toc-text dark:text-toc-text-dark"
+                                   href="#${heading.id}"
+                                   aria-current="${heading.id === this.activeId ? 'true' : 'false'}">
+                                    ${heading.text}
+                                </a>
+                            </li>
+                        `
+                        )
+                        .join('');
+
+                    // Render the progress bars.
+                    this.debouncedRenderProgressBars();
+                },
+                undefined,
+                'Failed to render TOC'
+            );
         }
 
-        /** Clean up event listeners and intervals. */
+        /** Cleans up the TOC manager. */
         public cleanup(): void {
-            if (this.rafId) {
-                cancelAnimationFrame(this.rafId);
-                this.rafId = null;
-            }
-
-            clearInterval(this.intervalId);
-
-            window.removeEventListener('scroll', () => this.onScroll());
-            window.removeEventListener('keyup', this.handleKeyboardNavigation);
-            window.removeEventListener('mousemove', this.handleMouseMove);
-        }
-
-        /** Initialize TOC functionality. */
-        public initialize(): void {
-            try {
-                // Remove previous observers.
-                document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((heading) => {
-                    this.observer.unobserve(heading);
-                });
-
-                // Add new observers.
-                headingStore.get().forEach((heading) => {
-                    const element = document.getElementById(heading.id);
-
-                    if (element) {
-                        this.observer.observe(element);
+            safeExecute(
+                () => {
+                    // Cancel the animation frame if it's in progress.
+                    if (this.rafId) {
+                        cancelAnimationFrame(this.rafId);
+                        this.rafId = null;
                     }
-                });
 
-                this.renderTOC();
+                    // Clear the interval for scroll checking.
+                    clearInterval(this.intervalId);
 
-                // Find and activate the first visible heading.
-                const entries = headingStore.get();
+                    // Remove event listeners.
+                    window.removeEventListener('scroll', this.onScroll);
+                    window.removeEventListener('mousemove', this.handleMouseMove);
 
-                if (entries.length > 0) {
-                    // Find the first visible heading.
-                    const firstVisibleHeading = entries.find((heading) => {
-                        const element = document.getElementById(heading.id);
-
-                        if (!element) return false;
-
-                        const rect = element.getBoundingClientRect();
-
-                        return rect.top >= 0 && rect.top <= window.innerHeight * 0.2;
+                    // Remove intersection observers.
+                    document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((heading) => {
+                        this.observer.unobserve(heading);
                     });
 
-                    // Update the active heading.
-                    this.updateActiveHeading(firstVisibleHeading?.id || entries[0].id);
-                }
-            } catch (error) {
-                logger.error('Failed to initialize TOC', error);
-            }
+                    logger.info('TOC manager cleaned up successfully');
+                },
+                undefined,
+                'Failed to cleanup TOC manager'
+            );
+        }
+
+        /** Initializes the TOC manager. */
+        public initialize(): void {
+            safeExecute(
+                () => {
+                    // Remove previous observers
+                    document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((heading) => {
+                        this.observer.unobserve(heading);
+                    });
+
+                    // Add new observers.
+                    headingStore.get().forEach((heading) => {
+                        const element = document.getElementById(heading.id);
+                        if (element) {
+                            this.observer.observe(element);
+                        }
+                    });
+
+                    // Render the TOC and find the first visible heading.
+                    this.renderTOC();
+                    this.findAndActivateFirstVisibleHeading();
+
+                    logger.info('TOC manager initialized successfully');
+                },
+                undefined,
+                'Failed to initialize TOC manager'
+            );
+        }
+
+        /** Finds and activates the first visible heading. */
+        private findAndActivateFirstVisibleHeading(): void {
+            const entries = headingStore.get();
+
+            if (entries.length === 0) return; // return if there are no headings
+
+            // Find the first visible heading.
+            const firstVisibleHeading = entries.find((heading) => {
+                const element = document.getElementById(heading.id);
+
+                if (!element) return false; // return if the heading element is not found
+
+                const rect = element.getBoundingClientRect();
+
+                return rect.top >= 0 && rect.top <= window.innerHeight * 0.2;
+            });
+
+            this.updateActiveHeading(firstVisibleHeading?.id || entries[0].id);
         }
     }
 
     // Initialize TOC manager.
-    try {
-        const manager = new TOCManager();
-        manager.initialize();
-
-        // Handle Astro page transitions.
-        document.addEventListener('astro:page-load', () => {
+    safeExecute(
+        () => {
+            const manager = new TOCManager();
             manager.initialize();
-        });
 
-        // Cleanup on navigation.
-        document.addEventListener('astro:before-preparation', () => {
-            manager.cleanup();
-        });
-    } catch (error) {
-        logger.error('Failed to initialize TOC manager', error);
-    }
+            // Handle Astro page transitions.
+            document.addEventListener('astro:page-load', () => {
+                manager.initialize();
+            });
+
+            // Cleanup on navigation.
+            document.addEventListener('astro:before-preparation', () => {
+                manager.cleanup();
+            });
+        },
+        undefined,
+        'Failed to setup TOC manager'
+    );
 </script>
 
 <style is:global>
