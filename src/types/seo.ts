@@ -17,4 +17,7 @@ export interface SEOMetadata {
 
     /** ISO 8601 date string for article last modification. */
     articleModifiedTime?: string;
+
+    /** Whether to show the table of contents. Defaults to true. */
+    showTOC?: boolean;
 }

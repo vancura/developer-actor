@@ -3,18 +3,15 @@ import { Head } from 'astro-capo';
 import BaseHead from '../components/BaseHead.astro';
 import HeadingLinks from '../components/HeadingLinks.astro';
 import TOC from '../components/TOC.astro';
+import type { SEOMetadata } from '../types';
 
 import '../styles/mdx-content.css';
 import '../styles/tailwind.css';
 import '../styles/typography.css';
 
-export interface Props {
-    title: string;
-    description: string;
-    permalink: string;
-}
+type Props = SEOMetadata;
 
-const { title, description, permalink } = Astro.props;
+const { title, description, permalink, showTOC = true } = Astro.props;
 ---
 
 <html lang="en">
@@ -27,7 +24,13 @@ const { title, description, permalink } = Astro.props;
             <slot />
         </main>
 
-        <TOC />
-        <HeadingLinks />
+        {
+            showTOC && (
+                <>
+                    <TOC />
+                    <HeadingLinks />
+                </>
+            )
+        }
     </body>
 </html>
