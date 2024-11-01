@@ -84,15 +84,8 @@ module.exports = {
                 dark: 'rgba(255, 255, 255, 0.1)'
             },
 
-            'toc-progress': {
-                DEFAULT: 'rgba(0, 0, 0, 0.15)',
-                dark: 'rgba(255, 255, 255, 0.15)'
-            },
-
-            'toc-progress-active': {
-                DEFAULT: '#333333',
-                dark: '#F5F5F5'
-            }
+            'toc-progress': '#333',
+            'toc-progress-active': '#f5f5f5'
         },
 
         extend: {

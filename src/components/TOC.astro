@@ -1,4 +1,4 @@
-<div class="pointer-events-none fixed right-0 top-0 h-full w-16 min-[1140px]:pr-4" id="toc-progress">
+<div class="pointer-events-none fixed right-0 top-0 h-full w-16 mix-blend-exclusion min-[1140px]:pr-4" id="toc-progress">
     <div id="toc-progress-bars" class="relative h-full"></div>
 </div>
 
@@ -210,7 +210,7 @@
                             return `
                                 <div
                                     data-heading-id="${heading.id}"
-                                    class="progress-bar absolute right-0 ${heading.id === this.activeId ? 'bg-toc-progress-active dark:bg-toc-progress-active-dark' : 'bg-toc-progress dark:bg-toc-progress-dark'}"
+                                    class="progress-bar absolute right-0 ${heading.id === this.activeId ? 'bg-toc-progress-active' : 'bg-toc-progress'}"
                                     style="
                                         width: ${styles.width}px;
                                         height: ${styles.height}px;
