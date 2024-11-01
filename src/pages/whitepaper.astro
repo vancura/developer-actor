@@ -6,9 +6,9 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()}>
-    <header class="mdx-content mx-auto max-w-screen-lg" role="banner">
+    <div class="mdx-content mx-auto max-w-screen-lg">
         <MDXWrapper>
             <Content />
         </MDXWrapper>
-    </header>
+    </div>
 </Layout>
