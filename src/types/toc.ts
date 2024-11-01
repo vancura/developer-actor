@@ -59,4 +59,13 @@ export interface TOCConfig {
 
     /** Debounce delay for progress bar updates in milliseconds. */
     readonly PROGRESS_BAR_DEBOUNCE: number;
+
+    /** Threshold for scroll position changes. */
+    readonly SCROLL_THRESHOLD: number;
+
+    /** Threshold for mouse position to show/hide TOC. */
+    readonly MOUSE_THRESHOLD: number;
+
+    /** Margin for intersection observer. */
+    readonly OBSERVER_MARGIN: string;
 }
