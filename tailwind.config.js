@@ -54,6 +54,11 @@ module.exports = {
                 dark: 'rgba(0, 0, 0, 0.3)'
             },
 
+            navbar: {
+                DEFAULT: '#f5f5f5',
+                dark: '#171717'
+            },
+
             hero: {
                 DEFAULT: 'black',
                 dark: 'white'

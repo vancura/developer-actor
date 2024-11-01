@@ -1,0 +1,43 @@
+---
+const primaryLinks = [
+    { label: 'Social Media', href: '#' },
+    { label: 'Forums', href: '#' },
+    { label: 'Issue Tracker', href: '#' },
+    { label: 'Additional Resources', href: '#' }
+];
+
+const secondaryLinks = [
+    { label: 'Contact Information', href: '#' },
+    { label: 'Privacy Policy', href: '#' },
+    { label: 'Terms of Service', href: '#' },
+    { label: 'Accessibility Statement', href: '#' }
+];
+---
+
+<footer class="mdx-content mx-auto mt-auto max-w-screen-lg pt-16">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <div>
+            <ul class="space-y-2">
+                {
+                    primaryLinks.map(({ label, href }) => (
+                        <li>
+                            <a href={href}>{label}</a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+
+        <div>
+            <ul class="space-y-2">
+                {
+                    secondaryLinks.map(({ label, href }) => (
+                        <li>
+                            <a href={href}>{label}</a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    </div>
+</footer>
