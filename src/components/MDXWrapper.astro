@@ -1,4 +1,6 @@
 ---
+import { MDX } from '../config/components';
+
 interface Props {
     showFallback?: boolean;
 }
@@ -14,7 +16,7 @@ const { showFallback = true } = Astro.props;
             <Fragment>
                 <slot />
                 <slot name="fallback">
-                    <p>Failed to load content. Please try refreshing the page.</p>
+                    <p>{MDX.FALLBACK_MESSAGE}</p>
                 </slot>
             </Fragment>
         )

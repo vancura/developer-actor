@@ -2,6 +2,7 @@
     import { createLogger } from '../utils/logger';
     import type { HeadingEntry, ILogger } from '../types';
     import { headingStore } from '../stores/heading';
+    import { HEADING_LINKS } from '../config/components';
 
     // Create a logger instance with the 'HeadingLinks' prefix.
     const logger: ILogger = createLogger({ prefix: 'HeadingLinks' });
@@ -16,13 +17,13 @@
     /** Manager for heading links in MDX content. Handles heading ID generation, anchor creation, and table of contents management. */
     class HeadingLinksManager {
         /** Selector for finding headings in MDX content */
-        private static readonly HEADING_SELECTOR = '.mdx-content h2, .mdx-content h3, .mdx-content h4';
+        private static readonly HEADING_SELECTOR = HEADING_LINKS.SELECTOR;
 
         /** Regex for converting text to URL-friendly format */
-        private static readonly ID_REGEX = /[^a-z0-9]+/g;
+        private static readonly ID_REGEX = HEADING_LINKS.ID_REGEX;
 
         /** Regex for trimming hyphens from start and end */
-        private static readonly TRIM_REGEX = /(^-|-$)/g;
+        private static readonly TRIM_REGEX = HEADING_LINKS.TRIM_REGEX;
 
         /** Map to track used IDs and their counts for duplicate prevention */
         private usedIds: Map<string, number>;
@@ -85,7 +86,7 @@
         private createAnchorElement(id: string): HTMLAnchorElement {
             const anchor: HTMLAnchorElement = document.createElement('a');
 
-            anchor.className = 'anchor absolute left-1 px-2 rounded-full border-none hover:bg-link dark:hover:bg-link-dark font-source text-[10pt] hover:text-bg dark:hover:text-bg-dark';
+            anchor.className = HEADING_LINKS.ANCHOR_CLASS;
             anchor.href = `#${id}`;
             anchor.innerHTML = '#';
             anchor.setAttribute('aria-hidden', 'true');

@@ -1,6 +1,7 @@
 ---
 import strings from '../../strings.mjs';
 import type { SEOMetadata } from '../types';
+import { HEAD } from '../config/components';
 
 export interface Props extends SEOMetadata {
     title: string;
@@ -26,24 +27,24 @@ canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
 <meta name="description" content={description} />
 <meta name="generator" content={Astro.generator} />
 <meta name="robots" content="index, follow" />
-<meta name="author" content="Apify" />
-<meta name="referrer" content="origin" />
-<meta name="language" content="English" />
+<meta name="author" content={HEAD.META.AUTHOR} />
+<meta name="referrer" content={HEAD.META.REFERRER} />
+<meta name="language" content={HEAD.META.LANGUAGE} />
 
 <meta property="og:type" content="website" />
 <meta property="og:url" content={permalink} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:site_name" content={strings.title} />
-<meta property="og:author" content="Apify" />
+<meta property="og:author" content={HEAD.META.AUTHOR} />
 
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={permalink} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 
-<meta property="article:author" content="Apify" />
+<meta property="article:author" content={HEAD.META.AUTHOR} />
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,500&display=swap" rel="stylesheet" />
+{HEAD.FONTS.PRECONNECT.map((url) => <link rel="preconnect" href={url} crossorigin />)}
+
+<link href={`https://fonts.googleapis.com/css2?family=${HEAD.FONTS.FAMILIES.join('&family=')}`} rel="stylesheet" />
