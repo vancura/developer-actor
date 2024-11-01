@@ -6,168 +6,192 @@
     <div class="sticky left-0 top-0 flex items-center justify-between bg-toc-toolbar-bg p-6 dark:bg-toc-toolbar-bg-dark">
         <input type="text" id="toc-filter" placeholder="Filter..." aria-label="Filter TOC" class="w-full rounded-md bg-toc-filter-bg px-2 py-1 text-toc-item shadow-sm dark:bg-toc-filter-bg-dark" />
     </div>
-
     <ul id="toc-list" class="mb-4 text-toc-item"></ul>
 </nav>
 
 <script>
+    import { createLogger } from '../utils/logger';
+    import type { HeadingEntry, ILogger } from '../types';
     import { headingStore } from '../stores/heading';
 
-    // State management.
-    let activeId = '';
+    // Create a logger instance with the 'TOC' prefix.
+    const logger: ILogger = createLogger({ prefix: 'TOC' });
 
-    // DOM element references.
-    const nav = document.getElementById('toc-nav');
-    const filterInput = document.getElementById('toc-filter');
-    const tocList = document.getElementById('toc-list');
+    /** Manager for Table of Contents functionality. */
+    class TOCManager {
+        /** ID of the currently active heading */
+        private activeId: string = '';
 
-    // Subscribe to changes in the headings store.
-    // This ensures TOC updates when headings change.
-    headingStore.subscribe((headings: string | any[]) => {
-        if (headings.length > 0) {
-            console.log(`[toc] ${headings.length} headings found, rendering TOC`);
-            renderTOC();
-        } else {
-            console.error('[toc] No headings found');
-        }
-    });
+        /** Request animation frame ID */
+        private rafId: number | null = null;
 
-    // Intersection Observer: Tracks which headings are visible in viewport.
-    // rootMargin creates a detection zone in top 20% of viewport.
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    updateActiveHeading(entry.target.id);
-                }
-            });
-        },
-        { rootMargin: '0px 0px -80% 0px' }
-    );
+        /** Reference to the TOC navigation element */
+        private readonly nav: HTMLElement | null;
 
-    // Initialize TOC and progress bars.
-    function initialize() {
-        // Setup TOC and observers. Remove previous observers if any, and add new ones.
-        document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((heading) => {
-            observer.unobserve(heading);
-        });
+        /** Reference to the filter input element */
+        private readonly filterInput: HTMLElement | null;
 
-        headingStore.get().forEach((heading) => {
-            const element = document.getElementById(heading.id);
-            if (element) {
-                observer.observe(element);
-            }
-        });
+        /** Reference to the TOC list element */
+        private readonly tocList: HTMLElement | null;
 
-        initializeMouseTracking();
-        renderTOC();
+        /** Interval ID for periodic checks */
+        private readonly intervalId: number;
 
-        // Find the first visible heading and activate it.
-        const entries = headingStore.get();
-        if (entries.length > 0) {
-            const firstVisibleHeading = entries.find((heading) => {
-                const element = document.getElementById(heading.id);
-                let o = false;
+        /** Observer for tracking heading visibility */
+        private readonly observer: IntersectionObserver;
 
-                if (element) {
-                    const rect = element.getBoundingClientRect();
-                    o = rect.top >= 0 && rect.top <= window.innerHeight * 0.2;
-                }
+        /** Constructor for the TOCManager class. Initializes DOM references and the observer. */
+        constructor() {
+            // Initialize DOM references.
+            this.nav = document.getElementById('toc-nav');
+            this.filterInput = document.getElementById('toc-filter');
+            this.tocList = document.getElementById('toc-list');
 
-                return o;
-            });
-
-            updateActiveHeading(firstVisibleHeading?.id || entries[0].id);
-        }
-    }
-
-    // Setup on initial load.
-    initialize();
-
-    // Setup after Astro page transitions.
-    document.addEventListener('astro:page-load', initialize);
-
-    // Filter TOC entries based on search input.
-    filterInput?.addEventListener('input', (event) => {
-        const filter = (event.target as HTMLInputElement).value.toLowerCase();
-        renderTOC(filter);
-    });
-
-    // Update visual state of TOC when active heading changes.
-    function updateActiveHeading(id: string) {
-        activeId = id;
-
-        document.querySelectorAll('.toc-item').forEach((item) => {
-            const isActive = item.querySelector(`a[href="#${id}"]`) !== null;
-
-            item.classList.toggle('is-active', isActive);
-
-            // If this item became active, ensure it's visible in the TOC.
-            if (isActive && nav && tocList) {
-                const tocRect = tocList.getBoundingClientRect();
-                const itemRect = item.getBoundingClientRect();
-                const visibleTop = Math.max(tocRect.top, window.innerHeight * 0.1 + 100); // +100 to account for the toolbar height
-                const visibleBottom = Math.min(tocRect.bottom, window.innerHeight * 0.9);
-                const isAbove = itemRect.top < visibleTop;
-                const isBelow = itemRect.bottom > visibleBottom;
-
-                if (isAbove || isBelow) {
-                    item.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
+            // Initialize intersection observer.
+            this.observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            this.updateActiveHeading(entry.target.id);
+                        }
                     });
-                }
-            }
-        });
+                },
+                { rootMargin: '0px 0px -80% 0px' }
+            );
 
-        // Update progress bars.
-        document.querySelectorAll('.progress-bar').forEach((bar) => {
-            const barId = bar.getAttribute('data-heading-id');
+            // Set up event listeners.
+            this.setupEventListeners();
 
-            bar.classList.toggle('bg-toc-progress-active', barId === id);
-            bar.classList.toggle('bg-toc-progress', barId !== id);
-        });
-    }
-
-    // Render TOC list with optional filtering.
-    function renderTOC(filter = '') {
-        if (tocList) {
-            tocList.innerHTML = headingStore
-                .get()
-                .filter((heading: { text: string }) => heading.text.toLowerCase().includes(filter))
-                .map(
-                    (heading: { depth: any; id: string; text: any }) => `
-                        <li class="toc-item  ${heading.id === activeId ? 'is-active' : ''}">
-                            <a class="py-toc-y px-toc-item-x pl-toc-d${heading.depth - 1} block text-balance text-toc-text dark:text-toc-text-dark" href="#${heading.id}">
-                                ${heading.text}
-                            </a>
-                        </li>`
-                )
-                .join('');
+            // Initialize periodic check.
+            this.intervalId = window.setInterval(() => this.onScroll(), 1000);
         }
 
-        // Always render progress bars after TOC updates.
-        requestAnimationFrame(renderProgressBars);
-    }
+        /** Set up event listeners for TOC functionality. */
+        private setupEventListeners(): void {
+            // Subscribe to heading store changes.
+            headingStore.subscribe((value: readonly HeadingEntry[]) => {
+                if (value.length > 0) {
+                    logger.info(`${value.length} headings found, rendering TOC`);
+                    this.renderTOC();
+                } else {
+                    logger.warn('No headings found');
+                }
+            });
 
-    // Render progress bars alongside TOC.
-    function renderProgressBars() {
-        const progressContainer = document.getElementById('toc-progress-bars');
+            // Filter input handler.
+            this.filterInput?.addEventListener('input', (event) => {
+                const filter = (event.target as HTMLInputElement).value.toLowerCase();
+                this.renderTOC(filter);
+            });
 
-        if (progressContainer) {
-            const headings = headingStore.get();
-            const spacing = 4;
-            const barHeight = 2;
-            const totalSpacing = (headings.length - 1) * spacing;
-            const totalBarsHeight = headings.length * barHeight;
-            const containerHeight = totalBarsHeight + totalSpacing;
+            // Scroll and keyboard handlers.
+            window.addEventListener('scroll', () => this.onScroll(), { passive: true });
+            window.addEventListener('keyup', this.handleKeyboardNavigation);
 
-            progressContainer.innerHTML = headings
-                .map(
-                    (heading: { depth: number; id: string }, index: number) => `
+            // Mouse tracking.
+            window.addEventListener('mousemove', this.handleMouseMove, { passive: true });
+        }
+
+        /**
+         * Update the active heading in the TOC.
+         *
+         * @param id - ID of the heading to activate
+         */
+        private updateActiveHeading(id: string): void {
+            this.activeId = id;
+
+            document.querySelectorAll('.toc-item').forEach((item) => {
+                const isActive = item.querySelector(`a[href="#${id}"]`) !== null;
+
+                item.classList.toggle('is-active', isActive);
+
+                if (isActive && this.nav && this.tocList) {
+                    // Get TOC and item bounding rectangles.
+                    const tocRect = this.tocList.getBoundingClientRect();
+                    const itemRect = item.getBoundingClientRect();
+                    const visibleTop = Math.max(tocRect.top, window.innerHeight * 0.1 + 100);
+                    const visibleBottom = Math.min(tocRect.bottom, window.innerHeight * 0.9);
+                    const isAbove = itemRect.top < visibleTop;
+                    const isBelow = itemRect.bottom > visibleBottom;
+
+                    // Scroll to the item if it's above or below the visible area.
+                    if (isAbove || isBelow) {
+                        item.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                    }
+                }
+            });
+
+            this.updateProgressBars(id);
+        }
+
+        /**
+         * Update progress bars to reflect current active heading.
+         *
+         * @param activeId - ID of the active heading
+         */
+        private updateProgressBars(activeId: string): void {
+            document.querySelectorAll('.progress-bar').forEach((bar) => {
+                const barId = bar.getAttribute('data-heading-id');
+
+                bar.classList.toggle('bg-toc-progress-active', barId === activeId);
+                bar.classList.toggle('bg-toc-progress', barId !== activeId);
+            });
+        }
+
+        /**
+         * Render the TOC with optional filtering.
+         *
+         * @param filter - Optional filter string to filter headings
+         */
+        private renderTOC(filter: string = ''): void {
+            try {
+                if (this.tocList) {
+                    this.tocList.innerHTML = headingStore
+                        .get()
+                        .filter((heading) => heading.text.toLowerCase().includes(filter))
+                        .map(
+                            (heading) => `
+                                <li class="toc-item ${heading.id === this.activeId ? 'is-active' : ''}">
+                                    <a class="py-toc-y px-toc-item-x pl-toc-d${heading.depth - 1} block text-balance text-toc-text dark:text-toc-text-dark" href="#${heading.id}">
+                                        ${heading.text}
+                                    </a>
+                                </li>`
+                        )
+                        .join('');
+                }
+
+                // Render progress bars.
+                requestAnimationFrame(() => this.renderProgressBars());
+            } catch (error) {
+                logger.error('Failed to render TOC', error);
+            }
+        }
+
+        /** Render progress bars for the TOC */
+        private renderProgressBars(): void {
+            try {
+                const progressBarsContainer = document.getElementById('toc-progress-bars');
+
+                if (!progressBarsContainer) return;
+
+                // Get headings and calculate the container height.
+                const headings = headingStore.get();
+                const spacing = 4;
+                const barHeight = 2;
+                const totalSpacing = (headings.length - 1) * spacing;
+                const totalBarsHeight = headings.length * barHeight;
+                const containerHeight = totalBarsHeight + totalSpacing;
+
+                // Render progress bars.
+                progressBarsContainer.innerHTML = headings
+                    .map(
+                        (heading, index) => `
                         <div
                             data-heading-id="${heading.id}"
-                            class="progress-bar absolute right-0 ${heading.id === activeId ? 'bg-toc-progress-active dark:bg-toc-progress-active-dark' : 'bg-toc-progress dark:bg-toc-progress-dark'}"
+                            class="progress-bar absolute right-0 ${heading.id === this.activeId ? 'bg-toc-progress-active dark:bg-toc-progress-active-dark' : 'bg-toc-progress dark:bg-toc-progress-dark'}"
                             style="
                                 width: ${(5 - heading.depth) * 8}px;
                                 height: ${barHeight}px;
@@ -175,128 +199,173 @@
                             "
                         ></div>
                     `
-                )
-                .join('');
+                    )
+                    .join('');
 
-            progressContainer.style.height = `${containerHeight}px`;
-            progressContainer.style.top = '50%';
-            progressContainer.style.transform = 'translateY(-50%)';
-        }
-    }
+                // Set progress bar container styles.
+                progressBarsContainer.style.height = `${containerHeight}px`;
+                progressBarsContainer.style.top = '50%';
+                progressBarsContainer.style.transform = 'translateY(-50%)';
 
-    // Efficient scroll handling with RAF.
-    let rafId: number | null = null;
-
-    function onScroll() {
-        if (rafId) {
-            cancelAnimationFrame(rafId); // cancel previous frame if it hasn't executed yet
+                logger.info(`Rendered ${headings.length} progress bars`);
+            } catch (error) {
+                logger.error('Failed to render progress bars', error);
+            }
         }
 
-        rafId = requestAnimationFrame(() => {
-            const entries = headingStore.get();
-            const visibleHeading = entries.find((heading) => {
-                const element = document.getElementById(heading.id);
-                let o = false;
+        /**
+         * Handle keyboard navigation.
+         *
+         * @param event - Keyboard event
+         */
+        private handleKeyboardNavigation = (event: KeyboardEvent): void => {
+            if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+                event.preventDefault();
 
-                if (element) {
-                    const rect = element.getBoundingClientRect();
-                    o = rect.top >= -50 && rect.top <= window.innerHeight * 0.3;
+                // Get headings and find the current index.
+                const headings = headingStore.get();
+                const currentIndex = headings.findIndex((h) => h.id === this.activeId);
+
+                if (currentIndex === -1) return;
+
+                // Calculate the new index based on the keyboard event.
+                const newIndex = event.key === 'ArrowUp' ? Math.max(0, currentIndex - 1) : Math.min(headings.length - 1, currentIndex + 1);
+
+                // Get the target ID and element.
+                const targetId = headings[newIndex].id;
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
+            }
+        };
 
-                return o;
-            });
+        /**
+         * Handle mouse movement for TOC visibility.
+         *
+         * @param event - Mouse event
+         */
+        private handleMouseMove = (event: MouseEvent): void => {
+            if (!this.nav) return;
 
-            // Fallback to first/last heading when at page boundaries
-            if (visibleHeading) {
-                if (visibleHeading.id !== activeId) {
-                    updateActiveHeading(visibleHeading.id);
-                }
+            // Get mouse position and window width.
+            const mouseX = event.clientX;
+            const windowWidth = window.innerWidth;
+            const threshold = windowWidth - 400;
+
+            // Show TOC if mouse is over the threshold.
+            if (mouseX > threshold) {
+                this.nav.style.pointerEvents = 'auto';
+                this.nav.style.opacity = '1';
             } else {
-                const scrollPosition = window.scrollY;
-                const isAtTop = scrollPosition < 100;
-                const isAtBottom = scrollPosition + window.innerHeight >= document.documentElement.scrollHeight - 100;
+                this.nav.style.pointerEvents = 'none';
+                this.nav.style.opacity = '0';
+            }
+        };
 
-                if (isAtTop && entries.length > 0) {
-                    updateActiveHeading(entries[0].id);
-                } else if (isAtBottom && entries.length > 0) {
-                    updateActiveHeading(entries[entries.length - 1].id);
+        /** Handle scroll events. */
+        private onScroll(): void {
+            if (this.rafId) return;
+
+            this.rafId = requestAnimationFrame(() => {
+                try {
+                    // Get headings and calculate the scroll position.
+                    const headings = headingStore.get();
+                    const scrollPosition = window.scrollY + window.innerHeight * 0.2;
+
+                    // Find the active heading based on the scroll position.
+                    for (let i = headings.length - 1; i >= 0; i--) {
+                        const element = document.getElementById(headings[i].id);
+
+                        if (element && element.offsetTop <= scrollPosition) {
+                            this.updateActiveHeading(headings[i].id);
+                            break;
+                        }
+                    }
+
+                    this.rafId = null;
+                } catch (error) {
+                    logger.error('Failed to handle scroll event', error);
+                    this.rafId = null;
                 }
+            });
+        }
+
+        /** Clean up event listeners and intervals. */
+        public cleanup(): void {
+            if (this.rafId) {
+                cancelAnimationFrame(this.rafId);
+                this.rafId = null;
             }
 
-            renderProgressBars();
+            clearInterval(this.intervalId);
 
-            rafId = null;
+            window.removeEventListener('scroll', () => this.onScroll());
+            window.removeEventListener('keyup', this.handleKeyboardNavigation);
+            window.removeEventListener('mousemove', this.handleMouseMove);
+        }
+
+        /** Initialize TOC functionality. */
+        public initialize(): void {
+            try {
+                // Remove previous observers.
+                document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((heading) => {
+                    this.observer.unobserve(heading);
+                });
+
+                // Add new observers.
+                headingStore.get().forEach((heading) => {
+                    const element = document.getElementById(heading.id);
+
+                    if (element) {
+                        this.observer.observe(element);
+                    }
+                });
+
+                this.renderTOC();
+
+                // Find and activate the first visible heading.
+                const entries = headingStore.get();
+
+                if (entries.length > 0) {
+                    // Find the first visible heading.
+                    const firstVisibleHeading = entries.find((heading) => {
+                        const element = document.getElementById(heading.id);
+
+                        if (!element) return false;
+
+                        const rect = element.getBoundingClientRect();
+
+                        return rect.top >= 0 && rect.top <= window.innerHeight * 0.2;
+                    });
+
+                    // Update the active heading.
+                    this.updateActiveHeading(firstVisibleHeading?.id || entries[0].id);
+                }
+            } catch (error) {
+                logger.error('Failed to initialize TOC', error);
+            }
+        }
+    }
+
+    // Initialize TOC manager.
+    try {
+        const manager = new TOCManager();
+        manager.initialize();
+
+        // Handle Astro page transitions.
+        document.addEventListener('astro:page-load', () => {
+            manager.initialize();
         });
+
+        // Cleanup on navigation.
+        document.addEventListener('astro:before-preparation', () => {
+            manager.cleanup();
+        });
+    } catch (error) {
+        logger.error('Failed to initialize TOC manager', error);
     }
-
-    // Handle keyboard navigation with more reliable updates.
-    const keyHandler = (e: KeyboardEvent) => {
-        if (['Home', 'End', 'PageUp', 'PageDown', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
-            // Multiple checks to ensure we catch the update.
-            setTimeout(onScroll, 10);
-            setTimeout(onScroll, 100);
-            setTimeout(onScroll, 200);
-        }
-    };
-
-    // Use passive scroll listener.
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('keyup', keyHandler);
-
-    // Also check periodically for any missed updates.
-    const intervalId = setInterval(onScroll, 1000);
-
-    // Cleanup on page navigation.
-    document.addEventListener('astro:before-preparation', () => {
-        if (rafId) {
-            cancelAnimationFrame(rafId);
-            rafId = null;
-        }
-
-        clearInterval(intervalId);
-
-        window.removeEventListener('scroll', onScroll);
-        window.removeEventListener('keyup', keyHandler);
-    });
-
-    // Add mouse position tracking.
-    function handleMouseMove(e: MouseEvent) {
-        const tocNav = document.getElementById('toc-nav');
-        if (tocNav) {
-            const mouseX = e.clientX;
-            const viewWidth = window.innerWidth;
-            const tocWidth = tocNav.offsetWidth;
-            const showThreshold = 100;
-            const hideThreshold = tocWidth + 32;
-
-            if (mouseX >= viewWidth - showThreshold) {
-                // Show TOC.
-                tocNav.classList.remove('opacity-0', 'pointer-events-none');
-                tocNav.classList.add('opacity-100', 'pointer-events-auto');
-            } else if (mouseX < viewWidth - hideThreshold) {
-                // Hide TOC.
-                tocNav.classList.remove('opacity-100', 'pointer-events-auto');
-                tocNav.classList.add('opacity-0', 'pointer-events-none');
-            }
-        }
-    }
-
-    // Initialize mouse tracking.
-    function initializeMouseTracking() {
-        window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    }
-
-    // Update cleanup
-    document.addEventListener('astro:before-preparation', () => {
-        if (rafId) {
-            cancelAnimationFrame(rafId);
-            rafId = null;
-        }
-        clearInterval(intervalId);
-        window.removeEventListener('scroll', onScroll);
-        window.removeEventListener('keyup', keyHandler);
-        window.removeEventListener('mousemove', handleMouseMove);
-    });
 </script>
 
 <style is:global>
