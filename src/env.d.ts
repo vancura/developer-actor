@@ -3,7 +3,13 @@
 
 /** Environment variables for the application. */
 interface ImportMetaEnv {
-    /** Log level for the application */
+    /**
+     * Log level for the application. Controls which messages are displayed in the console.
+     *
+     * - 'info': Show all messages
+     * - 'warning': Show only warnings and errors
+     * - 'error': Show only errors
+     */
     readonly LOG_LEVEL?: 'info' | 'warning' | 'error';
 }
 
