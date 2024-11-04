@@ -115,6 +115,9 @@
             // Add event listeners for scroll and mouse move.
             window.addEventListener('scroll', () => this.onScroll(), { passive: true });
             window.addEventListener('mousemove', this.handleMouseMove, { passive: true });
+
+            // Add click event listener for TOC links.
+            this.elements.tocList?.addEventListener('click', this.handleTOCLinkClick);
         }
 
         /**
@@ -351,6 +354,9 @@
                         this.observer.unobserve(heading);
                     });
 
+                    // Remove TOC link click listener.
+                    this.elements.tocList?.removeEventListener('click', this.handleTOCLinkClick);
+
                     logger.info('TOC manager cleaned up successfully');
                 },
                 undefined,
@@ -405,6 +411,44 @@
 
             this.updateActiveHeading(firstVisibleHeading?.id || entries[0].id);
         }
+
+        /**
+         * Smoothly scrolls to the target element with navbar offset.
+         *
+         * @param targetId - ID of the target element
+         */
+        private smoothScrollTo(targetId: string): void {
+            const targetElement = document.getElementById(targetId);
+
+            if (!targetElement) {
+                logger.error(`Target heading not found: ${targetId}`);
+                return;
+            }
+
+            window.scrollTo({
+                top: targetElement.offsetTop - TOC.SCROLL_OFFSET,
+                behavior: 'smooth'
+            });
+        }
+
+        /**
+         * Handles click events on TOC links.
+         *
+         * @param event - Click event
+         */
+        private handleTOCLinkClick = (event: MouseEvent): void => {
+            const link = event.target as HTMLAnchorElement;
+            if (!link.matches('.toc-item a')) return;
+
+            event.preventDefault();
+            const targetId = link.getAttribute('href')?.substring(1);
+
+            if (targetId) {
+                this.smoothScrollTo(targetId);
+                // Update URL without triggering scroll
+                history.pushState(null, '', `#${targetId}`);
+            }
+        };
     }
 
     // Initialize TOC manager.

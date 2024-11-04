@@ -68,4 +68,7 @@ export interface TOCConfig {
 
     /** Margin for intersection observer. */
     readonly OBSERVER_MARGIN: string;
+
+    /** Offset to account for the navbar height. */
+    readonly SCROLL_OFFSET: number;
 }
