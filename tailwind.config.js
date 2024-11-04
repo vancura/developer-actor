@@ -22,10 +22,10 @@ module.exports = {
             },
 
             background: {
-                DEFAULT: '#F5F5F5',
-                dark: '#222',
-                navbar: '#f5f5f5',
-                'navbar-dark': '#171717',
+                DEFAULT: 'rgba(245, 245, 245, 1)',
+                dark: 'rgba(34, 34, 34, 1)',
+                navbar: 'rgba(245, 245, 245, 0.9)',
+                'navbar-dark': 'rgba(34, 34, 34, 0.9)',
                 toc: 'rgba(248, 248, 248, 1)',
                 'toc-dark': 'rgba(17, 17, 17, 1)',
                 'toc-filter': 'white',

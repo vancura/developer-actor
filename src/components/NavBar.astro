@@ -2,9 +2,9 @@
 const currentPath = Astro.url.pathname;
 const navItems = [
     { label: 'Whitepaper', path: '/whitepaper' },
-    { label: 'Vestibulum Consequat', path: '/about-actors' },
-    { label: 'Nullam Sagittis', path: '/get-started' },
-    { label: 'Curabitur Magna', path: '/community' },
+    { label: 'Vestibulum', path: '/about-actors' },
+    { label: 'Sagittis', path: '/get-started' },
+    { label: 'Curabitur', path: '/community' },
     { label: 'Contact', path: '/contact' }
 ];
 
@@ -17,25 +17,24 @@ const isCurrentPage = (path: string) => {
 };
 ---
 
-<nav class="fixed top-0 z-50 w-full bg-navbar shadow dark:bg-navbar-dark">
-    <div class="mx-auto max-w-7xl px-4">
+<nav class="bg-background-navbar dark:bg-background-navbar-dark fixed top-0 z-50 w-full font-medium">
+    <div class="mx-auto max-w-[1088px] px-8">
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
-                <a href="/" class="text-xl font-bold">Actor</a>
+                <a href="/" class="">Actor Developer</a>
             </div>
 
             <!-- Desktop Navigation -->
             <div class="hidden md:block">
-                <div class="ml-10 flex items-baseline space-x-4">
+                <div class="flex items-baseline space-x-2">
                     {
                         navItems.map(({ label, path }) => (
                             <a
                                 href={path}
                                 class:list={[
-                                    'rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                                    'rounded-md px-2',
                                     {
-                                        'text-white bg-link': isCurrentPage(path),
-                                        'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white': !isCurrentPage(path)
+                                        'text-accent dark:text-accent-dark': isCurrentPage(path)
                                     }
                                 ]}
                             >
@@ -48,8 +47,9 @@ const isCurrentPage = (path: string) => {
 
             <!-- Mobile menu button -->
             <div class="flex md:hidden">
-                <button type="button" class="mobile-menu-button text-gray-400 hover:bg-gray-100 hover:text-gray-500 dark:hover:bg-gray-700 inline-flex items-center justify-center rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-link" aria-controls="mobile-menu" aria-expanded="false">
+                <button type="button" class="mobile-menu-button -mr-3 inline-flex items-center justify-center" aria-controls="mobile-menu" aria-expanded="false">
                     <span class="sr-only">Open main menu</span>
+
                     <svg class="mobile-menu-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path class="open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                         <path class="close hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -61,16 +61,15 @@ const isCurrentPage = (path: string) => {
 
     <!-- Mobile menu -->
     <div class="mobile-menu hidden md:hidden" id="mobile-menu">
-        <div class="space-y-1 px-2 pb-3 pt-2">
+        <div class="space-y-1 px-5 pb-3 pt-2">
             {
                 navItems.map(({ label, path }) => (
                     <a
                         href={path}
                         class:list={[
-                            'block rounded-md px-3 py-2 text-base font-medium',
+                            'block px-3 py-2',
                             {
-                                'text-white bg-link': isCurrentPage(path),
-                                'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white': !isCurrentPage(path)
+                                'text-accent dark:text-accent-dark': isCurrentPage(path)
                             }
                         ]}
                     >

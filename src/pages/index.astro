@@ -5,16 +5,16 @@ import FeatureCard from '../components/FeatureCard.astro';
 ---
 
 <Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()} showTOC={false}>
-    <header aria-label="Hero" role="banner" class="-mx-8 h-[100vh] select-none bg-hero">
+    <header aria-label="Hero" role="banner" class="-mx-8 h-[100vh] select-none">
         <!-- <iframe src="https://my.spline.design/pegboard-b334347be28048a3697082b19ce508d6/" width="100%" height="100%"></iframe> -->
     </header>
 
-    <header class="absolute left-0 top-1/4 flex w-2/3 -translate-y-1/2 select-none flex-col gap-4 rounded-r-2xl bg-index-header p-8 shadow-2xl" role="banner">
+    <header class="absolute left-0 top-1/4 flex w-2/3 -translate-y-1/2 select-none flex-col gap-4 rounded-r-2xl p-8 shadow-2xl" role="banner">
         <h1 class="text-balance text-5xl">Vestibulum consequat malesuada felis ornare dignissim</h1>
         <p class="text-balance pb-2 text-3xl">Nullam sagittis vestibulum nunc quis malesuada sem.</p>
 
         <p>
-            <a class="inline-block rounded-md bg-index-header-button px-4 py-2 text-index-header-button-label hover:bg-index-header-button-hover hover:text-index-header-button-label" href="#content" data-smooth-scroll> Learn more </a>
+            <a class="inline-block rounded-md px-4 py-2" href="#content" data-smooth-scroll> Learn more </a>
         </p>
     </header>
 
