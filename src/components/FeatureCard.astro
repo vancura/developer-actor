@@ -13,17 +13,19 @@ const { title, description, illustration = 'Illustration', link } = Astro.props;
 ---
 
 <div class="flex items-center gap-4">
-    <div class="flex h-48 w-48 flex-shrink-0 items-center justify-center rounded-md bg-temp">
+    <div class="bg-background-illustration dark:bg-background-illustration-dark text-background dark:text-background-dark flex h-48 w-48 flex-shrink-0 items-center justify-center rounded-md font-medium">
         {illustration}
     </div>
 
     <div class="flex flex-col gap-2 pb-2">
         <h2 class="text-2xl">{title}</h2>
+
         <p>{description}</p>
+
         {
             link && (
                 <p class="pt-2">
-                    <a href={link.href} class="inline-block rounded-md bg-index-header-button px-4 py-2 text-index-header-button-label hover:bg-index-header-button-hover hover:text-index-header-button-label">
+                    <a href={link.href} class="bg-primary text-background hover:bg-primary-hover hover:text-background dark:bg-primary-dark dark:text-background-dark dark:hover:bg-primary-dark-hover dark:hover:text-background-dark inline-block rounded-md px-4 py-2 font-medium">
                         {link.text}
                     </a>
                 </p>

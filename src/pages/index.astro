@@ -5,30 +5,29 @@ import FeatureCard from '../components/FeatureCard.astro';
 ---
 
 <Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()} showTOC={false}>
-    <header aria-label="Hero" role="banner" class="-mx-8 h-[100vh] select-none">
+    <header aria-label="Hero" role="banner" class="-mx-8 h-[66vh] select-none">
         <!-- <iframe src="https://my.spline.design/pegboard-b334347be28048a3697082b19ce508d6/" width="100%" height="100%"></iframe> -->
     </header>
 
-    <header class="absolute left-0 top-1/4 flex w-2/3 -translate-y-1/2 select-none flex-col gap-4 rounded-r-2xl p-8 shadow-2xl" role="banner">
-        <h1 class="text-balance text-5xl">Vestibulum consequat malesuada felis ornare dignissim</h1>
-        <p class="text-balance pb-2 text-3xl">Nullam sagittis vestibulum nunc quis malesuada sem.</p>
+    <header class="bg-white dark:bg-black absolute left-0 top-1/4 flex w-2/3 -translate-y-1/2 select-none flex-col gap-4 rounded-r-md p-8 shadow-xl" role="banner">
+        <h1 class="text-balance font-heading text-5xl oldstyle-nums proportional-nums stacked-fractions tracking-tight">Vestibulum consequat malesuada felis ornare dignissim</h1>
+
+        <p class="text-balance pb-2 font-heading text-3xl oldstyle-nums proportional-nums stacked-fractions tracking-tight">Nullam sagittis vestibulum nunc quis malesuada sem.</p>
 
         <p>
-            <a class="inline-block rounded-md px-4 py-2" href="#content" data-smooth-scroll> Learn more </a>
+            <a class="inline-block rounded-md px-4 py-2" href="#content" data-smooth-scroll>Learn More</a>
         </p>
     </header>
 
-    <div id="content"></div>
+    <section class="mx-auto max-w-[1024px]">
+        <h2>Praesent Lacinia Magna</h2>
 
-    <section>
-        <h1 class="py-10 text-4xl">Praesent Lacinia Magna</h1>
-
-        <div class="grid grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <FeatureCard
                 title="Praesent Lacinia Magna"
                 description="Curabitur ullamcorper feugiat vehicula nec lacinia ut dignissim nibh donec ac est faucibus pellentesque."
                 link={{
-                    href: '#',
+                    href: '/get-started',
                     text: 'Start Experimenting'
                 }}
             />
@@ -43,16 +42,14 @@ import FeatureCard from '../components/FeatureCard.astro';
             />
         </div>
 
-        <section class="pt-10">
-            <h1 class="py-10 text-4xl">Vestibulum</h1>
+        <h2>Vestibulum</h2>
 
-            <div class="grid grid-cols-2 gap-8">
-                <FeatureCard title="Curabitur Elementum" description='Fusce accumsan tortor ut felis sollicitudin vel efficitur nulla ultricies phasellus feugiat est vel. <a href="#">Nullam ipsum.</a>' />
-                <FeatureCard title="Praesent Magna" description="Integer rutrum sem ac metus lobortis vel consectetur nulla facilisis suspendisse rhoncus ipsum." />
-                <FeatureCard title="Maecenas Fermentum" description="Vivamus condimentum magna nisi eget aliquam mi efficitur id nulla facilisi orci ut lacus." />
-                <FeatureCard title="Suspendisse Potenti" description="Etiam euismod consectetur lectus at finibus morbi mattis ex non lorem convallis ut tempor." />
-            </div>
-        </section>
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            <FeatureCard title="Curabitur Elementum" description="Fusce accumsan tortor ut felis sollicitudin vel efficitur nulla ultricies phasellus feugiat est vel." />
+            <FeatureCard title="Praesent Magna" description="Integer rutrum sem ac metus lobortis vel consectetur nulla facilisis suspendisse rhoncus ipsum." />
+            <FeatureCard title="Maecenas Fermentum" description="Vivamus condimentum magna nisi eget aliquam mi efficitur id nulla facilisi orci ut lacus." />
+            <FeatureCard title="Suspendisse Potenti" description="Etiam euismod consectetur lectus at finibus morbi mattis ex non lorem convallis ut tempor." />
+        </div>
     </section>
 </Layout>
 
@@ -65,3 +62,13 @@ import FeatureCard from '../components/FeatureCard.astro';
         });
     });
 </script>
+
+<style>
+    h2 {
+        @apply py-10 pb-6 font-heading text-4xl oldstyle-nums proportional-nums stacked-fractions tracking-tight;
+    }
+
+    a {
+        @apply bg-primary text-background hover:bg-primary-hover hover:text-background dark:bg-primary-dark dark:text-background-dark dark:hover:bg-primary-dark-hover dark:hover:text-background-dark inline-block rounded-md px-4 py-2 font-medium;
+    }
+</style>

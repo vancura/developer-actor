@@ -33,7 +33,9 @@ module.exports = {
                 'toc-active': 'white',
                 'toc-active-dark': 'rgba(255, 255, 255, 0.1)',
                 'toc-toolbar': 'rgba(248, 248, 248, 0.9)',
-                'toc-toolbar-dark': 'rgba(17, 17, 17, 0.9)'
+                'toc-toolbar-dark': 'rgba(17, 17, 17, 0.9)',
+                illustration: '#f3c3de',
+                'illustration-dark': '#684358'
             },
 
             text: {
