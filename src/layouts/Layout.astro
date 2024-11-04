@@ -21,8 +21,9 @@ const { title, description, permalink, showTOC = true } = Astro.props;
         <BaseHead title={title} description={description} permalink={permalink} />
     </Head>
 
-    <body class="flex min-h-screen flex-col bg-bg pb-24 text-[11pt] text-text antialiased dark:bg-bg-dark dark:text-text-dark">
+    <body class="bg-background dark:bg-background-dark flex min-h-screen flex-col pb-24">
         <NavBar />
+
         <main class="mx-8 mt-16">
             <slot />
         </main>

@@ -10,9 +10,13 @@
 }
 
 ::selection {
-    @apply bg-selection text-selection-text shadow-none dark:bg-selection-dark dark:text-selection-dark-text;
+    @apply dark:text-selection-text-dark bg-selection text-selection-text shadow-none dark:bg-selection-dark;
+}
+
+body {
+    @apply text-[11pt] text-text antialiased dark:text-text-dark;
 }
 
 a {
-    @apply text-link selection:bg-link hover:text-link-hover dark:text-link-dark dark:selection:bg-link-dark dark:hover:text-link-dark-hover;
+    @apply text-primary selection:bg-primary hover:text-primary-hover dark:text-primary-dark dark:selection:bg-primary-dark dark:hover:text-primary-dark-hover;
 }

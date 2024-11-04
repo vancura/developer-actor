@@ -4,11 +4,11 @@
     }
 
     & strong {
-        @apply font-medium text-strong selection:bg-strong dark:text-strong-dark dark:selection:bg-strong-dark;
+        @apply text-accent dark:text-accent-dark font-medium selection:bg-selection dark:selection:bg-selection-dark;
     }
 
     & em {
-        @apply border-b-[0.1em] font-medium not-italic text-strong selection:bg-strong dark:text-strong-dark dark:selection:bg-strong-dark;
+        @apply text-accent dark:text-accent-dark border-b-[0.1em] font-medium not-italic selection:bg-selection dark:selection:bg-selection-dark;
     }
 
     & h1,
@@ -31,7 +31,7 @@
     }
 
     & h2 {
-        @apply mb-3 mt-10 border-t-4 border-hr pt-8 text-3xl first-of-type:mt-0 first-of-type:border-none lg:mb-6 lg:mt-14 lg:pt-12 lg:text-4xl dark:border-hr-dark;
+        @apply border-ui-border-hr dark:border-ui-border-hr-dark mb-3 mt-10 border-t-4 pt-8 text-3xl first-of-type:mt-0 first-of-type:border-none lg:mb-6 lg:mt-14 lg:pt-12 lg:text-4xl;
     }
 
     & h3 {
@@ -100,7 +100,7 @@
         }
 
         & tr {
-            @apply border-b border-hr last:border-b-0 dark:border-hr-dark;
+            @apply border-ui-border-hr dark:border-ui-border-hr-dark border-b last:border-b-0;
         }
 
         & td {
@@ -113,7 +113,7 @@
     }
 
     & blockquote {
-        @apply text-pretty border-l-4 border-hr pl-4 dark:border-hr-dark;
+        @apply border-ui-border-hr dark:border-ui-border-hr-dark text-pretty border-l-4 pl-4;
     }
 }
 

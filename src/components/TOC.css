@@ -1,0 +1,35 @@
+.toc-nav {
+    @apply bg-background-toc dark:bg-background-toc-dark pointer-events-none fixed right-0 top-[10%] h-[80%] w-80 overflow-y-auto rounded-l-xl opacity-0 shadow-xl min-[1140px]:right-4 min-[1140px]:rounded-xl;
+}
+
+.toc-item {
+    @apply px-6;
+
+    & a {
+        @apply text-text-toc hover:text-primary-hover dark:text-text-toc-dark dark:hover:text-primary-dark-hover block text-balance px-1 py-1;
+
+        &.toc-depth-1 {
+            @apply pl-0;
+        }
+
+        &.toc-depth-2 {
+            @apply pl-[16px];
+        }
+
+        &.toc-depth-3 {
+            @apply pl-[32px];
+        }
+
+        &.toc-depth-4 {
+            @apply pl-[48px];
+        }
+    }
+}
+
+.toc-item.is-active {
+    @apply bg-background-toc-active dark:bg-background-toc-active-dark shadow-sm;
+
+    & a {
+        @apply text-text-toc-active dark:text-text-toc-active-dark;
+    }
+}

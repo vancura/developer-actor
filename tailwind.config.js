@@ -8,100 +8,82 @@ module.exports = {
 
         colors: {
             debug: '#f0f',
-            temp: 'rgba(255, 0, 255, 0.25)',
 
-            bg: {
-                DEFAULT: '#F5F5F5',
-                dark: '#222'
-            },
-
-            text: {
-                DEFAULT: '#333333',
-                dark: '#F5F5F5'
-            },
-
-            link: {
+            primary: {
                 DEFAULT: '#2833FF',
                 hover: '#8C3FFF',
                 dark: '#ABAFFF',
                 'dark-hover': '#CAA6FF'
             },
 
-            strong: {
+            accent: {
                 DEFAULT: '#D200A3',
                 dark: '#FF7DE2'
             },
 
-            hr: {
-                DEFAULT: 'rgba(0, 0, 0, 0.15)',
-                dark: 'rgba(255, 255, 255, 0.15)'
+            background: {
+                DEFAULT: '#F5F5F5',
+                dark: '#222',
+                navbar: '#f5f5f5',
+                'navbar-dark': '#171717',
+                toc: 'rgba(248, 248, 248, 1)',
+                'toc-dark': 'rgba(17, 17, 17, 1)',
+                'toc-filter': 'white',
+                'toc-filter-dark': 'rgba(255, 255, 255, 0.1)',
+                'toc-active': 'white',
+                'toc-active-dark': 'rgba(255, 255, 255, 0.1)',
+                'toc-toolbar': 'rgba(248, 248, 248, 0.9)',
+                'toc-toolbar-dark': 'rgba(17, 17, 17, 0.9)'
+            },
+
+            text: {
+                DEFAULT: '#333333',
+                dark: '#F5F5F5',
+                muted: 'rgba(0, 0, 0, 0.15)',
+                'muted-dark': 'rgba(255, 255, 255, 0.15)',
+                toc: '#333',
+                'toc-dark': '#fafafa',
+                'toc-active': '#2833FF',
+                'toc-active-dark': '#ABAFFF'
             },
 
             selection: {
                 DEFAULT: '#222',
-                text: '#F5F5F5',
-                dark: '#F5F5F5',
-                'dark-text': '#222'
+                dark: '#f5f5f5',
+                text: 'white',
+                'text-dark': 'white'
             },
 
-            'code-stroke': {
-                DEFAULT: 'rgba(0, 0, 0, 0.1)',
-                dark: 'rgba(255, 255, 255, 0.15)'
+            ui: {
+                border: 'rgba(0, 0, 0, 0.1)',
+                'border-dark': 'rgba(255, 255, 255, 0.15)',
+                'border-hr': 'rgba(0, 0, 0, 0.1)',
+                'border-hr-dark': 'rgba(255, 255, 255, 0.15)'
             },
 
-            'code-bg': {
-                DEFAULT: 'white',
-                dark: 'rgba(0, 0, 0, 0.3)'
+            toc: {
+                progress: '#333',
+                'progress-active': '#f5f5f5'
             },
 
-            navbar: {
-                DEFAULT: '#f5f5f5',
-                dark: '#171717'
+            code: {
+                stroke: 'rgba(0, 0, 0, 0.1)',
+                'stroke-dark': 'rgba(255, 255, 255, 0.15)',
+                bg: '#ffffff',
+                'bg-dark': '#171717'
             },
 
-            hero: '#aaa',
-
-            'index-header': 'white',
-
-            'index-header-button': {
-                DEFAULT: '#2833FF',
-                hover: '#8C3FFF'
+            gray: {
+                50: '#fafafa',
+                100: '#f5f5f5',
+                300: '#d4d4d4',
+                600: '#666666',
+                700: '#404040',
+                900: '#171717'
             },
 
-            'index-header-button-label': 'white',
-
-            'toc-bg': {
-                DEFAULT: 'rgba(246, 246, 246, 1)',
-                dark: 'rgba(17, 17, 17, 1)'
-            },
-
-            'toc-text': {
-                DEFAULT: '#333',
-                dark: '#fafafa'
-            },
-
-            'toc-active-bg': {
-                DEFAULT: 'white',
-                dark: 'rgba(255, 255, 255, 0.1)'
-            },
-
-            'toc-active-text': {
-                DEFAULT: '#2833FF',
-                dark: '#ABAFFF'
-            },
-
-            'toc-toolbar-bg': {
-                DEFAULT: 'rgba(246, 246, 246, 0.9)',
-                dark: 'rgba(17, 17, 17, 0.9)'
-            },
-
-            'toc-filter-bg': {
-                DEFAULT: 'white',
-                dark: 'rgba(255, 255, 255, 0.1)'
-            },
-
-            'toc-progress': '#333',
-            'toc-progress-active': '#f5f5f5'
+            white: 'white',
+            black: 'black'
         },
 
         extend: {
@@ -109,16 +91,10 @@ module.exports = {
                 base: '1.1rem',
                 'toc-item': '0.75rem'
             },
+
             spacing: {
                 128: '32rem',
                 64: '16rem'
-            },
-            padding: {
-                'toc-y': '0.25rem',
-                'toc-d1': '1.5rem',
-                'toc-d2': '2.5rem',
-                'toc-d3': '3.5rem',
-                'toc-d4': '4.5rem'
             }
         }
     },
