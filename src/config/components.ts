@@ -19,8 +19,7 @@ export const COMPONENT_CONFIG = {
     HEADING_LINKS: {
         SELECTOR: '.mdx-content h2, .mdx-content h3, .mdx-content h4',
         ID_REGEX: /[^a-z0-9]+/g,
-        TRIM_REGEX: /(^-|-$)/g,
-        ANCHOR_CLASS: 'anchor absolute left-1 px-2 rounded-full border-none hover:bg-primary dark:hover:bg-primary-dark font-source text-[10pt] hover:text-background dark:hover:text-background-dark'
+        TRIM_REGEX: /(^-|-$)/g
     },
 
     // MDX Wrapper constants.
