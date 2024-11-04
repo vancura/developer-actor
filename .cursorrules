@@ -165,8 +165,6 @@ You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web d
 -   **Custom Themes**:
     -   Extend Tailwind's default theme when necessary.
     -   Keep theme customizations minimal and consistent.
--   **Avoid `@apply` Directive**:
-    -   Do not use `@apply`; prefer utility classes for styling.
 -   **Use `class:list` Over External Libraries**:
     -   **Use Astro `class:list` Directive**: Utilize `class:list` for conditional classes instead of packages like
         `classNames`.
