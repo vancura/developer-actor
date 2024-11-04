@@ -1,4 +1,4 @@
 export default {
-    title: 'Actor Programming Model: Build Serverless Microapps',
-    description: 'Discover the Actor model for serverless microapps. Learn to develop, share, and monetize reusable tools for web scraping, automation, and AI agents.'
+    title: 'Vestibulum Consequat Malesuada Felis Ornare',
+    description: 'Nullam sagittis vestibulum nunc quis malesuada sem ornare ut donec pellentesque augue vitae massa consectetur eu tincidunt eros facilisis sed accumsan.'
 };
