@@ -59,10 +59,7 @@ module.exports = {
                 dark: '#171717'
             },
 
-            hero: {
-                DEFAULT: 'black',
-                dark: 'white'
-            },
+            hero: '#aaa',
 
             'index-header': 'white',
 
