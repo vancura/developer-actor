@@ -46,4 +46,4 @@ export const COMPONENT_CONFIG = {
 } as const;
 
 // Export specific configs for direct imports.
-export const { HEAD, HEADING_LINKS, HERO, MDX, TOC } = COMPONENT_CONFIG;
+export const { HEAD, HEADING_LINKS, MDX, TOC } = COMPONENT_CONFIG;
