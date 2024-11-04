@@ -27,11 +27,11 @@
     }
 
     & h1 {
-        @apply pb-4 pt-8 text-4xl lg:pb-6 lg:pt-12 lg:text-5xl;
+        @apply pb-4 pt-14 text-4xl lg:pb-6 lg:pt-20 lg:text-5xl;
     }
 
     & h2 {
-        @apply mb-3 mt-10 border-t-4 border-hr pt-8 text-3xl lg:mb-6 lg:mt-14 lg:pt-12 lg:text-4xl dark:border-hr-dark;
+        @apply mb-3 mt-10 border-t-4 border-hr pt-8 text-3xl first-of-type:mt-0 first-of-type:border-none lg:mb-6 lg:mt-14 lg:pt-12 lg:text-4xl dark:border-hr-dark;
     }
 
     & h3 {
