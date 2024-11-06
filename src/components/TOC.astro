@@ -229,13 +229,17 @@
             if (this.elements.nav) {
                 const mouseX = event.clientX;
                 const windowWidth = window.innerWidth;
-                const threshold = windowWidth - TOC.MOUSE_THRESHOLD;
-                const shouldShow = mouseX > threshold;
+                const thresholdShow = windowWidth - TOC.MOUSE_THRESHOLD_INACTIVE;
+                const thresholdHide = windowWidth - TOC.MOUSE_THRESHOLD_ACTIVE;
 
-                if (shouldShow !== this.state.isVisible) {
-                    this.state.isVisible = shouldShow;
-                    this.elements.nav.style.pointerEvents = shouldShow ? 'auto' : 'none';
-                    this.elements.nav.style.opacity = shouldShow ? '1' : '0';
+                if (!this.state.isVisible && mouseX > thresholdShow) {
+                    this.state.isVisible = true;
+                    this.elements.nav.style.pointerEvents = 'auto';
+                    this.elements.nav.style.opacity = '1';
+                } else if (this.state.isVisible && mouseX < thresholdHide) {
+                    this.state.isVisible = false;
+                    this.elements.nav.style.pointerEvents = 'none';
+                    this.elements.nav.style.opacity = '0';
                 }
             }
         };

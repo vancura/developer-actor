@@ -39,7 +39,8 @@ export const COMPONENT_CONFIG = {
         },
         PROGRESS_BAR_DEBOUNCE: 16,
         SCROLL_THRESHOLD: 50,
-        MOUSE_THRESHOLD: 400,
+        MOUSE_THRESHOLD_INACTIVE: 32,
+        MOUSE_THRESHOLD_ACTIVE: 320 + 32, // panel width + safe area for accidental mouse movement
         OBSERVER_MARGIN: '0px 0px -80% 0px'
     } satisfies TOCConfig
 } as const;

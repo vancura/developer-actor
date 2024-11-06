@@ -63,8 +63,11 @@ export interface TOCConfig {
     /** Threshold for scroll position changes. */
     readonly SCROLL_THRESHOLD: number;
 
-    /** Threshold for mouse position to show/hide TOC. */
-    readonly MOUSE_THRESHOLD: number;
+    /** Threshold for mouse position to show TOC when inactive. */
+    readonly MOUSE_THRESHOLD_INACTIVE: number;
+
+    /** Threshold for mouse position to show TOC when active. */
+    readonly MOUSE_THRESHOLD_ACTIVE: number;
 
     /** Margin for intersection observer. */
     readonly OBSERVER_MARGIN: string;
