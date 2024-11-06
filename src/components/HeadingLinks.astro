@@ -4,14 +4,12 @@
     import { headingStore } from '../stores/heading';
     import { HEADING_LINKS } from '../config/components';
 
-    // Create a logger instance with the 'HeadingLinks' prefix.
     const logger: ILogger = createLogger({ prefix: 'HeadingLinks' });
 
-    // Define a type for valid headings.
     interface ValidHeading extends HeadingEntry {
-        id: string; // Heading ID
-        text: string; // Heading text
-        depth: number; // Heading depth
+        id: string;
+        text: string;
+        depth: number;
     }
 
     /** Manager for heading links in MDX content. Handles heading ID generation, anchor creation, and table of contents management. */
@@ -39,6 +37,8 @@
          * @param targetId - ID of the target element to scroll to
          */
         private smoothScrollTo(targetId: string): void {
+            // logger.info(`Attempting to scroll to target ID: ${targetId}`);
+
             const targetElement = document.getElementById(targetId);
 
             if (targetElement) {
@@ -46,6 +46,8 @@
                     top: targetElement.offsetTop,
                     behavior: 'smooth'
                 });
+
+                // logger.info(`Successfully scrolled to target ID: ${targetId}`);
             } else {
                 logger.error(`Target heading not found: ${targetId}`);
             }
@@ -63,14 +65,22 @@
             if (text) {
                 const baseId = text.toLowerCase().replace(HeadingLinksManager.ID_REGEX, '-').replace(HeadingLinksManager.TRIM_REGEX, '');
 
+                // logger.info(`Base ID generated: ${baseId}`);
+
                 if (this.usedIds.has(baseId)) {
                     const count = this.usedIds.get(baseId)! + 1;
                     this.usedIds.set(baseId, count);
                     o = `${baseId}-${count}`;
+
+                    // logger.info(`Duplicate ID handled: ${o}`);
                 } else {
                     this.usedIds.set(baseId, 1);
                     o = baseId;
+
+                    // logger.info(`New ID generated: ${baseId}`);
                 }
+            } else {
+                logger.warn('Text provided for ID generation is null');
             }
 
             return o;
@@ -90,6 +100,8 @@
             anchor.innerHTML = '#';
             anchor.setAttribute('aria-hidden', 'true');
 
+            // logger.info(`Anchor element created for ID: ${id}`);
+
             return anchor;
         }
 
@@ -102,17 +114,15 @@
         private handleAnchorClick = (e: MouseEvent, id: string): void => {
             e.preventDefault();
 
-            // Construct the URL with the heading ID.
             const url = new URL(window.location.href);
             url.hash = id;
 
-            // Scroll to the heading and update the URL.
+            logger.info(`Anchor clicked: navigating to ${id}`);
+
             this.smoothScrollTo(id);
 
-            // Update the URL in the browser history.
             window.history.pushState({}, '', url.toString());
 
-            // Copy the URL to the clipboard.
             navigator.clipboard.writeText(url.toString()).catch((error) => {
                 logger.error('Failed to copy URL to clipboard', error);
             });
@@ -184,7 +194,6 @@
         };
     }
 
-    // Initialize heading links manager.
     try {
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
