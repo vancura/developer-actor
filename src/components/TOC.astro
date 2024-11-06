@@ -1,9 +1,9 @@
-<div class="pointer-events-none fixed right-0 top-0 h-full w-16 mix-blend-exclusion min-[1140px]:pr-4" id="toc-progress">
+<div class="pointer-events-none fixed right-0 top-0 h-full w-16 mix-blend-exclusion min-[1140px]:pr-4 min-[1600px]:hidden" id="toc-progress">
     <div id="toc-progress-bars" class="relative h-full"></div>
 </div>
 
 <nav class="toc-nav" id="toc-nav" aria-label="Table of Contents">
-    <div class="sticky left-0 top-0 flex items-center justify-between bg-background-toc-toolbar p-6 dark:bg-background-toc-toolbar-dark">
+    <div class="toc-filter sticky left-0 top-0 flex items-center justify-between bg-background-toc-toolbar p-6 dark:bg-background-toc-toolbar-dark">
         <input type="text" id="toc-filter" placeholder="Filter..." aria-label="Filter TOC" class="w-full rounded-md bg-background-toc-filter px-2 py-1 text-toc-item shadow-sm dark:bg-background-toc-filter-dark" />
     </div>
 
@@ -111,6 +111,22 @@
             window.addEventListener('mousemove', this.handleMouseMove, { passive: true });
 
             this.elements.tocList?.addEventListener('click', this.handleTOCLinkClick);
+
+            window.addEventListener('resize', () => {
+                this.updateTOCMode();
+                this.updateProgressVisibility();
+
+                if (window.innerWidth < TOC.WIDE_SCREEN_WIDTH) {
+                    this.debouncedRenderProgressBars();
+                }
+            });
+        }
+
+        /** Updates the TOC mode based on the viewport width. */
+        private updateTOCMode(): void {
+            if (this.elements.nav) {
+                this.elements.nav.classList.toggle('is-wide-screen', window.innerWidth >= TOC.WIDE_SCREEN_WIDTH);
+            }
         }
 
         /**
@@ -193,6 +209,16 @@
         private renderProgressBars(): void {
             safeExecute(
                 () => {
+                    if (window.innerWidth >= TOC.WIDE_SCREEN_WIDTH) {
+                        // If the screen is wide enough, we don't need the progress bars.
+                        // Clear the progress bars container.
+                        if (this.elements.progressBars) {
+                            this.elements.progressBars.innerHTML = '';
+                        }
+
+                        return;
+                    }
+
                     if (this.elements.progressBars) {
                         const headings = headingStore.get();
 
@@ -227,7 +253,7 @@
 
         /** Handles mouse move events. */
         private handleMouseMove = (event: MouseEvent): void => {
-            if (this.elements.nav) {
+            if (this.elements.nav && window.innerWidth < TOC.WIDE_SCREEN_WIDTH) {
                 const mouseX = event.clientX;
                 const windowWidth = window.innerWidth;
                 const thresholdShow = windowWidth - TOC.MOUSE_THRESHOLD_INACTIVE;
@@ -349,6 +375,8 @@
                         }
                     });
 
+                    this.updateTOCMode();
+                    this.updateProgressVisibility();
                     this.renderTOC();
                     this.activateFirstVisibleHeading();
 
@@ -416,6 +444,15 @@
                 logger.warn('Click event on non-TOC link element');
             }
         };
+
+        /** Updates the visibility of the progress bar based on the screen width. */
+        private updateProgressVisibility(): void {
+            const progressElement = document.getElementById('toc-progress');
+
+            if (progressElement) {
+                progressElement.style.display = window.innerWidth >= TOC.WIDE_SCREEN_WIDTH ? 'none' : 'block';
+            }
+        }
     }
 
     safeExecute(
@@ -439,6 +476,14 @@
 <style is:global>
     .toc-nav {
         @apply pointer-events-none fixed right-0 top-[10%] h-[80%] w-80 overflow-y-auto rounded-l-xl bg-background-toc opacity-0 shadow-xl min-[1140px]:right-4 min-[1140px]:rounded-xl dark:bg-background-toc-dark;
+
+        &.toc-nav.is-wide-screen {
+            @apply pointer-events-auto right-0 top-0 h-full rounded-none bg-transparent opacity-100 shadow-none;
+
+            & .toc-filter {
+                @apply bg-transparent;
+            }
+        }
     }
 
     .toc-item {

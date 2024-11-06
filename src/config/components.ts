@@ -41,7 +41,8 @@ export const COMPONENT_CONFIG = {
         SCROLL_THRESHOLD: 50,
         MOUSE_THRESHOLD_INACTIVE: 32,
         MOUSE_THRESHOLD_ACTIVE: 320 + 32, // panel width + safe area for accidental mouse movement
-        OBSERVER_MARGIN: '0px 0px -80% 0px'
+        OBSERVER_MARGIN: '0px 0px -80% 0px',
+        WIDE_SCREEN_WIDTH: 1710
     } satisfies TOCConfig
 } as const;
 

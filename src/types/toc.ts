@@ -71,4 +71,7 @@ export interface TOCConfig {
 
     /** Margin for intersection observer. */
     readonly OBSERVER_MARGIN: string;
+
+    /** Width at which TOC is considered wide, used to determine if TOC should be rendered in a separate panel. */
+    readonly WIDE_SCREEN_WIDTH: number;
 }

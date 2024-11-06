@@ -8,6 +8,7 @@ module.exports = {
 
         colors: {
             debug: '#f0f',
+            transparent: 'transparent',
 
             primary: {
                 DEFAULT: '#2833FF',
