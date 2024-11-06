@@ -1,6 +1,22 @@
 .mdx-content {
     & a {
-        @apply border-b-[0.1em] font-medium;
+        @apply relative font-medium;
+
+        &:not([href^='http']):not([href^='https']) {
+            @apply border-b-[0.1em] font-medium;
+        }
+
+        &[href^='http']::before,
+        &[href^='https']::before {
+            content: '';
+            @apply absolute bottom-0 left-0 right-[0.8em] border-b-[0.1em];
+        }
+
+        &[href^='http']::after,
+        &[href^='https']::after {
+            content: '↗︎';
+            @apply ml-[0.2rem] inline-block -translate-y-[0.2rem] align-top font-heading text-[18px] transition-transform hover:-translate-y-[0.4rem] hover:translate-x-[0.2rem];
+        }
     }
 
     & strong {
