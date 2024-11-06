@@ -24,7 +24,7 @@
     }
 
     & em {
-        @apply border-b-[0.1em] font-medium not-italic text-accent selection:bg-selection dark:text-accent-dark dark:selection:bg-selection-dark;
+        @apply font-medium not-italic text-accent selection:bg-selection dark:text-accent-dark dark:selection:bg-selection-dark;
     }
 
     & h1,
