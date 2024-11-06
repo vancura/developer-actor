@@ -1,74 +1,14 @@
 ---
 import strings from '../../strings.mjs';
+import MDXWrapper from '../components/MDXWrapper.astro';
+import Content from '../content/pages/index.mdx';
 import Layout from '../layouts/Layout.astro';
-import FeatureCard from '../components/FeatureCard.astro';
 ---
 
-<Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()} showTOC={false}>
-    <header aria-label="Hero" role="banner" class="-mx-8 h-[66vh] select-none">
-        <iframe src="https://my.spline.design/home-5697816bede77960b20644406d861c3f/" width="100%" height="100%"></iframe>
-    </header>
-
-    <header class="bg-white dark:bg-black pointer-events-none absolute left-0 top-[55%] flex -translate-y-1/2 select-none flex-col gap-4 rounded-r-md p-8 shadow-xl" role="banner">
-        <h1 class="text-balance font-heading text-5xl oldstyle-nums proportional-nums stacked-fractions tracking-tight">Vestibulum consequat malesuada felis</h1>
-
-        <p class="text-balance pb-2 font-heading text-3xl oldstyle-nums proportional-nums stacked-fractions tracking-tight">Nullam sagittis vestibulum nunc quis malesuada sem.</p>
-
-        <p>
-            <a class="pointer-events-auto inline-block rounded-md px-4 py-2" href="#content" data-smooth-scroll>Learn More</a>
-        </p>
-    </header>
-
-    <section class="mx-auto max-w-[1024px]">
-        <h2>Praesent Lacinia Magna</h2>
-
-        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <FeatureCard
-                title="Praesent Lacinia Magna"
-                description="Curabitur ullamcorper feugiat vehicula nec lacinia ut dignissim nibh donec ac est faucibus pellentesque."
-                link={{
-                    href: '/get-started',
-                    text: 'Start Experimenting'
-                }}
-            />
-
-            <FeatureCard
-                title="Suspendisse Rhoncus Ipsum"
-                description="Maecenas fermentum lacus vitae diam consequat vitae rutrum nisi vehicula proin cursus odio sed neque."
-                link={{
-                    href: '/whitepaper',
-                    text: 'Read the Whitepaper'
-                }}
-            />
-        </div>
-
-        <h2>Vestibulum</h2>
-
-        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            <FeatureCard title="Curabitur Elementum" description="Fusce accumsan tortor ut felis sollicitudin vel efficitur nulla ultricies phasellus feugiat est vel." />
-            <FeatureCard title="Praesent Magna" description="Integer rutrum sem ac metus lobortis vel consectetur nulla facilisis suspendisse rhoncus ipsum." />
-            <FeatureCard title="Maecenas Fermentum" description="Vivamus condimentum magna nisi eget aliquam mi efficitur id nulla facilisi orci ut lacus." />
-            <FeatureCard title="Suspendisse Potenti" description="Etiam euismod consectetur lectus at finibus morbi mattis ex non lorem convallis ut tempor." />
-        </div>
-    </section>
+<Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()}>
+    <div class="mdx-content mx-auto max-w-screen-lg">
+        <MDXWrapper>
+            <Content />
+        </MDXWrapper>
+    </div>
 </Layout>
-
-<script>
-    document.querySelectorAll('[data-smooth-scroll]').forEach((link) => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const href = link.getAttribute('href');
-            document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
-        });
-    });
-</script>
-
-<style>
-    h2 {
-        @apply py-10 pb-6 font-heading text-4xl oldstyle-nums proportional-nums stacked-fractions tracking-tight;
-    }
-
-    a {
-        @apply bg-primary text-background hover:bg-primary-hover hover:text-background dark:bg-primary-dark dark:text-background-dark dark:hover:bg-primary-dark-hover dark:hover:text-background-dark inline-block rounded-md px-4 py-2 font-medium;
-    }
-</style>

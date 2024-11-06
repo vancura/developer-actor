@@ -1,17 +1,12 @@
 ---
 import { Head } from 'astro-capo';
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
 import HeadingLinks from '../components/HeadingLinks.astro';
-import NavBar from '../components/NavBar.astro';
 import TOC from '../components/TOC.astro';
-import type { SEOMetadata } from '../types';
 
 import '../styles/mdx-content.css';
 import '../styles/tailwind.css';
 import '../styles/typography.css';
-
-type Props = SEOMetadata;
 
 const { title, description, permalink, showTOC = true } = Astro.props;
 ---
@@ -21,10 +16,8 @@ const { title, description, permalink, showTOC = true } = Astro.props;
         <BaseHead title={title} description={description} permalink={permalink} />
     </Head>
 
-    <body class="bg-background dark:bg-background-dark flex min-h-screen flex-col pb-24">
-        <NavBar />
-
-        <main class="mx-8 mt-16">
+    <body class="flex min-h-screen flex-col bg-background pb-24 dark:bg-background-dark">
+        <main class="mx-8">
             <slot />
         </main>
 
@@ -36,6 +29,5 @@ const { title, description, permalink, showTOC = true } = Astro.props;
                 </>
             )
         }
-        <Footer />
     </body>
 </html>
