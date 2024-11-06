@@ -18,6 +18,7 @@
     import { headingStore } from '../stores/heading';
     import type { TOCEntry, ProgressBarStyles, HeadingEntry } from '../types/toc';
     import { safeQuerySelector } from '../utils/dom';
+    import { smoothScrollTo } from '../utils/scroll';
 
     const logger = createLogger({ prefix: 'TOC' });
 
@@ -389,29 +390,11 @@
         }
 
         /**
-         * Smoothly scrolls to the target element.
-         *
-         * @param targetId - ID of the target element
-         */
-        private smoothScrollTo(targetId: string): void {
-            const targetElement = document.getElementById(targetId);
-
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop,
-                    behavior: 'smooth'
-                });
-            } else {
-                logger.error(`Target heading not found: ${targetId}`);
-            }
-        }
-
-        /**
          * Handles click events on TOC links.
          *
          * @param event - Click event
          */
-        private handleTOCLinkClick = (event: MouseEvent): void => {
+        private handleTOCLinkClick = (event: MouseEvent) => {
             const link = event.target as HTMLAnchorElement;
 
             if (link.matches('.toc-item a')) {
@@ -419,7 +402,7 @@
                 const targetId = link.getAttribute('href')?.substring(1);
 
                 if (targetId) {
-                    this.smoothScrollTo(targetId);
+                    smoothScrollTo({ targetId: targetId });
 
                     try {
                         history.pushState(null, '', `#${targetId}`);

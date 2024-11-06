@@ -3,6 +3,7 @@
     import type { HeadingEntry, ILogger } from '../types';
     import { headingStore } from '../stores/heading';
     import { HEADING_LINKS } from '../config/components';
+    import { smoothScrollTo } from '../utils/scroll';
 
     const logger: ILogger = createLogger({ prefix: 'HeadingLinks' });
 
@@ -29,28 +30,6 @@
         /** Constructor for the HeadingLinksManager class. Initializes the usedIds map. */
         constructor() {
             this.usedIds = new Map<string, number>();
-        }
-
-        /**
-         * Smoothly scroll to the target element.
-         *
-         * @param targetId - ID of the target element to scroll to
-         */
-        private smoothScrollTo(targetId: string): void {
-            // logger.info(`Attempting to scroll to target ID: ${targetId}`);
-
-            const targetElement = document.getElementById(targetId);
-
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop,
-                    behavior: 'smooth'
-                });
-
-                // logger.info(`Successfully scrolled to target ID: ${targetId}`);
-            } else {
-                logger.error(`Target heading not found: ${targetId}`);
-            }
         }
 
         /**
@@ -122,7 +101,7 @@
             const url = new URL(window.location.href);
             url.hash = id;
 
-            this.smoothScrollTo(id);
+            smoothScrollTo({ targetId: id });
 
             try {
                 window.history.pushState({}, '', url.toString());
