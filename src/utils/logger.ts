@@ -23,6 +23,7 @@ class Logger implements ILogger {
         return currentLevelIndex <= minLevelIndex;
     }
 
+    // noinspection FunctionNamingConventionJS
     /**
      * Log a message with the specified level.
      *
@@ -31,21 +32,21 @@ class Logger implements ILogger {
      * @param error - Optional error object to log
      */
     private log(level: LogLevel, message: string, error?: unknown): void {
-        if (!this.shouldLog(level)) return;
+        if (this.shouldLog(level)) {
+            const prefix = this.prefix ? `${this.prefix} ` : '';
+            const formattedMessage = `${prefix}${message}`;
 
-        const prefix = this.prefix ? `${this.prefix} ` : '';
-        const formattedMessage = `${prefix}${message}`;
-
-        switch (level) {
-            case 'info':
-                console.info(formattedMessage);
-                break;
-            case 'warning':
-                console.warn(formattedMessage);
-                break;
-            case 'error':
-                console.error(formattedMessage, error || '');
-                break;
+            switch (level) {
+                case 'info':
+                    console.info(formattedMessage);
+                    break;
+                case 'warning':
+                    console.warn(formattedMessage);
+                    break;
+                case 'error':
+                    console.error(formattedMessage, error || '');
+                    break;
+            }
         }
     }
 
