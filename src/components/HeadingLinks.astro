@@ -59,28 +59,33 @@
          * @param text - Text to generate an ID from
          * @returns Heading ID
          */
-        private generateHeadingId(text: string | null): string | null {
-            let o: string | null = null;
+        private generateHeadingId(text: string | null): string {
+            let o = '';
 
             if (text) {
                 const baseId = text.toLowerCase().replace(HeadingLinksManager.ID_REGEX, '-').replace(HeadingLinksManager.TRIM_REGEX, '');
 
-                // logger.info(`Base ID generated: ${baseId}`);
-
-                if (this.usedIds.has(baseId)) {
-                    const count = this.usedIds.get(baseId)! + 1;
-                    this.usedIds.set(baseId, count);
-                    o = `${baseId}-${count}`;
-
-                    // logger.info(`Duplicate ID handled: ${o}`);
+                if (baseId.length === 0) {
+                    logger.warn(`Generated heading ID is empty for text: "${text}"`);
+                    o = '';
                 } else {
-                    this.usedIds.set(baseId, 1);
-                    o = baseId;
+                    // logger.info(`Base ID generated: ${baseId}`);
 
-                    // logger.info(`New ID generated: ${baseId}`);
+                    if (this.usedIds.has(baseId)) {
+                        const count = this.usedIds.get(baseId)! + 1;
+                        this.usedIds.set(baseId, count);
+                        o = `${baseId}-${count}`;
+
+                        // logger.info(`Duplicate ID handled: ${o}`);
+                    } else {
+                        this.usedIds.set(baseId, 1);
+                        o = baseId;
+
+                        // logger.info(`New ID generated: ${baseId}`);
+                    }
                 }
             } else {
-                logger.warn('Text provided for ID generation is null');
+                logger.warn('Empty text provided for heading ID generation');
             }
 
             return o;
@@ -117,11 +122,13 @@
             const url = new URL(window.location.href);
             url.hash = id;
 
-            logger.info(`Anchor clicked: navigating to ${id}`);
-
             this.smoothScrollTo(id);
 
-            window.history.pushState({}, '', url.toString());
+            try {
+                window.history.pushState({}, '', url.toString());
+            } catch (error) {
+                logger.error('Failed to update browser history', error);
+            }
 
             navigator.clipboard.writeText(url.toString()).catch((error) => {
                 logger.error('Failed to copy URL to clipboard', error);
@@ -130,19 +137,23 @@
 
         /** Add heading links to all headings. */
         public addHeadingLinks(): void {
-            this.usedIds = new Map<string, number>();
-            const headings: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(HeadingLinksManager.HEADING_SELECTOR);
+            if (document.querySelector(HeadingLinksManager.HEADING_SELECTOR)) {
+                this.usedIds = new Map<string, number>();
+                const headings: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(HeadingLinksManager.HEADING_SELECTOR);
 
-            headings.forEach((headingElement) => {
-                const id = this.generateHeadingId(headingElement.textContent);
+                headings.forEach((headingElement) => {
+                    const id = this.generateHeadingId(headingElement.textContent);
 
-                if (id) {
-                    const anchor = this.createAnchorElement(id);
-                    anchor.addEventListener('click', (e) => this.handleAnchorClick(e, id));
-                    headingElement.insertAdjacentElement('afterbegin', anchor);
-                    headingElement.id = id;
-                }
-            });
+                    if (id) {
+                        const anchor = this.createAnchorElement(id);
+                        anchor.addEventListener('click', (e) => this.handleAnchorClick(e, id));
+                        headingElement.insertAdjacentElement('afterbegin', anchor);
+                        headingElement.id = id;
+                    }
+                });
+            } else {
+                logger.warn('No headings found in document to process');
+            }
         }
 
         /**
@@ -151,23 +162,27 @@
          * @returns Array of headings.
          */
         public collectHeadings(): HeadingEntry[] {
-            const headings: HeadingEntry[] = [];
+            let headings: HeadingEntry[] = [];
             const headingElements = document.querySelectorAll(HeadingLinksManager.HEADING_SELECTOR);
 
-            this.usedIds = new Map<string, number>();
+            if (headingElements.length > 0) {
+                this.usedIds = new Map<string, number>();
 
-            headingElements.forEach((heading) => {
-                const text = heading.textContent;
-                const id = this.generateHeadingId(text);
-                const depth = parseInt(heading.tagName.charAt(1));
+                headingElements.forEach((heading) => {
+                    const text = heading.textContent;
+                    const id = this.generateHeadingId(text);
+                    const depth = parseInt(heading.tagName.charAt(1));
 
-                if (id && text) {
-                    // Remove the # prefix, since that's the heading activation hyperlink.
-                    headings.push({ id, text: text.replace(/^#/, ''), depth });
-                } else {
-                    logger.error(`[heading-links] Heading link text not found: ${heading.textContent}`);
-                }
-            });
+                    if (id && text) {
+                        // Remove the # prefix, since that's the heading activation hyperlink.
+                        headings.push({ id, text: text.replace(/^#/, ''), depth });
+                    } else {
+                        logger.error(`Heading link text not found: ${heading.textContent}`);
+                    }
+                });
+            } else {
+                logger.warn('No headings found to collect');
+            }
 
             return headings;
         }
@@ -213,6 +228,6 @@
             });
         }
     } catch (error) {
-        logger.error('[HeadingLinks] Failed to initialize heading links manager', error);
+        logger.error('Failed to initialize heading links manager', error);
     }
 </script>
