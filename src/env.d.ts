@@ -1,6 +1,4 @@
 /// <reference path="../.astro/types.d.ts" />
-/// <reference types="@astrojs/image/client" />
-
 /** Environment variables for the application. */
 interface ImportMetaEnv {
     /**

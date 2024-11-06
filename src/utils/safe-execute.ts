@@ -2,6 +2,7 @@ import { createLogger } from './logger';
 
 const logger = createLogger({ prefix: 'SafeExecute' });
 
+// noinspection FunctionWithMultipleReturnPointsJS
 /** Safely executes an operation with error handling and logging. */
 export function safeExecute<T>(operation: () => T, fallback: T, errorMessage: string): T {
     try {
