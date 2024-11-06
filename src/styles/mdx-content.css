@@ -2,6 +2,10 @@
     & a {
         @apply relative font-medium;
 
+        &.anchor {
+            @apply absolute;
+        }
+
         &:not([href^='http']):not([href^='https']) {
             @apply border-b-[0.1em] font-medium;
         }
