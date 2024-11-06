@@ -9,10 +9,10 @@ const { description, spline, position = 'content' } = Astro.props;
 
 // Calculate width and alignment classes based on position
 const containerClasses = {
-    left: 'spline float-left w-1/3 mr-8 mb-4',
-    right: 'spline float-right w-1/3 ml-8 mb-4',
-    content: 'spline w-full mb-8',
-    wide: 'spline relative left-[50%] right-[50%] -mx-[100vw] ml-[-50vw] mr-[-50vw] w-screen max-w-[100vw] mb-8'
+    left: 'spline float-left w-1/3 mr-8 mb-4 select-none',
+    right: 'spline float-right w-1/3 ml-8 mb-4 select-none',
+    content: 'spline w-full mb-8 select-none',
+    wide: 'spline relative left-[50%] right-[50%] -mx-[100vw] ml-[-50vw] mr-[-50vw] w-screen max-w-[100vw] mb-8 select-none'
 };
 
 const iframeClasses = {
