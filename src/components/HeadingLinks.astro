@@ -41,15 +41,14 @@
         private smoothScrollTo(targetId: string): void {
             const targetElement = document.getElementById(targetId);
 
-            if (!targetElement) {
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop,
+                    behavior: 'smooth'
+                });
+            } else {
                 logger.error(`Target heading not found: ${targetId}`);
-                return;
             }
-
-            window.scrollTo({
-                top: targetElement.offsetTop - HEADING_LINKS.SCROLL_OFFSET,
-                behavior: 'smooth'
-            });
         }
 
         /**
