@@ -6,37 +6,23 @@ import type { ScrollOptions, ScrollResult } from '../types/scroll';
  * @param options - Scroll options including target ID and callbacks
  * @returns Promise that resolves with scroll result
  */
-export const smoothScrollTo = async (options: ScrollOptions): Promise<ScrollResult> => {
-    return new Promise((resolve) => {
-        const targetElement = document.getElementById(options.targetId);
+export const smoothScrollTo = async ({ targetId, offset = 0, onComplete }: ScrollOptions): Promise<ScrollResult> => {
+    const element = document.getElementById(targetId);
 
-        if (targetElement) {
-            const scrollOptions: ScrollIntoViewOptions = {
-                behavior: 'smooth',
-                block: 'start'
-            };
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            targetElement.scrollIntoView(scrollOptions);
-
-            // Apply offset if specified
-            if (options.offset) {
-                window.scrollBy(0, options.offset);
-            }
-
-            // Resolve after animation
-            setTimeout(() => {
-                options.onComplete?.();
-                resolve({
-                    success: true,
-                    element: targetElement
-                });
-            }, 1000);
-        } else {
-            console.error(`Target element not found: ${options.targetId}`);
-            resolve({
-                success: false,
-                element: null
-            });
+        if (offset) {
+            window.scrollBy(0, offset);
         }
-    });
+
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                onComplete?.();
+                resolve({ success: true, element });
+            }, 1000);
+        });
+    }
+
+    return { success: false, element: null };
 };
