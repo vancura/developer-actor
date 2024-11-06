@@ -19,8 +19,7 @@ export const COMPONENT_CONFIG = {
     HEADING_LINKS: {
         SELECTOR: '.mdx-content h2, .mdx-content h3, .mdx-content h4',
         ID_REGEX: /[^a-z0-9]+/g,
-        TRIM_REGEX: /(^-|-$)/g,
-        SCROLL_OFFSET: 60 // offset to account for the navbar height.
+        TRIM_REGEX: /(^-|-$)/g
     },
 
     // MDX Wrapper constants.
@@ -41,8 +40,7 @@ export const COMPONENT_CONFIG = {
         PROGRESS_BAR_DEBOUNCE: 16,
         SCROLL_THRESHOLD: 50,
         MOUSE_THRESHOLD: 400,
-        OBSERVER_MARGIN: '0px 0px -80% 0px',
-        SCROLL_OFFSET: 60
+        OBSERVER_MARGIN: '0px 0px -80% 0px'
     } satisfies TOCConfig
 } as const;
 
