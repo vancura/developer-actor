@@ -3,8 +3,8 @@
 </div>
 
 <nav class="toc-nav" id="toc-nav" aria-label="Table of Contents">
-    <div class="bg-background-toc-toolbar dark:bg-background-toc-toolbar-dark sticky left-0 top-0 flex items-center justify-between p-6">
-        <input type="text" id="toc-filter" placeholder="Filter..." aria-label="Filter TOC" class="bg-background-toc-filter dark:bg-background-toc-filter-dark w-full rounded-md px-2 py-1 text-toc-item shadow-sm" />
+    <div class="sticky left-0 top-0 flex items-center justify-between bg-background-toc-toolbar p-6 dark:bg-background-toc-toolbar-dark">
+        <input type="text" id="toc-filter" placeholder="Filter..." aria-label="Filter TOC" class="w-full rounded-md bg-background-toc-filter px-2 py-1 text-toc-item shadow-sm dark:bg-background-toc-filter-dark" />
     </div>
 
     <ul id="toc-list" class="mb-4 text-toc-item" role="list"></ul>
@@ -451,14 +451,14 @@
 
 <style is:global>
     .toc-nav {
-        @apply bg-background-toc dark:bg-background-toc-dark pointer-events-none fixed right-0 top-[10%] h-[80%] w-80 overflow-y-auto rounded-l-xl opacity-0 shadow-xl min-[1140px]:right-4 min-[1140px]:rounded-xl;
+        @apply pointer-events-none fixed right-0 top-[10%] h-[80%] w-80 overflow-y-auto rounded-l-xl bg-background-toc opacity-0 shadow-xl min-[1140px]:right-4 min-[1140px]:rounded-xl dark:bg-background-toc-dark;
     }
 
     .toc-item {
         @apply px-6;
 
         & a {
-            @apply text-text-toc hover:text-primary-hover dark:text-text-toc-dark dark:hover:text-primary-dark-hover block text-balance px-1 py-1;
+            @apply block text-balance px-1 py-1 text-text-toc hover:text-primary-hover dark:text-text-toc-dark dark:hover:text-primary-dark-hover;
 
             &.toc-depth-1 {
                 @apply pl-0;
@@ -479,7 +479,7 @@
     }
 
     .toc-item.is-active {
-        @apply bg-background-toc-active dark:bg-background-toc-active-dark shadow-sm;
+        @apply bg-background-toc-active shadow-sm dark:bg-background-toc-active-dark;
 
         & a {
             @apply text-text-toc-active dark:text-text-toc-active-dark;
