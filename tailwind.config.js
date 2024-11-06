@@ -51,7 +51,7 @@ module.exports = {
                 DEFAULT: '#222',
                 dark: '#f5f5f5',
                 text: 'white',
-                'text-dark': 'white'
+                'text-dark': 'black'
             },
 
             ui: {

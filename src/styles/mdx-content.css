@@ -24,11 +24,11 @@
     }
 
     & strong {
-        @apply font-medium text-accent selection:bg-selection dark:text-accent-dark dark:selection:bg-selection-dark;
+        @apply font-medium text-accent selection:bg-accent dark:text-accent-dark dark:selection:bg-accent-dark;
     }
 
     & em {
-        @apply font-medium not-italic text-accent selection:bg-selection dark:text-accent-dark dark:selection:bg-selection-dark;
+        @apply font-medium not-italic text-accent selection:bg-accent dark:text-accent-dark dark:selection:bg-accent-dark;
     }
 
     & h1,
@@ -71,7 +71,7 @@
     & code,
     & table,
     & img {
-        @apply mb-4 leading-[1.35rem] lg:mb-6 lg:text-base lg:leading-[1.7rem];
+        @apply mb-4 leading-[1.35rem] lg:mb-6 lg:text-base lg:leading-[1.68rem];
     }
 
     & ul li {
