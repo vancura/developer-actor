@@ -2,7 +2,7 @@
     <div id="toc-progress-bars" class="relative h-full"></div>
 </div>
 
-<nav class="toc-nav" id="toc-nav" aria-label="Table of Contents">
+<nav class="toc-nav pointer-events-none fixed right-0 top-[10%] h-[80%] w-80 overflow-y-auto rounded-l-xl bg-background-toc opacity-0 shadow-xl min-[1140px]:right-4 min-[1140px]:rounded-xl dark:bg-background-toc-dark" id="toc-nav" aria-label="Table of Contents">
     <div class="toc-filter sticky left-0 top-0 flex items-center justify-between bg-background-toc-toolbar p-6 dark:bg-background-toc-toolbar-dark">
         <input type="text" id="toc-filter" placeholder="Filter..." aria-label="Filter TOC" class="w-full rounded-md bg-background-toc-filter px-2 py-1 text-toc-item shadow-sm dark:bg-background-toc-filter-dark" />
     </div>
@@ -475,8 +475,6 @@
 
 <style is:global>
     .toc-nav {
-        @apply pointer-events-none fixed right-0 top-[10%] h-[80%] w-80 overflow-y-auto rounded-l-xl bg-background-toc opacity-0 shadow-xl min-[1140px]:right-4 min-[1140px]:rounded-xl dark:bg-background-toc-dark;
-
         &.toc-nav.is-wide-screen {
             @apply pointer-events-auto right-0 top-0 h-full rounded-none bg-transparent opacity-100 shadow-none;
 
@@ -508,13 +506,13 @@
                 @apply pl-[48px];
             }
         }
-    }
 
-    .toc-item.is-active {
-        @apply bg-background-toc-active shadow-sm dark:bg-background-toc-active-dark;
+        &.is-active {
+            @apply bg-background-toc-active shadow-sm dark:bg-background-toc-active-dark;
 
-        & a {
-            @apply text-text-toc-active dark:text-text-toc-active-dark;
+            & a {
+                @apply text-text-toc-active dark:text-text-toc-active-dark;
+            }
         }
     }
 </style>
