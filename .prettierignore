@@ -1,15 +1,10 @@
-.git
-
-dist
-.output
 .astro
+.git
 .nitro
-
-node_modules
-
+.output
 **/*.vue
-
-# Ignore files for PNPM, NPM and YARN
-pnpm-lock.yaml
+dist
+node_modules
 package-lock.json
+pnpm-lock.yaml
 yarn.lock
