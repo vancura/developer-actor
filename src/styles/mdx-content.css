@@ -110,7 +110,7 @@
     }
 
     & table {
-        @apply w-full;
+        @apply block w-full overflow-x-auto whitespace-nowrap lg:whitespace-normal;
 
         & thead th:first-child,
         & thead th:nth-child(3) {
@@ -122,11 +122,11 @@
         }
 
         & td {
-            @apply py-3 align-top;
+            @apply px-2 py-3 align-top first:pl-0 last:pr-0;
         }
 
         & th {
-            @apply border-b border-text pb-2 text-left font-normal dark:border-text-dark;
+            @apply border-b border-text px-2 pb-2 text-left font-normal first:pl-0 last:pr-0 dark:border-text-dark;
         }
     }
 
