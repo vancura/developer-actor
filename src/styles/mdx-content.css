@@ -99,14 +99,6 @@
 
     & img {
         @apply rounded-md border border-code-stroke bg-code-bg dark:border-code-stroke-dark dark:bg-code-bg-dark;
-
-        &.is-wide {
-            @apply rounded-none;
-
-            &.is-wide {
-                @apply relative left-[50%] right-[50%] -mx-[100vw] ml-[-50vw] mr-[-50vw] w-screen max-w-[100vw] rounded-none border-x-0;
-            }
-        }
     }
 
     & table {
