@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+import placeholder from './placeholder.png';
+
 interface Props {
     description: string;
     spline: string;
@@ -27,7 +30,7 @@ const iframeClass = iframeClasses[position as keyof typeof iframeClasses] || ifr
 ---
 
 <figure class={containerClass}>
-    <iframe src={`https://my.spline.design/${spline}/`} class={iframeClass}></iframe>
+    {position === 'content' ? <iframe src={`https://my.spline.design/${spline}/`} class={iframeClass} /> : <Image src={placeholder} alt={description} class={iframeClass} />}
 
     <figcaption class="mt-3 text-balance text-center text-sm text-text-muted dark:text-text-muted-dark">
         {description}
