@@ -1,0 +1,43 @@
+<script>
+    import { createLogger } from '../utils/logger';
+    import type { ILogger } from '../types';
+
+    const logger: ILogger = createLogger({ prefix: 'SmoothScroll' });
+
+    const handleAnchorClick = (e: MouseEvent) => {
+        const target = e.target as Element;
+        const link = target.closest('a');
+
+        if (!link?.href) return;
+
+        try {
+            const url = new URL(link.href);
+            const isLocalLink = url.origin === window.location.origin;
+            const hasHash = url.hash.length > 0;
+
+            if (isLocalLink && hasHash) {
+                e.preventDefault();
+
+                const targetId = url.hash.substring(1);
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    logger.info(`Scrolling to target: ${targetId}`);
+
+                    window.scrollTo({
+                        top: targetElement.offsetTop,
+                        behavior: 'smooth'
+                    });
+
+                    history.pushState(null, '', url.hash);
+                } else {
+                    logger.warn(`Target element not found: ${targetId}`);
+                }
+            }
+        } catch (error) {
+            logger.error('Failed to handle anchor click:', error);
+        }
+    };
+
+    document.addEventListener('click', handleAnchorClick);
+</script>

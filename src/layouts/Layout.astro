@@ -3,6 +3,7 @@ import { Head } from 'astro-capo';
 import BaseHead from '../components/BaseHead.astro';
 import HeadingLinks from '../components/HeadingLinks.astro';
 import TOC from '../components/TOC.astro';
+import SmoothScroll from '../components/SmoothScroll.astro';
 
 import '../styles/mdx-content.css';
 import '../styles/tailwind.css';
@@ -21,6 +22,8 @@ const { title, description, permalink, showTOC = true } = Astro.props;
             <slot />
         </main>
 
+        <SmoothScroll />
+
         {
             showTOC && (
                 <>
@@ -29,35 +32,5 @@ const { title, description, permalink, showTOC = true } = Astro.props;
                 </>
             )
         }
-
-        <script>
-            import { smoothScrollTo } from '../utils/scroll';
-
-            document.addEventListener('click', async (e) => {
-                const link = e.target as HTMLAnchorElement;
-
-                if (link.tagName === 'A' && link.href) {
-                    try {
-                        const url = new URL(link.href);
-                        const isLocalLink = url.origin === window.location.origin;
-                        const hasHash = url.hash.length > 0;
-
-                        if (isLocalLink && hasHash) {
-                            e.preventDefault();
-                            const targetId = url.hash.substring(1);
-
-                            await smoothScrollTo({
-                                targetId,
-                                onComplete: () => {
-                                    history.pushState(null, '', url.hash);
-                                }
-                            });
-                        }
-                    } catch (error) {
-                        console.error('Failed to parse URL:', error);
-                    }
-                }
-            });
-        </script>
     </body>
 </html>
