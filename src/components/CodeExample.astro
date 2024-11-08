@@ -1,18 +1,15 @@
 ---
 interface Props {
     title: string;
-    description: string;
 }
 
-const { title, description } = Astro.props;
+const { title } = Astro.props;
 ---
 
 <section class="code-example">
     <button type="button" data-tab class="code-switcher-tab rounded-t px-4 py-1">{title}</button>
 
     <div data-content class="code-switcher-content hidden">
-        <p set:html={description} />
-
         <slot />
     </div>
 </section>
