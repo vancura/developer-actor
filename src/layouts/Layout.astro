@@ -4,11 +4,18 @@ import BaseHead from '../components/BaseHead.astro';
 import HeadingLinks from '../components/HeadingLinks.astro';
 import TOC from '../components/TOC.astro';
 import CodeCopy from '../components/CodeCopy.astro';
+import CodeExample from '../components/CodeExample.astro';
+import CodeSwitcher from '../components/CodeSwitcher.astro';
 import SmoothScroll from '../components/SmoothScroll.astro';
 
 import '../styles/mdx-content.css';
 import '../styles/tailwind.css';
 import '../styles/typography.css';
+
+export const components = {
+    CodeSwitcher,
+    CodeExample
+};
 
 const { title, description, permalink, showTOC = true } = Astro.props;
 ---

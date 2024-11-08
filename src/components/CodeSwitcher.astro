@@ -1,0 +1,57 @@
+---
+interface Props {
+    class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={['code-switcher relative mb-6', className]}>
+    <div class="code-switcher-tabs flex px-5"></div>
+
+    <div class="code-switcher-content rounded-xl border border-ui-border p-5 pb-0 dark:border-ui-border-dark">
+        <slot />
+    </div>
+</div>
+
+<script>
+    class CodeSwitcherManager {
+        private tabs: HTMLElement[];
+        private contents: HTMLElement[];
+
+        constructor(container: HTMLElement) {
+            this.tabs = Array.from(container.querySelectorAll('[data-tab]'));
+            this.contents = Array.from(container.querySelectorAll('[data-content]'));
+
+            const tabsContainer = container.querySelector('.code-switcher-tabs');
+
+            if (tabsContainer) {
+                this.tabs.forEach((tab) => tabsContainer.appendChild(tab));
+            }
+
+            this.init();
+        }
+
+        private init() {
+            this.tabs.forEach((tab, index) => {
+                tab.addEventListener('click', () => this.switchTab(index));
+            });
+
+            if (this.tabs.length > 0) {
+                this.switchTab(0);
+            }
+        }
+
+        private switchTab(index: number) {
+            this.tabs.forEach((tab) => tab.classList.remove('is-active'));
+            this.contents.forEach((content) => content.classList.remove('is-active'));
+
+            this.tabs[index]?.classList.add('is-active');
+            this.contents[index]?.classList.add('is-active');
+        }
+    }
+
+    document.querySelectorAll('.code-switcher').forEach((switcher) => {
+        new CodeSwitcherManager(switcher as HTMLElement);
+    });
+</script>

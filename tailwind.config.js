@@ -80,6 +80,11 @@ module.exports = {
                 'bg-dark': '#171717'
             },
 
+            'code-switcher': {
+                tab: 'rgba(0, 0, 0, 0.1)',
+                'tab-dark': 'rgba(255, 255, 255, 0.15)'
+            },
+
             gray: {
                 50: '#fafafa',
                 100: '#f5f5f5',
