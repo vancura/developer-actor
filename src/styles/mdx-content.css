@@ -94,6 +94,14 @@
 
         & .copy-button {
             @apply icon-[solar--clipboard-linear] absolute right-2 top-2 block h-5 w-5 cursor-pointer opacity-40;
+
+            &.has-passed {
+                @apply icon-[solar--check-square-bold] h-5 w-5;
+            }
+
+            &.has-failed {
+                @apply icon-[solar--forbidden-circle-bold] h-5 w-5;
+            }
         }
 
         * {

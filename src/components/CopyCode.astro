@@ -7,17 +7,26 @@
     const handleCopyClick = (button: HTMLButtonElement, code: string) => {
         try {
             navigator.clipboard.writeText(code);
+
             button.textContent = 'Copied!';
+            button.classList.add('has-passed');
 
             setTimeout(() => {
                 button.textContent = 'Copy';
-            }, 2000);
+                button.classList.remove('has-passed');
+            }, 1000);
 
             logger.info('Code copied to clipboard');
         } catch (err) {
             logger.error('Failed to copy code to clipboard:', err);
 
             button.textContent = 'Error!';
+            button.classList.add('has-failed');
+
+            setTimeout(() => {
+                button.textContent = 'Copy';
+                button.classList.remove('has-failed');
+            }, 1000);
         }
     };
 
@@ -28,6 +37,8 @@
         if (button instanceof HTMLButtonElement) {
             const pre = button.closest('pre');
             const code = pre?.querySelector('code')?.textContent || '';
+
+            e.preventDefault();
 
             handleCopyClick(button, code);
         }
