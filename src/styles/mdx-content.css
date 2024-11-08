@@ -90,7 +90,7 @@
     }
 
     & pre {
-        @apply relative overflow-x-auto rounded-md border border-code-stroke bg-code-bg p-4 dark:border-code-stroke-dark dark:bg-code-bg-dark;
+        @apply relative overflow-hidden overflow-x-auto rounded-md border border-code-stroke bg-code-bg p-4 dark:border-code-stroke-dark dark:bg-code-bg-dark;
 
         & .copy-button {
             @apply icon-[solar--clipboard-linear] absolute right-2 top-2 block h-5 w-5 cursor-pointer opacity-40;
