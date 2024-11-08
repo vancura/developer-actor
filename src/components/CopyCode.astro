@@ -1,0 +1,35 @@
+<script>
+    import { createLogger } from '../utils/logger';
+    import type { ILogger } from '../types';
+
+    const logger: ILogger = createLogger({ prefix: 'CodeBlock' });
+
+    const handleCopyClick = (button: HTMLButtonElement, code: string) => {
+        try {
+            navigator.clipboard.writeText(code);
+            button.textContent = 'Copied!';
+
+            setTimeout(() => {
+                button.textContent = 'Copy';
+            }, 2000);
+
+            logger.info('Code copied to clipboard');
+        } catch (err) {
+            logger.error('Failed to copy code to clipboard:', err);
+
+            button.textContent = 'Error!';
+        }
+    };
+
+    document.addEventListener('click', (e: MouseEvent) => {
+        const target = e.target as Element;
+        const button = target.closest('.copy-button');
+
+        if (button instanceof HTMLButtonElement) {
+            const pre = button.closest('pre');
+            const code = pre?.querySelector('code')?.textContent || '';
+
+            handleCopyClick(button, code);
+        }
+    });
+</script>

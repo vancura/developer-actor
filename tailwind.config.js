@@ -1,5 +1,9 @@
+const { addDynamicIconSelectors } = require('@iconify/tailwind');
+
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+    content: ['./src/**/*.{astro,html,js,jsx,md,mdx,ts}'],
+    plugins: [addDynamicIconSelectors()],
     theme: {
         fontFamily: {
             heading: ['Walsheim Regular', 'sans-serif'],
@@ -70,6 +74,8 @@ module.exports = {
             code: {
                 stroke: 'rgba(0, 0, 0, 0.1)',
                 'stroke-dark': 'rgba(255, 255, 255, 0.15)',
+                'stroke-hover': 'rgba(0, 0, 0, 0.4)',
+                'stroke-hover-dark': 'rgba(255, 255, 255, 0.35)',
                 bg: '#ffffff',
                 'bg-dark': '#171717'
             },

@@ -90,10 +90,24 @@
     }
 
     & pre {
-        @apply overflow-x-auto rounded-md border border-code-stroke bg-code-bg p-4 dark:border-code-stroke-dark dark:bg-code-bg-dark;
+        @apply relative overflow-x-auto rounded-md border border-code-stroke bg-code-bg p-4 dark:border-code-stroke-dark dark:bg-code-bg-dark;
+
+        & .copy-button {
+            @apply icon-[solar--clipboard-linear] absolute right-2 top-2 block h-5 w-5 cursor-pointer opacity-40;
+        }
 
         * {
             @apply font-source text-[0.97em];
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+            @apply border-code-stroke-hover dark:border-code-stroke-hover-dark;
+
+            & .copy-button {
+                @apply hover:opacity-100;
+            }
         }
     }
 

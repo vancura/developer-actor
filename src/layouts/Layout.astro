@@ -3,6 +3,7 @@ import { Head } from 'astro-capo';
 import BaseHead from '../components/BaseHead.astro';
 import HeadingLinks from '../components/HeadingLinks.astro';
 import TOC from '../components/TOC.astro';
+import CopyCode from '../components/CopyCode.astro';
 import SmoothScroll from '../components/SmoothScroll.astro';
 
 import '../styles/mdx-content.css';
@@ -22,6 +23,7 @@ const { title, description, permalink, showTOC = true } = Astro.props;
             <slot />
         </main>
 
+        <CopyCode />
         <SmoothScroll />
 
         {

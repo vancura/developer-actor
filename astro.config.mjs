@@ -24,7 +24,23 @@ export default defineConfig({
                     light: 'light-plus',
                     dark: 'dark-plus'
                 },
-                wrap: true
+                wrap: true,
+                transformers: [
+                    {
+                        pre(node) {
+                            node.children.unshift({
+                                type: 'element',
+                                tagName: 'button',
+                                properties: {
+                                    class: 'copy-button',
+                                    'aria-label': 'Copy code to clipboard'
+                                },
+                                children: [{ type: 'text', value: 'Copy' }]
+                            });
+                            return node;
+                        }
+                    }
+                ]
             },
             remarkPlugins: [remarkGfm, remarkSmartypants]
         }),
