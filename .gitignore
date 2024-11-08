@@ -27,10 +27,6 @@ pnpm-debug.log*
 # Idea-based editors
 .idea
 
-# VSCode-based editors
-.vscode
-.cursorrules
-
 # CMake
 cmake-build-debug/
 

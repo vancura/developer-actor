@@ -4,17 +4,12 @@ You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web d
 
 # Key Principles
 
--   **Write Concise and Technical Code**: Ensure your code is clear, efficient, and adheres to modern web development
-    standards.
--   **Leverage Astro Strengths**: Utilize Astro static site generation, partial hydration, and content-focused
-    approach for optimal performance and SEO.
--   **Prioritize Performance and SEO**: Aim for minimal JavaScript, fast load times, efficient resource management, and
-    implement SEO best practices.
--   **Produce High-Quality Content**: Focus on creating valuable, informative, and relevant content that resonates with
-    your target audience.
+-   **Write Concise and Technical Code**: Ensure your code is clear, efficient, and adheres to modern web development standards.
+-   **Leverage Astro Strengths**: Utilize Astro static site generation, partial hydration, and content-focused approach for optimal performance and SEO.
+-   **Prioritize Performance and SEO**: Aim for minimal JavaScript, fast load times, efficient resource management, and implement SEO best practices.
+-   **Produce High-Quality Content**: Focus on creating valuable, informative, and relevant content that resonates with your target audience.
 -   **Use Descriptive Naming**: Adopt clear and descriptive variable and function names.
--   **Organize Files Logically**: Structure your project using Astro file-based routing and component system, ensuring
-    consistency and maintainability.
+-   **Organize Files Logically**: Structure your project using Astro file-based routing and component system, ensuring consistency and maintainability.
 
 ---
 
@@ -24,20 +19,35 @@ You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web d
     ```
     - src/
       - components/
+      - config/        # Configuration files for components and features
+      - content/
       - layouts/
       - pages/
-      - styles/
-      - content/
+      - styles/       # Global and component-specific styles
+      - types/        # TypeScript type definitions
+      - utils/        # Utility functions and helpers
     - public/
     - astro.config.mjs
     - tailwind.config.cjs
+    - src/env.d.ts    # Environment and global type declarations
+    - src/types.ts    # Central type definitions index
     ```
 -   **Components**: Place reusable UI components in `src/components/`.
--   **Layouts**: Store layout components in `src/layouts/` and use them to ensure a consistent look and feel across
-    pages.
--   **Pages**: Organize page components in `src/pages/` using Astro routing conventions.
--   **Styles**: Keep global styles in `src/styles/`.
--   **Content**: Store content files like Markdown or MDX in `src/content/` or an appropriate directory.
+-   **Config**: Store component and feature configurations in `src/config/*.ts`:
+    -   Use `components.ts` for Astro component configurations
+    -   Each config file should export constants used throughout the project
+    -   Scripts should use site config constants defined in `/src/config/*.ts`
+-   **Types**:
+    -   Place all TypeScript interfaces and types in `src/types/*.ts`
+    -   Always reference new type files in `/src/types.ts`
+    -   Maintain type definitions for component props, utilities, and configurations
+-   **Utils**:
+    -   Store all utility functions in `/src/utils/*.ts`
+    -   Ensure utility scripts are written in TypeScript, not JavaScript
+-   **Layouts**: Store layout components in `src/layouts/` for consistent page structure
+-   **Pages**: Organize page components in `src/pages/` using Astro routing conventions
+-   **Styles**: Keep all CSS files in `src/styles/*.css`
+-   **Content**: Store content files like Markdown or MDX in `src/content/`
 
 ---
 
@@ -61,6 +71,28 @@ You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web d
 
 ---
 
+# TypeScript and Development Standards
+
+-   **TypeScript-First Development**:
+    -   Write all scripts in TypeScript, never JavaScript
+    -   Utilize `/src/env.d.ts` for environment and global type declarations
+    -   Create and maintain comprehensive type definitions in `/src/types/`
+    -   Reference all type files in the central `/src/types.ts` index
+    -   Whenever creating new TypeScript code or changing existing code, look around in `/src/types/*.ts` and create TypeScript types there as needed. If you create a new type file, don't forget to reference it in `/src/types.ts`**
+-   **Astro-Specific Guidelines**:
+    -   This project is built with Astro and doesn't contain any React. Avoid writing any React code or TSX syntax
+    -   Use `.astro` files for components instead of React components
+    -   Leverage Astro's built-in features instead of React alternatives
+-   **Project Integration**:
+    -   Ensure new files and changed files are properly referenced from other parts of the Astro/TypeScript project. Never create files in isolation.
+    -   Use configuration constants from `/src/config/` in components and scripts
+-   **Code Organization**:
+    -   Place all utility functions in `/src/utils/*.ts`
+    -   Keep styles in `/src/styles/*.css`
+    -   Maintain type definitions in `/src/types/*.ts`
+
+---
+
 # TypeScript Usage
 
 -   **Strict Mode**: Enable strict mode in your `tsconfig.json` for better type checking.
@@ -76,8 +108,7 @@ You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web d
 -   **Component Development**:
     -   Use `.astro` files for components.
     -   Utilize Astro component props for data passing.
-    -   **Use Layouts for Consistency**: Implement layout components in `src/layouts/` to ensure a consistent header,
-        footer, and main content across pages.
+    -   **Use Layouts for Consistency**: Implement layout components in `src/layouts/` to ensure a consistent header, footer, and main content across pages.
     -   Leverage Astro built-in components and features.
 -   **Routing and Pages**:
     -   Use file-based routing in `src/pages/`.
@@ -88,8 +119,7 @@ You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web d
     -   Leverage Astro support for frontmatter in Markdown files.
     -   Implement content collections for organized content management.
 -   **SEO Components**:
-    -   **Create an SEO Component**: Develop a reusable SEO component to manage meta tags, title tags, and structured
-        data.
+    -   **Create an SEO Component**: Develop a reusable SEO component to manage meta tags, title tags, and structured data.
     -   Use frontmatter or component props to pass SEO-related data.
 -   **Data Fetching**:
     -   Fetch data at build time using `Astro.fetchContent` or `getStaticPaths()`.
@@ -113,8 +143,7 @@ You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web d
 -   **Caching**: Use HTTP caching headers for static assets.
 -   **Optimize Builds**:
     -   Minify HTML, CSS, and JavaScript in production builds.
-    -   **Post-Build Optimizations**: Create post-build scripts to remove unwanted files or perform further
-        optimizations.
+    -   **Post-Build Optimizations**: Create post-build scripts to remove unwanted files or perform further optimizations.
 -   **Page Speed Optimization**:
     -   Regularly audit and improve page load times.
     -   Use tools like Google PageSpeed Insights for recommendations.
@@ -166,8 +195,7 @@ You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web d
     -   Extend Tailwind's default theme when necessary.
     -   Keep theme customizations minimal and consistent.
 -   **Use `class:list` Over External Libraries**:
-    -   **Use Astro `class:list` Directive**: Utilize `class:list` for conditional classes instead of packages like
-        `classNames`.
+    -   **Use Astro `class:list` Directive**: Utilize `class:list` for conditional classes instead of packages like `classNames`.
     -   **Example**:
         ```astro
         <div class:list={{ active: isActive, disabled: isDisabled }}>...</div>
