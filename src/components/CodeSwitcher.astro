@@ -18,6 +18,7 @@ const { class: className } = Astro.props;
     class CodeSwitcherManager {
         private tabs: HTMLElement[];
         private contents: HTMLElement[];
+        private static instances: CodeSwitcherManager[] = [];
 
         constructor(container: HTMLElement) {
             this.tabs = Array.from(container.querySelectorAll('[data-tab]'));
@@ -29,17 +30,29 @@ const { class: className } = Astro.props;
                 this.tabs.forEach((tab) => tabsContainer.appendChild(tab));
             }
 
+            CodeSwitcherManager.instances.push(this);
+
             this.init();
         }
 
         private init() {
             this.tabs.forEach((tab, index) => {
-                tab.addEventListener('click', () => this.switchTab(index));
+                tab.addEventListener('click', () => this.handleTabClick(tab.textContent?.trim() || ''));
             });
 
             if (this.tabs.length > 0) {
                 this.switchTab(0);
             }
+        }
+
+        private handleTabClick(title: string) {
+            CodeSwitcherManager.instances.forEach((instance) => {
+                const tabIndex = instance.tabs.findIndex((tab) => tab.textContent?.trim() === title);
+
+                if (tabIndex !== -1) {
+                    instance.switchTab(tabIndex);
+                }
+            });
         }
 
         private switchTab(index: number) {
@@ -49,9 +62,17 @@ const { class: className } = Astro.props;
             this.tabs[index]?.classList.add('is-active');
             this.contents[index]?.classList.add('is-active');
         }
+
+        public static cleanup() {
+            this.instances = [];
+        }
     }
 
     document.querySelectorAll('.code-switcher').forEach((switcher) => {
         new CodeSwitcherManager(switcher as HTMLElement);
+    });
+
+    document.addEventListener('astro:before-preparation', () => {
+        CodeSwitcherManager.cleanup();
     });
 </script>
