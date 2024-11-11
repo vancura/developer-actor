@@ -83,6 +83,7 @@
             anchor.href = `#${id}`;
             anchor.innerHTML = '#';
             anchor.setAttribute('aria-hidden', 'true');
+            anchor.setAttribute('tabindex', '-1');
 
             // logger.info(`Anchor element created for ID: ${id}`);
 
