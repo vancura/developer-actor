@@ -14,7 +14,7 @@ const components = {
 
 <Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()}>
     <header aria-label="Hero" role="banner" class="-mx-8 h-[66vh] select-none">
-        <iframe src="https://my.spline.design/home-5697816bede77960b20644406d861c3f/" width="100%" height="100%" title="Home "></iframe>
+        <canvas id="hero-canvas" class="h-full w-full"></canvas>
     </header>
 
     <div class="mdx-content mx-auto max-w-screen-lg">
@@ -23,3 +23,67 @@ const components = {
         </MDXWrapper>
     </div>
 </Layout>
+
+<script>
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+    import SplineLoader from '@splinetool/loader';
+
+    const canvas = document.getElementById('hero-canvas');
+    const camera = new THREE.PerspectiveCamera(33.7, window.innerWidth / window.innerHeight, 70, 100000);
+    camera.position.set(659.12, 3308.88, 4998.09);
+    camera.quaternion.setFromEuler(new THREE.Euler(-0.75, 0, 0));
+
+    const scene = new THREE.Scene();
+
+    const loader = new SplineLoader();
+    loader.load('/assets/scene.splinecode', (splineScene) => {
+        scene.add(splineScene);
+    });
+
+    function getHeaderSize() {
+        const header = canvas.parentElement;
+        return {
+            width: header.clientWidth,
+            height: header.clientHeight
+        };
+    }
+
+    const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        antialias: true
+    });
+
+    const headerSize = getHeaderSize();
+    renderer.setSize(headerSize.width, headerSize.height);
+    camera.aspect = headerSize.width / headerSize.height;
+    camera.updateProjectionMatrix();
+
+    renderer.setAnimationLoop(animate);
+
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
+
+    scene.background = new THREE.Color('#e0e7ed');
+    renderer.setClearAlpha(1);
+
+    scene.fog = new THREE.Fog('#e0e7ed', 2000, 20000);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.125;
+
+    window.addEventListener('resize', onWindowResize);
+
+    function onWindowResize() {
+        const { width, height } = getHeaderSize();
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+    }
+
+    function animate(time) {
+        controls.update();
+        renderer.render(scene, camera);
+    }
+</script>
