@@ -405,10 +405,6 @@
                     }
                 });
 
-                if (!firstVisibleHeading) {
-                    logger.warn('No visible headings found');
-                }
-
                 this.updateActiveHeading(firstVisibleHeading?.id || entries[0].id);
             } else {
                 logger.warn('No headings available to activate');
