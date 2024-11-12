@@ -48,6 +48,10 @@ const { class: className } = Astro.props;
 
         /** Handle a tab click. */
         private handleTabClick(title: string) {
+            // Record the vertical position of the tab switcher before content changes.
+            const rectBefore = this.getContainerRect();
+            const switcherTopBefore = rectBefore.top;
+
             // Switch tabs across all instances.
             CodeSwitcherManager.instances.forEach((instance) => {
                 const tabIndex = instance.tabs.findIndex((tab) => tab.textContent?.trim() === title);
@@ -56,6 +60,22 @@ const { class: className } = Astro.props;
                     instance.switchTab(tabIndex);
                 }
             });
+
+            // Use requestAnimationFrame to ensure the DOM has updated before measuring again.
+            requestAnimationFrame(() => {
+                // Record the vertical position of the tab switcher after content changes.
+                const rectAfter = this.getContainerRect();
+                const switcherTopAfter = rectAfter.top;
+
+                // Calculate the difference and adjust the scroll position.
+                const delta = switcherTopAfter - switcherTopBefore;
+                window.scrollBy(0, delta);
+            });
+        }
+
+        /** Get the bounding rectangle of the first tab (or the container). */
+        private getContainerRect() {
+            return this.tabs[0]?.getBoundingClientRect() || { top: 0 };
         }
 
         /** Switch the tab to the given index. */
