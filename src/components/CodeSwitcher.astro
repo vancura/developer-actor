@@ -20,32 +20,39 @@ const { class: className } = Astro.props;
         private contents: HTMLElement[];
         private static instances: CodeSwitcherManager[] = [];
 
+        /** Initialize the code switcher. */
         constructor(container: HTMLElement) {
             this.tabs = Array.from(container.querySelectorAll('[data-tab]'));
             this.contents = Array.from(container.querySelectorAll('[data-content]'));
 
             const tabsContainer = container.querySelector('.code-switcher-tabs');
 
+            // Append the tabs to the tabs container.
             if (tabsContainer) {
                 this.tabs.forEach((tab) => tabsContainer.appendChild(tab));
             }
 
+            // Add the instance to the list of instances.
             CodeSwitcherManager.instances.push(this);
 
             this.init();
         }
 
         private init() {
+            // Add event listeners to the tabs.
             this.tabs.forEach((tab, index) => {
                 tab.addEventListener('click', () => this.handleTabClick(tab.textContent?.trim() || ''));
             });
 
+            // Switch to the first tab if there are any tabs.
             if (this.tabs.length > 0) {
                 this.switchTab(0);
             }
         }
 
+        /** Handle a tab click. */
         private handleTabClick(title: string) {
+            // Switch tabs across all instances.
             CodeSwitcherManager.instances.forEach((instance) => {
                 const tabIndex = instance.tabs.findIndex((tab) => tab.textContent?.trim() === title);
 
@@ -55,14 +62,18 @@ const { class: className } = Astro.props;
             });
         }
 
+        /** Switch the tab to the given index. */
         private switchTab(index: number) {
+            // Remove the active class from all tabs and contents.
             this.tabs.forEach((tab) => tab.classList.remove('is-active'));
             this.contents.forEach((content) => content.classList.remove('is-active'));
 
+            // Add the active class to the tab and content at the given index.
             this.tabs[index]?.classList.add('is-active');
             this.contents[index]?.classList.add('is-active');
         }
 
+        /** Cleanup all instances. */
         public static cleanup() {
             this.instances = [];
         }
