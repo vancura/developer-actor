@@ -35,10 +35,6 @@ const { class: className } = Astro.props;
             // Add the instance to the list of instances.
             CodeSwitcherManager.instances.push(this);
 
-            this.init();
-        }
-
-        private init() {
             // Add event listeners to the tabs.
             this.tabs.forEach((tab, index) => {
                 tab.addEventListener('click', () => this.handleTabClick(tab.textContent?.trim() || ''));
