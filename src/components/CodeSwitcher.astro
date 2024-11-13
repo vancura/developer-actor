@@ -9,7 +9,9 @@ const { class: className } = Astro.props;
 <div class:list={['code-switcher relative mb-6', className]}>
     <div class="code-switcher-tabs flex px-5"></div>
 
-    <div class="code-switcher-content rounded-xl border border-ui-border p-5 dark:border-ui-border-dark [&>.code-example>.code-switcher-content>*:last-child]:mb-0">
+    <div
+        class="code-switcher-content rounded-xl border border-ui-border p-5 dark:border-ui-border-dark [&>.code-example>.code-switcher-content>*:last-child]:mb-0"
+    >
         <slot />
     </div>
 </div>
@@ -37,7 +39,7 @@ const { class: className } = Astro.props;
 
             CodeSwitcherManager.instances.push(this);
 
-            this.tabs.forEach((tab, index) => {
+            this.tabs.forEach((tab) => {
                 tab.addEventListener('click', () => this.handleTabClick(tab.textContent?.trim() || ''));
             });
 
@@ -73,30 +75,30 @@ const { class: className } = Astro.props;
             });
         }
 
-        private getContainerRect() {
         /**
          * Returns the bounding rectangle of the first tab element or a default rectangle with top set to 0 if no tab is
          * present.
          *
          * @returns {DOMRect} The bounding rectangle of the first tab element or a default rectangle with top set to 0.
          */
+        private getContainerRect(): DOMRect {
             return this.tabs[0]?.getBoundingClientRect() || { top: 0 };
         }
 
-        private switchTab(index: number) {
         /**
          * Switches the active tab to the given index.
          *
          * @param {number} index - The index of the tab to activate.
          */
+        private switchTab(index: number): void {
             this.tabs.forEach((tab) => tab.classList.remove('is-active'));
             this.contents.forEach((content) => content.classList.remove('is-active'));
             this.tabs[index]?.classList.add('is-active');
             this.contents[index]?.classList.add('is-active');
         }
 
-        public static cleanup() {
         /** Cleans up the current instances by resetting the instances array to an empty array. */
+        public static cleanup(): void {
             this.instances = [];
         }
     }

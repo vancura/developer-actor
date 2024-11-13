@@ -22,8 +22,10 @@ const containerClasses = {
 const iframeClasses = {
     left: 'aspect-square w-full rounded-md border border-code-stroke bg-code-bg dark:border-code-stroke-dark dark:bg-code-bg-dark',
     right: 'aspect-square w-full rounded-md border border-code-stroke bg-code-bg dark:border-code-stroke-dark dark:bg-code-bg-dark',
-    content: 'aspect-video w-full rounded-md border border-code-stroke bg-code-bg dark:border-code-stroke-dark dark:bg-code-bg-dark',
-    default: 'aspect-video w-full rounded-md border border-code-stroke bg-code-bg dark:border-code-stroke-dark dark:bg-code-bg-dark'
+    content:
+        'aspect-video w-full rounded-md border border-code-stroke bg-code-bg dark:border-code-stroke-dark dark:bg-code-bg-dark',
+    default:
+        'aspect-video w-full rounded-md border border-code-stroke bg-code-bg dark:border-code-stroke-dark dark:bg-code-bg-dark'
 };
 
 const containerClass = containerClasses[position as keyof typeof containerClasses] || containerClasses.default;
@@ -31,7 +33,13 @@ const iframeClass = iframeClasses[position as keyof typeof iframeClasses] || ifr
 ---
 
 <figure class={containerClass}>
-    {position === 'content' ? <iframe src={`https://my.spline.design/${spline}/`} class={iframeClass} title={description} /> : <Image src={placeholder} alt={description} class={iframeClass} />}
+    {
+        position === 'content' ? (
+            <iframe src={`https://my.spline.design/${spline}/`} class={iframeClass} title={description} />
+        ) : (
+            <Image src={placeholder} alt={description} class={iframeClass} />
+        )
+    }
 
     <figcaption class="mt-3 text-balance text-center text-sm text-text-muted dark:text-text-muted-dark">
         {description}

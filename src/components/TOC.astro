@@ -1,14 +1,73 @@
-<div class="pointer-events-none fixed right-0 top-0 h-full w-16 mix-blend-exclusion min-[1140px]:pr-4 min-[1600px]:hidden" id="toc-progress">
+<div
+    class="pointer-events-none fixed right-0 top-0 h-full w-16 mix-blend-exclusion min-[1140px]:pr-4 min-[1600px]:hidden"
+    id="toc-progress"
+>
     <div id="toc-progress-bars" class="relative h-full"></div>
 </div>
 
-<nav class="toc-nav pointer-events-none fixed right-0 top-[10%] h-[80%] w-80 overflow-y-auto rounded-l-xl bg-background-toc opacity-0 shadow-xl min-[1140px]:right-4 min-[1140px]:rounded-xl dark:bg-background-toc-dark" id="toc-nav" aria-label="Table of Contents">
-    <div class="toc-filter sticky left-0 top-0 flex items-center justify-between bg-background-toc-toolbar p-6 dark:bg-background-toc-toolbar-dark">
-        <input type="text" id="toc-filter" placeholder="Filter..." aria-label="Filter TOC" class="w-full rounded-md bg-background-toc-filter px-2 py-1 text-toc-item shadow-sm dark:bg-background-toc-filter-dark" />
+<nav
+    class="toc-nav pointer-events-none fixed right-0 top-[10%] h-[80%] w-80 overflow-y-auto rounded-l-xl bg-background-toc opacity-0 shadow-xl min-[1140px]:right-4 min-[1140px]:rounded-xl dark:bg-background-toc-dark"
+    id="toc-nav"
+    aria-label="Table of Contents"
+>
+    <div
+        class="toc-filter sticky left-0 top-0 flex items-center justify-between bg-background-toc-toolbar p-6 dark:bg-background-toc-toolbar-dark"
+    >
+        <input
+            type="text"
+            id="toc-filter"
+            placeholder="Filter..."
+            aria-label="Filter TOC"
+            class="w-full rounded-md bg-background-toc-filter px-2 py-1 text-toc-item shadow-sm dark:bg-background-toc-filter-dark"
+        />
     </div>
 
     <ul id="toc-list" class="mb-4 text-toc-item" role="list"></ul>
 </nav>
+
+<style is:global>
+    .toc-nav {
+        &.toc-nav.is-wide-screen {
+            @apply pointer-events-auto right-0 top-0 h-full rounded-none bg-transparent opacity-100 shadow-none;
+
+            & .toc-filter {
+                @apply bg-transparent;
+            }
+        }
+    }
+
+    .toc-item {
+        @apply px-6;
+
+        & a {
+            @apply block text-balance px-1 py-1 text-text-toc hover:text-primary-hover dark:text-text-toc-dark dark:hover:text-primary-dark-hover;
+
+            &.toc-depth-1 {
+                @apply pl-0;
+            }
+
+            &.toc-depth-2 {
+                @apply pl-[16px];
+            }
+
+            &.toc-depth-3 {
+                @apply pl-[32px];
+            }
+
+            &.toc-depth-4 {
+                @apply pl-[48px];
+            }
+        }
+
+        &.is-active {
+            @apply bg-background-toc-active shadow-sm dark:bg-background-toc-active-dark;
+
+            & a {
+                @apply text-text-toc-active dark:text-text-toc-active-dark;
+            }
+        }
+    }
+</style>
 
 <script>
     import { createLogger } from '../utils/logger';
@@ -68,7 +127,9 @@
          * scroll checks.
          */
         constructor() {
-            this.observer = new IntersectionObserver((entries) => this.handleIntersection(entries), { rootMargin: TOC.OBSERVER_MARGIN });
+            this.observer = new IntersectionObserver((entries) => this.handleIntersection(entries), {
+                rootMargin: TOC.OBSERVER_MARGIN
+            });
             this.debouncedRenderProgressBars = debounce(() => this.renderProgressBars(), TOC.PROGRESS_BAR_DEBOUNCE);
             this.setupEventListeners();
             this.intervalId = window.setInterval(() => this.onScroll(), TOC.SCROLL_CHECK_INTERVAL);
@@ -226,7 +287,7 @@
          */
         private renderProgressBars(): void {
             safeExecute(
-                () => {
+                (): void => {
                     if (window.innerWidth >= TOC.WIDE_SCREEN_WIDTH) {
                         // If the screen is wide enough, we don't need the progress bars.
                         // Clear the progress bars container.
@@ -344,9 +405,16 @@
             safeExecute(
                 () => {
                     if (this.elements.tocList) {
-                        const headings = headingStore.get().filter((heading) => heading.text.toLowerCase().includes(filter));
+                        const headings = headingStore
+                            .get()
+                            .filter((heading) => heading.text.toLowerCase().includes(filter));
 
-                        this.elements.tocList.innerHTML = headings.map((heading) => `<li class="toc-item ${heading.id === this.activeId ? 'is-active' : ''}" role="listitem"><a class="toc-depth-${heading.depth - 1}" href="#${heading.id}" aria-current="${heading.id === this.activeId ? 'true' : 'false'}">${heading.text}</a></li>`).join('');
+                        this.elements.tocList.innerHTML = headings
+                            .map(
+                                (heading) =>
+                                    `<li class="toc-item ${heading.id === this.activeId ? 'is-active' : ''}" role="listitem"><a class="toc-depth-${heading.depth - 1}" href="#${heading.id}" aria-current="${heading.id === this.activeId ? 'true' : 'false'}">${heading.text}</a></li>`
+                            )
+                            .join('');
 
                         this.debouncedRenderProgressBars();
                     }
@@ -511,47 +579,3 @@
         'Failed to setup TOC manager'
     );
 </script>
-
-<style is:global>
-    .toc-nav {
-        &.toc-nav.is-wide-screen {
-            @apply pointer-events-auto right-0 top-0 h-full rounded-none bg-transparent opacity-100 shadow-none;
-
-            & .toc-filter {
-                @apply bg-transparent;
-            }
-        }
-    }
-
-    .toc-item {
-        @apply px-6;
-
-        & a {
-            @apply block text-balance px-1 py-1 text-text-toc hover:text-primary-hover dark:text-text-toc-dark dark:hover:text-primary-dark-hover;
-
-            &.toc-depth-1 {
-                @apply pl-0;
-            }
-
-            &.toc-depth-2 {
-                @apply pl-[16px];
-            }
-
-            &.toc-depth-3 {
-                @apply pl-[32px];
-            }
-
-            &.toc-depth-4 {
-                @apply pl-[48px];
-            }
-        }
-
-        &.is-active {
-            @apply bg-background-toc-active shadow-sm dark:bg-background-toc-active-dark;
-
-            & a {
-                @apply text-text-toc-active dark:text-text-toc-active-dark;
-            }
-        }
-    }
-</style>

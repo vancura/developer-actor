@@ -47,7 +47,10 @@
             let o = '';
 
             if (text) {
-                const baseId = text.toLowerCase().replace(HeadingLinksManager.ID_REGEX, '-').replace(HeadingLinksManager.TRIM_REGEX, '');
+                const baseId = text
+                    .toLowerCase()
+                    .replace(HeadingLinksManager.ID_REGEX, '-')
+                    .replace(HeadingLinksManager.TRIM_REGEX, '');
 
                 if (baseId.length === 0) {
                     logger.warn(`Generated heading ID is empty for text: "${text}"`);
@@ -84,7 +87,9 @@
         private createAnchorElement(id: string): HTMLAnchorElement {
             const anchor: HTMLAnchorElement = document.createElement('a');
 
-            anchor.className = 'anchor absolute left-1 px-2 rounded-full border-none hover:bg-primary dark:hover:bg-primary-dark font-source text-[10pt] hover:text-background dark:hover:text-background-dark select-none';
+            anchor.className =
+                'anchor absolute left-1 px-2 rounded-full border-none hover:bg-primary dark:hover:bg-primary-dark ' +
+                'font-source text-[10pt] hover:text-background dark:hover:text-background-dark select-none';
             anchor.href = `#${id}`;
             anchor.innerHTML = '#';
             anchor.setAttribute('aria-hidden', 'true');
@@ -129,7 +134,10 @@
         public addHeadingLinks(): void {
             if (document.querySelector(HeadingLinksManager.HEADING_SELECTOR)) {
                 this.usedIds = new Map<string, number>();
-                const headings: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(HeadingLinksManager.HEADING_SELECTOR);
+
+                const headings: NodeListOf<HTMLHeadingElement> = document.querySelectorAll(
+                    HeadingLinksManager.HEADING_SELECTOR
+                );
 
                 headings.forEach((headingElement) => {
                     const id = this.generateHeadingId(headingElement.textContent);
@@ -187,7 +195,9 @@
             try {
                 this.addHeadingLinks();
                 const headings = this.collectHeadings();
-                const validHeadings: ValidHeading[] = headings.filter((h): h is ValidHeading => Boolean(h.id && h.text));
+                const validHeadings: ValidHeading[] = headings.filter((h): h is ValidHeading =>
+                    Boolean(h.id && h.text)
+                );
 
                 if (validHeadings.length === 0) {
                     logger.warn('No headings found in content');
