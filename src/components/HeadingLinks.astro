@@ -32,6 +32,13 @@
 
         /** Constructor for the HeadingLinksManager class. Initializes the usedIds map. */
         constructor() {
+            this.addHeadingLinks = this.addHeadingLinks.bind(this);
+            this.anchorClick = this.anchorClick.bind(this);
+            this.collectHeadings = this.collectHeadings.bind(this);
+            this.createAnchorElement = this.createAnchorElement.bind(this);
+            this.generateHeadingId = this.generateHeadingId.bind(this);
+            this.refresh = this.refresh.bind(this);
+
             this.usedIds = new Map<string, number>();
         }
 
@@ -108,7 +115,7 @@
          * @param {MouseEvent} e - The click event object.
          * @param {string} id - The target element's ID, used to update the URL hash and scroll to the element.
          */
-        private handleAnchorClick = (e: MouseEvent, id: string): void => {
+        private anchorClick = (e: MouseEvent, id: string): void => {
             e.preventDefault();
 
             const url = new URL(window.location.href);
@@ -144,7 +151,7 @@
 
                     if (id) {
                         const anchor = this.createAnchorElement(id);
-                        anchor.addEventListener('click', (e) => this.handleAnchorClick(e, id));
+                        anchor.addEventListener('click', (e) => this.anchorClick(e, id));
                         headingElement.insertAdjacentElement('afterbegin', anchor);
                         headingElement.id = id;
                     }

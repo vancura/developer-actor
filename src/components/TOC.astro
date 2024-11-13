@@ -127,12 +127,32 @@
          * scroll checks.
          */
         constructor() {
-            this.observer = new IntersectionObserver((entries) => this.handleIntersection(entries), {
+            this.activateFirstVisibleHeading = this.activateFirstVisibleHeading.bind(this);
+            this.cleanup = this.cleanup.bind(this);
+            this.getProgressBarStyles = this.getProgressBarStyles.bind(this);
+            this.initialize = this.initialize.bind(this);
+            this.intersection = this.intersection.bind(this);
+            this.linkClick = this.linkClick.bind(this);
+            this.mouseMoveRefresh = this.mouseMoveRefresh.bind(this);
+            this.renderProgressBars = this.renderProgressBars.bind(this);
+            this.renderTOC = this.renderTOC.bind(this);
+            this.scrollActiveItemIntoView = this.scrollActiveItemIntoView.bind(this);
+            this.scrollRefresh = this.scrollRefresh.bind(this);
+            this.setupEventListeners = this.setupEventListeners.bind(this);
+            this.updateActiveHeading = this.updateActiveHeading.bind(this);
+            this.updateAriaLabels = this.updateAriaLabels.bind(this);
+            this.updateProgressVisibility = this.updateProgressVisibility.bind(this);
+            this.updateTOCMode = this.updateTOCMode.bind(this);
+
+            this.debouncedRenderProgressBars = debounce(this.renderProgressBars, TOC.PROGRESS_BAR_DEBOUNCE);
+
+            this.observer = new IntersectionObserver((entries) => this.intersection(entries), {
                 rootMargin: TOC.OBSERVER_MARGIN
             });
-            this.debouncedRenderProgressBars = debounce(() => this.renderProgressBars(), TOC.PROGRESS_BAR_DEBOUNCE);
+
             this.setupEventListeners();
-            this.intervalId = window.setInterval(() => this.onScroll(), TOC.SCROLL_CHECK_INTERVAL);
+
+            this.intervalId = window.setInterval(this.scrollRefresh, TOC.SCROLL_CHECK_INTERVAL);
         }
 
         /**
@@ -140,7 +160,7 @@
          *
          * @param {IntersectionObserverEntry[]} entries - An array of intersection observer entries.
          */
-        private handleIntersection(entries: IntersectionObserverEntry[]): void {
+        private intersection(entries: IntersectionObserverEntry[]): void {
             if (entries.length) {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
@@ -172,10 +192,10 @@
                 this.renderTOC(filter);
             });
 
-            window.addEventListener('scroll', () => this.onScroll(), { passive: true });
-            window.addEventListener('mousemove', this.handleMouseMove, { passive: true });
+            window.addEventListener('scroll', this.scrollRefresh, { passive: true });
+            window.addEventListener('mousemove', this.mouseMoveRefresh, { passive: true });
 
-            this.elements.tocList?.addEventListener('click', this.handleTOCLinkClick);
+            this.elements.tocList?.addEventListener('click', this.linkClick);
 
             window.addEventListener('resize', () => {
                 this.updateTOCMode();
@@ -336,7 +356,7 @@
          *
          * @param {MouseEvent} event - The mouse event triggered by user movement.
          */
-        private handleMouseMove = (event: MouseEvent): void => {
+        private mouseMoveRefresh(event: MouseEvent): void {
             if (this.elements.nav && window.innerWidth < TOC.WIDE_SCREEN_WIDTH) {
                 const mouseX = event.clientX;
                 const windowWidth = window.innerWidth;
@@ -353,14 +373,14 @@
                     this.elements.nav.style.opacity = '0';
                 }
             }
-        };
+        }
 
         /** ID of the request animation frame. */
         private rafId: number | null = null;
 
         /** Handles scroll events. */
-        private onScroll = (): void => {
-            if (this.rafId && this.state.isScrolling) {
+        private scrollRefresh(): void {
+            if (!this.rafId) {
                 this.state.isScrolling = true;
 
                 this.rafId = requestAnimationFrame(() => {
@@ -394,7 +414,7 @@
                     );
                 });
             }
-        };
+        }
 
         /**
          * Renders the TOC by filtering headings based on the provided filter text.
@@ -435,14 +455,14 @@
 
                     clearInterval(this.intervalId);
 
-                    window.removeEventListener('scroll', this.onScroll);
-                    window.removeEventListener('mousemove', this.handleMouseMove);
+                    window.removeEventListener('scroll', this.scrollRefresh);
+                    window.removeEventListener('mousemove', this.mouseMoveRefresh);
 
                     document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((heading) => {
                         this.observer.unobserve(heading);
                     });
 
-                    this.elements.tocList?.removeEventListener('click', this.handleTOCLinkClick);
+                    this.elements.tocList?.removeEventListener('click', this.linkClick);
 
                     logger.info('TOC manager cleaned up successfully');
                 },
@@ -525,7 +545,7 @@
          *
          * @param {MouseEvent} event - The mouse event triggered by clicking a TOC link.
          */
-        private handleTOCLinkClick = (event: MouseEvent) => {
+        private linkClick(event: MouseEvent): void {
             const link = event.target as HTMLAnchorElement;
 
             if (link.matches('.toc-item a')) {
@@ -546,7 +566,7 @@
             } else {
                 logger.warn('Click event on non-TOC link element');
             }
-        };
+        }
 
         /**
          * Updates the visibility of the progress element based on the window's width. The progress element is
@@ -567,13 +587,8 @@
             const manager = new TOCManager();
             manager.initialize();
 
-            document.addEventListener('astro:page-load', () => {
-                manager.initialize();
-            });
-
-            document.addEventListener('astro:before-preparation', () => {
-                manager.cleanup();
-            });
+            document.addEventListener('astro:page-load', manager.initialize);
+            document.addEventListener('astro:before-preparation', manager.cleanup);
         },
         undefined,
         'Failed to setup TOC manager'

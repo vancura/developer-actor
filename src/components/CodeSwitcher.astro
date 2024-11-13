@@ -28,6 +28,10 @@ const { class: className } = Astro.props;
 
         /** Initialize the code switcher. */
         constructor(container: HTMLElement) {
+            this.getContainerRect = this.getContainerRect.bind(this);
+            this.handleTabClick = this.handleTabClick.bind(this);
+            this.switchTab = this.switchTab.bind(this);
+
             this.tabs = Array.from(container.querySelectorAll('[data-tab]'));
             this.contents = Array.from(container.querySelectorAll('[data-content]'));
 
