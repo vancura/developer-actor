@@ -10,43 +10,81 @@
      * @param button - The HTML button element that was clicked.
      * @param code - The code text to be copied to the clipboard.
      */
-    const handleCopyClick = (button: HTMLButtonElement, code: string) => {
-        try {
-            navigator.clipboard.writeText(code);
+    class CodeCopyManager {
+        /** Initializes the CodeCopyManager and sets up event listeners. */
+        constructor() {
+            this.cleanup = this.cleanup.bind(this);
+            this.handleClick = this.handleClick.bind(this);
+            this.handleCopyClick = this.handleCopyClick.bind(this);
 
-            button.textContent = 'Copied!';
-            button.classList.add('has-passed');
-
-            setTimeout(() => {
-                button.textContent = 'Copy';
-                button.classList.remove('has-passed');
-            }, 1000);
-
-            logger.info('Code copied to clipboard');
-        } catch (err) {
-            logger.error('Failed to copy code to clipboard:', err);
-
-            button.textContent = 'Error!';
-            button.classList.add('has-failed');
-
-            setTimeout(() => {
-                button.textContent = 'Copy';
-                button.classList.remove('has-failed');
-            }, 1000);
+            document.addEventListener('click', this.handleClick);
         }
-    };
 
-    document.addEventListener('click', (e: MouseEvent) => {
-        const target = e.target as Element;
-        const button = target.closest('.copy-button');
+        /**
+         * Handles the click event on the copy button, copies the code within the associated <pre> element to the
+         * clipboard, and provides visual feedback to the user.
+         *
+         * @param button - The HTML button element that was clicked.
+         * @param code - The code text to be copied to the clipboard.
+         */
+        private handleCopyClick(button: HTMLButtonElement, code: string): void {
+            try {
+                navigator.clipboard.writeText(code);
 
-        if (button instanceof HTMLButtonElement) {
-            const pre = button.closest('pre');
-            const code = pre?.querySelector('code')?.textContent || '';
+                button.textContent = 'Copied!';
+                button.classList.add('has-passed');
 
-            e.preventDefault();
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('has-passed');
+                }, 1000);
 
-            handleCopyClick(button, code);
+                logger.info('Code copied to clipboard');
+            } catch (err) {
+                logger.error('Failed to copy code to clipboard:', err);
+
+                button.textContent = 'Error!';
+                button.classList.add('has-failed');
+
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('has-failed');
+                }, 1000);
+            }
         }
+
+        /**
+         * Global click event handler that detects clicks on copy buttons. When a copy button is clicked, finds the
+         * associated code block and triggers copy operation.
+         *
+         * @param e - The click event object.
+         */
+        private handleClick(e: MouseEvent): void {
+            const target = e.target as Element;
+            const button = target.closest('.copy-button');
+
+            if (button instanceof HTMLButtonElement) {
+                const pre = button.closest('pre');
+                const code = pre?.querySelector('code')?.textContent || '';
+
+                e.preventDefault();
+
+                this.handleCopyClick(button, code);
+            }
+        }
+
+        /**
+         * Cleanup method to remove event listeners. Should be called when the component is being destroyed or page is
+         * transitioning.
+         */
+        public cleanup(): void {
+            document.removeEventListener('click', this.handleClick);
+        }
+    }
+
+    const manager = new CodeCopyManager();
+
+    document.addEventListener('astro:before-preparation', () => {
+        manager.cleanup();
     });
 </script>
