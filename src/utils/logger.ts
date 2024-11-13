@@ -18,22 +18,22 @@ export interface ILogger {
     /**
      * Log an info message. Only displays if LOG_LEVEL is 'info'.
      *
-     * @param message - Message to log
+     * @param message - Message to log.
      */
     info(message: string): void;
 
     /**
      * Log a warning message. Only displays if LOG_LEVEL is 'info' or 'warning'.
      *
-     * @param message - Message to log
+     * @param message - Message to log.
      */
     warn(message: string): void;
 
     /**
      * Log an error message. Always displays regardless of LOG_LEVEL.
      *
-     * @param message - Message to log
-     * @param error - Optional error object to log
+     * @param message - Message to log.
+     * @param error - Optional error object to log.
      */
     error(message: string, error?: unknown): void;
 }
@@ -41,8 +41,8 @@ export interface ILogger {
 /**
  * Create a new logger instance.
  *
- * @param options - Logger configuration options
- * @returns A configured logger instance
+ * @param options - Logger configuration options.
+ * @returns A configured logger instance.
  */
 export type LoggerFactory = (options?: LoggerOptions) => ILogger;
 
@@ -63,8 +63,8 @@ class Logger implements ILogger {
     /**
      * Determine if a log message should be displayed based on the minimum log level.
      *
-     * @param level - Log level to check
-     * @returns True if the log message should be displayed, false otherwise
+     * @param level - Log level to check.
+     * @returns True if the log message should be displayed, false otherwise.
      */
     private shouldLog(level: LogLevel): boolean {
         const levels: LogLevel[] = ['error', 'warning', 'info'];
@@ -77,9 +77,9 @@ class Logger implements ILogger {
     /**
      * Log a message with the specified level.
      *
-     * @param level - Log level
-     * @param message - Message to log
-     * @param error - Optional error object to log
+     * @param level - Log level.
+     * @param message - Message to log.
+     * @param error - Optional error object to log.
      */
     private log(level: LogLevel, message: string, error?: unknown): void {
         if (this.shouldLog(level)) {
