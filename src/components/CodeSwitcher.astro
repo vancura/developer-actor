@@ -15,6 +15,10 @@ const { class: className } = Astro.props;
 </div>
 
 <script>
+    /**
+     * Manages a code switcher component that allows users to switch between various code examples using tabs. Each
+     * instance operates within the context of a specified container element.
+     */
     class CodeSwitcherManager {
         private tabs: HTMLElement[];
         private contents: HTMLElement[];
@@ -27,32 +31,31 @@ const { class: className } = Astro.props;
 
             const tabsContainer = container.querySelector('.code-switcher-tabs');
 
-            // Append the tabs to the tabs container.
             if (tabsContainer) {
                 this.tabs.forEach((tab) => tabsContainer.appendChild(tab));
             }
 
-            // Add the instance to the list of instances.
             CodeSwitcherManager.instances.push(this);
 
-            // Add event listeners to the tabs.
             this.tabs.forEach((tab, index) => {
                 tab.addEventListener('click', () => this.handleTabClick(tab.textContent?.trim() || ''));
             });
 
-            // Switch to the first tab if there are any tabs.
             if (this.tabs.length > 0) {
                 this.switchTab(0);
             }
         }
 
-        /** Handle a tab click. */
-        private handleTabClick(title: string) {
-            // Record the vertical position of the tab switcher before content changes.
+        /**
+         * Handles the click event on a tab by switching to the selected tab across all instances of the tab switcher
+         * and adjusting the scroll position to maintain the vertical position of the tab switcher.
+         *
+         * @param {string} title - The title of the tab that was clicked.
+         */
+        private handleTabClick(title: string): void {
             const rectBefore = this.getContainerRect();
             const switcherTopBefore = rectBefore.top;
 
-            // Switch tabs across all instances.
             CodeSwitcherManager.instances.forEach((instance) => {
                 const tabIndex = instance.tabs.findIndex((tab) => tab.textContent?.trim() === title);
 
@@ -61,44 +64,49 @@ const { class: className } = Astro.props;
                 }
             });
 
-            // Use requestAnimationFrame to ensure the DOM has updated before measuring again.
             requestAnimationFrame(() => {
-                // Record the vertical position of the tab switcher after content changes.
                 const rectAfter = this.getContainerRect();
                 const switcherTopAfter = rectAfter.top;
-
-                // Calculate the difference and adjust the scroll position.
                 const delta = switcherTopAfter - switcherTopBefore;
+
                 window.scrollBy(0, delta);
             });
         }
 
-        /** Get the bounding rectangle of the first tab (or the container). */
         private getContainerRect() {
+        /**
+         * Returns the bounding rectangle of the first tab element or a default rectangle with top set to 0 if no tab is
+         * present.
+         *
+         * @returns {DOMRect} The bounding rectangle of the first tab element or a default rectangle with top set to 0.
+         */
             return this.tabs[0]?.getBoundingClientRect() || { top: 0 };
         }
 
-        /** Switch the tab to the given index. */
         private switchTab(index: number) {
-            // Remove the active class from all tabs and contents.
+        /**
+         * Switches the active tab to the given index.
+         *
+         * @param {number} index - The index of the tab to activate.
+         */
             this.tabs.forEach((tab) => tab.classList.remove('is-active'));
             this.contents.forEach((content) => content.classList.remove('is-active'));
-
-            // Add the active class to the tab and content at the given index.
             this.tabs[index]?.classList.add('is-active');
             this.contents[index]?.classList.add('is-active');
         }
 
-        /** Cleanup all instances. */
         public static cleanup() {
+        /** Cleans up the current instances by resetting the instances array to an empty array. */
             this.instances = [];
         }
     }
 
+    /** Initialize all code switchers. */
     document.querySelectorAll('.code-switcher').forEach((switcher) => {
         new CodeSwitcherManager(switcher as HTMLElement);
     });
 
+    /** Cleanup code switchers when the page is reloaded. */
     document.addEventListener('astro:before-preparation', () => {
         CodeSwitcherManager.cleanup();
     });

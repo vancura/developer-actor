@@ -4,6 +4,13 @@
 
     const logger: ILogger = createLogger({ prefix: 'CodeBlock' });
 
+    /**
+     * Handles the click event on the copy button, copies the code within the associated <pre> element to the clipboard,
+     * and provides visual feedback to the user.
+     *
+     * @param button - The HTML button element that was clicked.
+     * @param code - The code text to be copied to the clipboard.
+     */
     const handleCopyClick = (button: HTMLButtonElement, code: string) => {
         try {
             navigator.clipboard.writeText(code);

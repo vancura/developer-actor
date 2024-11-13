@@ -13,7 +13,10 @@
         depth: number;
     }
 
-    /** Manager for heading links in MDX content. Handles heading ID generation, anchor creation, and table of contents management. */
+    /**
+     * Manages the creation and insertion of anchor links for headings within MDX content. This class ensures that each
+     * heading has a unique linkable ID and facilitates smooth scrolling and URL updates upon anchor click events.
+     */
     class HeadingLinksManager {
         /** Selector for finding headings in MDX content */
         private static readonly HEADING_SELECTOR = HEADING_LINKS.SELECTOR;
@@ -33,10 +36,12 @@
         }
 
         /**
-         * Generate a heading ID.
+         * Generates a unique heading id based on the provided text.
          *
-         * @param text - Text to generate an ID from
-         * @returns Heading ID
+         * @param {string | null} text The text from which the heading id will be generated. If null, a warning will be
+         *   logged.
+         * @returns {string} A unique heading id based on the provided text. If the text is null or empty, an empty
+         *   string will be returned.
          */
         private generateHeadingId(text: string | null): string {
             let o = '';
@@ -71,10 +76,10 @@
         }
 
         /**
-         * Create an anchor element.
+         * Creates an HTML anchor element with a specified ID.
          *
-         * @param id - ID to link to
-         * @returns Anchor element
+         * @param {string} id - The ID for which the anchor element will be created.
+         * @returns {HTMLAnchorElement} The created HTML anchor element.
          */
         private createAnchorElement(id: string): HTMLAnchorElement {
             const anchor: HTMLAnchorElement = document.createElement('a');
@@ -91,10 +96,12 @@
         }
 
         /**
-         * Handle an anchor click.
+         * Handles the click event on an anchor element. Prevents the default browser behavior, updates the URL with the
+         * specified hash, performs smooth scrolling to the target element, and updates the browser history. Also
+         * attempts to copy the updated URL to the clipboard.
          *
-         * @param e - Mouse event
-         * @param id - ID to link to
+         * @param {MouseEvent} e - The click event object.
+         * @param {string} id - The target element's ID, used to update the URL hash and scroll to the element.
          */
         private handleAnchorClick = (e: MouseEvent, id: string): void => {
             e.preventDefault();
@@ -115,7 +122,10 @@
             });
         };
 
-        /** Add heading links to all headings. */
+        /**
+         * Adds anchor links to headings in the document. For each heading element, an ID is generated and an anchor
+         * link is inserted at the beginning of the heading element. Additionally, each heading is assigned an ID.
+         */
         public addHeadingLinks(): void {
             if (document.querySelector(HeadingLinksManager.HEADING_SELECTOR)) {
                 this.usedIds = new Map<string, number>();
@@ -167,7 +177,10 @@
             return headings;
         }
 
-        /** Refresh the heading links. */
+        /**
+         * Executes the refresh process to update heading links in the content. It attempts to add new heading links and
+         * collects existing headings. Headings without an id or text are filtered out.
+         */
         public refresh = (): void => {
             logger.info('Refreshing heading links');
 
@@ -189,6 +202,7 @@
         };
     }
 
+    // Initialize the manager when the DOM is ready.
     try {
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {

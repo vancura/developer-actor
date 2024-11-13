@@ -2,8 +2,14 @@ import { createLogger } from './logger';
 
 const logger = createLogger({ prefix: 'SafeExecute' });
 
-// noinspection FunctionWithMultipleReturnPointsJS
-/** Safely executes an operation with error handling and logging. */
+/**
+ * Executes a function and returns its result. If the function throws an error, a fallback value is returned instead.
+ *
+ * @param {function(): T} operation - The function to execute safely.
+ * @param {T} fallback - The value to return if the function throws an error.
+ * @param {string} errorMessage - The error message to log if an error occurs.
+ * @returns {T} The result of the function, or the fallback value if an error occurs.
+ */
 export function safeExecute<T>(operation: () => T, fallback: T, errorMessage: string): T {
     try {
         return operation();

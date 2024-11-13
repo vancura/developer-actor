@@ -4,6 +4,15 @@
 
     const logger: ILogger = createLogger({ prefix: 'SmoothScroll' });
 
+    /**
+     * Handles click events on anchor elements.
+     *
+     * Intercepts clicks on anchor elements, checks if the href is a local link with a hash fragment, and smoothly
+     * scrolls to the target element on the same page without reloading the page. It also updates the browser history
+     * with the new hash.
+     *
+     * @param {MouseEvent} e - The mouse event triggered by the click.
+     */
     const handleAnchorClick = (e: MouseEvent) => {
         const target = e.target as Element;
         const link = target.closest('a');

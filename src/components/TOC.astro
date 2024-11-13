@@ -35,7 +35,7 @@
         progressBars: HTMLElement | null;
     }
 
-    /** Manager for Table of Contents functionality. */
+    /** Manages the TOC including displaying, updating, and scrolling to headings. */
     class TOCManager {
         private activeId: string = '';
 
@@ -63,6 +63,10 @@
         /** Debounced function to render progress bars. */
         private readonly debouncedRenderProgressBars: () => void;
 
+        /**
+         * Initializes an IntersectionObserver, sets up debounced rendering of progress bars, and initiates periodic
+         * scroll checks.
+         */
         constructor() {
             this.observer = new IntersectionObserver((entries) => this.handleIntersection(entries), { rootMargin: TOC.OBSERVER_MARGIN });
             this.debouncedRenderProgressBars = debounce(() => this.renderProgressBars(), TOC.PROGRESS_BAR_DEBOUNCE);
@@ -71,9 +75,9 @@
         }
 
         /**
-         * Handles intersection events from the observer.
+         * Handles the intersection events for observed elements.
          *
-         * @param entries - Intersection observer entries
+         * @param {IntersectionObserverEntry[]} entries - An array of intersection observer entries.
          */
         private handleIntersection(entries: IntersectionObserverEntry[]): void {
             if (entries.length) {
@@ -91,7 +95,7 @@
             }
         }
 
-        /** Sets up event listeners for the TOC. */
+        /** Sets up various event listeners required for TOC functionality. */
         private setupEventListeners(): void {
             headingStore.subscribe((value: readonly HeadingEntry[]) => {
                 if (value.length > 0) {
@@ -122,7 +126,10 @@
             });
         }
 
-        /** Updates the TOC mode based on the viewport width. */
+        /**
+         * Updates the TOC mode based on the current window width. Toggles the 'is-wide-screen' class on the navigation
+         * element if the window width is greater than or equal to the predefined WIDE_SCREEN_WIDTH.
+         */
         private updateTOCMode(): void {
             if (this.elements.nav) {
                 this.elements.nav.classList.toggle('is-wide-screen', window.innerWidth >= TOC.WIDE_SCREEN_WIDTH);
@@ -130,9 +137,9 @@
         }
 
         /**
-         * Updates the active heading and toggles the active class on the TOC items.
+         * Updates the active TOC heading by highlighting the TOC item that corresponds to the given id.
          *
-         * @param id - ID of the active heading
+         * @param {string} id - The identifier of the heading to set as active.
          */
         private updateActiveHeading(id: string): void {
             this.activeId = id;
@@ -155,9 +162,11 @@
         }
 
         /**
-         * Scrolls the active item into view if it's not already visible.
+         * Scrolls the active item into view within the TOC. This ensures that the active item is visible within the
+         * viewport by scrolling smoothly to the center of the viewport if necessary. It checks and handles the
+         * visibility of the item relative to the TOC container.
          *
-         * @param item - TOC item element
+         * @param {Element} item The DOM element representing the active item that needs to be scrolled into view.
          */
         private scrollActiveItemIntoView(item: Element): void {
             if (this.elements.nav && this.elements.tocList) {
@@ -181,7 +190,11 @@
             }
         }
 
-        /** Updates the aria labels on the TOC items. */
+        /**
+         * Updates the ARIA labels for the table of contents links. This method traverses all anchor elements with the
+         * class 'toc-item' and sets their 'aria-current' attribute based on whether their 'href' matches the currently
+         * active ID.
+         */
         private updateAriaLabels(): void {
             const links = document.querySelectorAll('.toc-item a');
 
@@ -191,11 +204,12 @@
         }
 
         /**
-         * Gets the styles for the progress bars.
+         * Computes the styles for a progress bar based on the heading's depth and its index.
          *
-         * @param heading - TOC entry
-         * @param index - Index of the heading
-         * @returns Progress bar styles
+         * @param heading - An entry in the table of contents whose depth determines the width of the progress bar.
+         * @param index - The position of the heading within the table of contents, used to calculate the top position
+         *   of the progress bar.
+         * @returns An object containing the calculated width, height, and top style properties for the progress bar.
          */
         private getProgressBarStyles(heading: TOCEntry, index: number): ProgressBarStyles {
             return {
@@ -205,7 +219,11 @@
             };
         }
 
-        /** Renders the progress bars. */
+        /**
+         * Renders progress bars for headings based on the screen width. If the screen width is above a certain
+         * threshold, the progress bars are cleared. Otherwise, progress bars are rendered dynamically based on the
+         * headings.
+         */
         private renderProgressBars(): void {
             safeExecute(
                 () => {
@@ -251,7 +269,12 @@
             );
         }
 
-        /** Handles mouse move events. */
+        /**
+         * Handles mouse move events to show or hide the navigation based on the mouse's position. Only active on
+         * screens narrower than a defined width.
+         *
+         * @param {MouseEvent} event - The mouse event triggered by user movement.
+         */
         private handleMouseMove = (event: MouseEvent): void => {
             if (this.elements.nav && window.innerWidth < TOC.WIDE_SCREEN_WIDTH) {
                 const mouseX = event.clientX;
@@ -313,9 +336,9 @@
         };
 
         /**
-         * Renders the TOC.
+         * Renders the TOC by filtering headings based on the provided filter text.
          *
-         * @param filter - Filter string
+         * @param {string} filter - The text used to filter the headings. The default value is an empty string.
          */
         private renderTOC(filter: string = ''): void {
             safeExecute(
@@ -333,7 +356,7 @@
             );
         }
 
-        /** Cleans up the TOC manager. */
+        /** Cleans up various resources and event listeners associated with the TOC manager. */
         public cleanup(): void {
             safeExecute(
                 () => {
@@ -360,7 +383,11 @@
             );
         }
 
-        /** Initializes the TOC manager. */
+        /**
+         * Initializes the table of content (TOC) manager by setting up observation on header elements, updating the TOC
+         * mode, visibility, and rendering the TOC. Additionally, activates the first visible heading and logs the
+         * initialization status.
+         */
         public initialize(): void {
             safeExecute(
                 () => {
@@ -387,7 +414,14 @@
             );
         }
 
-        /** Finds and activates the first visible heading. */
+        /**
+         * Activates the first visible heading from the headingStore based on its position in the viewport. Returns true
+         * if a heading is successfully activated and is within the top 20% of the viewport. Logs a warning if no
+         * heading elements are found or if the headingStore is empty.
+         *
+         * @returns {boolean} - True if a valid heading is found and activated within the viewport's criteria, false
+         *   otherwise.
+         */
         private activateFirstVisibleHeading(): void {
             const entries = headingStore.get();
             let o;
@@ -414,9 +448,14 @@
         }
 
         /**
-         * Handles click events on TOC links.
+         * Event handler for TOC link clicks.
          *
-         * @param event - Click event
+         * Intercepts clicks on links contained within table of contents items, prevents the default link behavior, and
+         * performs a smooth scroll to the target element identified by the link's href attribute. Additionally, it
+         * updates the URL hash using the History API. If the target identifier is invalid or missing, an error is
+         * logged.
+         *
+         * @param {MouseEvent} event - The mouse event triggered by clicking a TOC link.
          */
         private handleTOCLinkClick = (event: MouseEvent) => {
             const link = event.target as HTMLAnchorElement;
@@ -441,7 +480,11 @@
             }
         };
 
-        /** Updates the visibility of the progress bar based on the screen width. */
+        /**
+         * Updates the visibility of the progress element based on the window's width. The progress element is
+         * identified by the ID 'toc-progress'. It will be hidden if the window's width is greater than or equal to the
+         * predetermined wide screen width defined by `TOC.WIDE_SCREEN_WIDTH`. Otherwise, it will be shown.
+         */
         private updateProgressVisibility(): void {
             const progressElement = document.getElementById('toc-progress');
 
