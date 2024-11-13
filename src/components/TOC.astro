@@ -143,6 +143,7 @@
             this.updateAriaLabels = this.updateAriaLabels.bind(this);
             this.updateProgressVisibility = this.updateProgressVisibility.bind(this);
             this.updateTOCMode = this.updateTOCMode.bind(this);
+            this.updateTOCPosition = this.updateTOCPosition.bind(this);
 
             this.debouncedRenderProgressBars = debounce(this.renderProgressBars, TOC.PROGRESS_BAR_DEBOUNCE);
 
@@ -214,6 +215,31 @@
         private updateTOCMode(): void {
             if (this.elements.nav) {
                 this.elements.nav.classList.toggle('is-wide-screen', window.innerWidth >= TOC.WIDE_SCREEN_WIDTH);
+            }
+        }
+
+        /**
+         * Updates the vertical position of the TOC navigation element based on scroll position and hero section height.
+         * Only applies when the window width is greater than or equal to the wide screen threshold. The TOC will "dock"
+         * to the hero section while scrolling through it, then stick to the top of the viewport once scrolled past.
+         * This creates a smooth transition effect as the user scrolls down the page.
+         */
+        private updateTOCPosition(): void {
+            if (this.elements.nav) {
+                if (window.innerWidth >= TOC.WIDE_SCREEN_WIDTH) {
+                    const heroElement = document.getElementById('hero');
+
+                    if (heroElement != null) {
+                        const heroHeight = heroElement ? heroElement.offsetHeight : 0;
+                        const scrollPosition = document.documentElement.scrollTop;
+                        const isDocking = heroHeight - scrollPosition > 0;
+                        const offset = heroHeight - scrollPosition;
+
+                        this.elements.nav.style.top = isDocking ? `${offset}px` : `0`;
+                    }
+                } else {
+                    this.elements.nav.style.top = `10%`;
+                }
             }
         }
 
@@ -405,6 +431,7 @@
 
                             this.debouncedRenderProgressBars();
                             this.updateAriaLabels();
+                            this.updateTOCPosition();
 
                             this.state.isScrolling = false;
                             this.rafId = null;
