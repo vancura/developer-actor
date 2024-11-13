@@ -8,7 +8,6 @@ This repository contains the documentation website for the Actor Programming Mod
 -   Responsive design with Tailwind CSS
 -   Interactive Table of Contents with progress tracking
 -   Code syntax highlighting with copy functionality
--   SEO optimized with meta tags and sitemap generation
 -   Dark mode support
 -   MDX content support with custom components
 
@@ -80,7 +79,6 @@ The site implements comprehensive SEO practices including:
 
 -   Meta tags
 -   Canonical URLs
--   Sitemaps
 -   OpenGraph data
 -   Structured data
 

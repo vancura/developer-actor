@@ -1,2 +1,1 @@
 User-agent: *
-Sitemap: https://developer.actor/sitemap-index.xml
