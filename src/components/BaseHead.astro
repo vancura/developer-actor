@@ -1,9 +1,9 @@
 ---
+import type { ISEOMetadata } from '../types';
 import strings from '../../strings.mjs';
-import type { SEOMetadata } from '../types';
 import { HEAD } from '../config/components';
 
-export interface Props extends SEOMetadata {
+export interface Props extends ISEOMetadata {
     title: string;
     description: string;
     permalink: string;

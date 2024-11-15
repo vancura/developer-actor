@@ -75,11 +75,10 @@
     import { safeExecute } from '../utils/safe-execute';
     import { TOC } from '../config/components';
     import { headingStore } from '../stores/heading';
-    import type { TOCEntry, ProgressBarStyles, HeadingEntry } from '../types/toc';
     import { safeQuerySelector } from '../utils/dom';
     import { smoothScrollTo } from '../utils/scroll';
 
-    const logger = createLogger({ prefix: 'TOC' });
+    const logger: ILogger = createLogger({ prefix: 'TOC' });
 
     interface TOCState {
         isVisible: boolean;

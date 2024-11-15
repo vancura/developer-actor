@@ -57,7 +57,7 @@ class Logger implements ILogger {
 
     constructor(options: LoggerOptions = {}) {
         this.prefix = options.prefix ? `[${options.prefix}]` : '';
-        this.minLevel = options.minLevel || import.meta.env.LOG_LEVEL || 'info';
+        this.minLevel = options.minLevel ?? import.meta.env.LOG_LEVEL ?? 'info';
     }
 
     /**

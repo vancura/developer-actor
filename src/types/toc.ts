@@ -1,5 +1,5 @@
 /** Interface for the table of contents heading entries. */
-export interface HeadingEntry {
+export interface IHeadingEntry {
     /** Unique identifier for the heading. */
     id: string;
 
@@ -11,7 +11,7 @@ export interface HeadingEntry {
 }
 
 /** Progress bar styling properties. */
-export interface ProgressBarStyles {
+export interface IProgressBarStyles {
     /** Width of the progress bar in pixels. */
     width: number;
 
@@ -23,7 +23,7 @@ export interface ProgressBarStyles {
 }
 
 /** Table of contents entry. */
-export interface TOCEntry {
+export interface ITOCEntry {
     /** Unique identifier for the entry. */
     id: string;
 
@@ -35,7 +35,7 @@ export interface TOCEntry {
 }
 
 /** Configuration options for the TOC component. */
-export interface TOCConfig {
+export interface ITOCConfig {
     /** Spacing between progress bars in pixels. */
     readonly PROGRESS_BAR_SPACING: number;
 

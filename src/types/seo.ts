@@ -1,5 +1,5 @@
 /** Interface for SEO metadata used across pages. */
-export interface SEOMetadata {
+export interface ISEOMetadata {
     /** Page title. */
     title: string;
 

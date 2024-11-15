@@ -1,4 +1,4 @@
-import type { TOCConfig } from '../types/toc';
+import type { ITOCConfig } from '../types/toc';
 
 /** Component-specific configuration constants. */
 export const COMPONENT_CONFIG = {
@@ -43,7 +43,7 @@ export const COMPONENT_CONFIG = {
         MOUSE_THRESHOLD_ACTIVE: 320 + 32, // panel width + safe area for accidental mouse movement
         OBSERVER_MARGIN: '0px 0px -80% 0px',
         WIDE_SCREEN_WIDTH: 1710
-    } satisfies TOCConfig
+    } satisfies ITOCConfig
 } as const;
 
 // Export specific configs for direct imports.
