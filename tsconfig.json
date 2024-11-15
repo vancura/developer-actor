@@ -1,6 +1,12 @@
 {
     "extends": "astro/tsconfigs/strict",
     "compilerOptions": {
+        "moduleResolution": "bundler",
+        "verbatimModuleSyntax": true,
+        "isolatedModules": true,
+        "skipLibCheck": true,
+        "target": "ESNext",
+        "jsx": "preserve",
         "strict": true,
         "noImplicitAny": true,
         "strictNullChecks": true,
@@ -17,7 +23,11 @@
         "noFallthroughCasesInSwitch": true,
         "noUncheckedIndexedAccess": true,
         "noImplicitOverride": true,
-        "noPropertyAccessFromIndexSignature": true
+        "noPropertyAccessFromIndexSignature": true,
+        "module": "ESNext",
+        "allowImportingTsExtensions": true,
+        "resolveJsonModule": true,
+        "allowJs": true
     },
     "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.mjs", "src/**/*.astro"]
 }

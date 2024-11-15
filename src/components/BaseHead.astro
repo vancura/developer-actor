@@ -1,7 +1,6 @@
 ---
-import type { ISEOMetadata } from '../types';
-import strings from '../../strings.mjs';
 import { HEAD } from '../config/components';
+import type { ISEOMetadata } from '../types';
 
 export interface Props extends ISEOMetadata {
     title: string;
@@ -34,7 +33,7 @@ canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
 <meta property="og:url" content={permalink} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:site_name" content={strings.title} />
+<meta property="og:site_name" content={title} />
 <meta property="og:author" content={HEAD.META.AUTHOR} />
 
 <meta property="twitter:card" content="summary_large_image" />

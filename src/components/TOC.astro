@@ -77,6 +77,7 @@
     import { headingStore } from '../stores/heading';
     import { safeQuerySelector } from '../utils/dom';
     import { smoothScrollTo } from '../utils/scroll';
+    import { type IHeadingEntry, type IProgressBarStyles, type ITOCEntry } from '../types/toc';
 
     const logger: ILogger = createLogger({ prefix: 'TOC' });
 
@@ -178,7 +179,7 @@
 
         /** Sets up various event listeners required for TOC functionality. */
         private setupEventListeners(): void {
-            headingStore.subscribe((value: readonly HeadingEntry[]) => {
+            headingStore.subscribe((value: readonly IHeadingEntry[]) => {
                 if (value.length > 0) {
                     logger.info(`${value.length} headings found, rendering TOC`);
                     this.renderTOC();
@@ -317,7 +318,7 @@
          *   of the progress bar.
          * @returns An object containing the calculated width, height, and top style properties for the progress bar.
          */
-        private getProgressBarStyles(heading: TOCEntry, index: number): ProgressBarStyles {
+        private getProgressBarStyles(heading: ITOCEntry, index: number): IProgressBarStyles {
             return {
                 width: (5 - heading.depth) * TOC.PROGRESS_BAR_BASE_WIDTH,
                 height: TOC.PROGRESS_BAR_HEIGHT,

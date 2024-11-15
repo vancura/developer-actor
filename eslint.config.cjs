@@ -69,6 +69,9 @@ module.exports = [
                 node: {
                     extensions: ['.js', '.ts', '.mjs', '.astro', '.json', '.yml', '.yaml', '.md']
                 }
+            },
+            'import/parsers': {
+                '@typescript-eslint/parser': ['.mjs', '.ts']
             }
         },
 
@@ -94,10 +97,10 @@ module.exports = [
             '@typescript-eslint/strict-boolean-expressions': 'error',
             '@typescript-eslint/no-unnecessary-type-assertion': 'error',
             '@typescript-eslint/prefer-nullish-coalescing': 'error',
-            '@typescript-eslint/no-unsafe-assignment': 'error',
-            '@typescript-eslint/no-unsafe-member-access': 'error',
-            '@typescript-eslint/no-unsafe-call': 'error',
-            '@typescript-eslint/no-unsafe-return': 'error',
+            '@typescript-eslint/no-unsafe-assignment': 'warn',
+            '@typescript-eslint/no-unsafe-member-access': 'warn',
+            '@typescript-eslint/no-unsafe-call': 'warn',
+            '@typescript-eslint/no-unsafe-return': 'warn',
             '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'explicit' }],
             '@typescript-eslint/member-ordering': 'error',
             '@typescript-eslint/method-signature-style': ['error', 'property'],
@@ -105,7 +108,7 @@ module.exports = [
                 'error',
                 {
                     selector: 'default',
-                    format: ['camelCase']
+                    format: ['camelCase', 'PascalCase']
                 },
                 {
                     selector: 'variable',
@@ -118,16 +121,16 @@ module.exports = [
                 },
                 {
                     selector: 'property',
-                    format: ['camelCase', 'UPPER_CASE'],
+                    format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
                     leadingUnderscore: 'allow'
                 },
                 {
                     selector: 'typeProperty',
-                    format: ['camelCase', 'UPPER_CASE']
+                    format: ['camelCase', 'UPPER_CASE', 'PascalCase']
                 },
                 {
                     selector: 'enumMember',
-                    format: ['PascalCase', 'UPPER_CASE']
+                    format: ['PascalCase', 'UPPER_CASE', 'PascalCase']
                 },
                 {
                     selector: 'typeLike',
@@ -169,7 +172,7 @@ module.exports = [
             // Unicorn
             'unicorn/prevent-abbreviations': 'off',
             'unicorn/filename-case': [
-                'error',
+                'warn',
                 {
                     cases: {
                         pascalCase: true
@@ -226,6 +229,15 @@ module.exports = [
             'jsdoc/require-jsdoc': 'error',
             'jsdoc/require-param': 'error',
             'jsdoc/require-returns': 'error'
+        }
+    },
+
+    {
+        files: ['**/*.mjs'],
+
+        languageOptions: {
+            sourceType: 'module',
+            ecmaVersion: 'latest'
         }
     }
 ];

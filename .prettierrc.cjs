@@ -21,7 +21,7 @@ module.exports = {
     printWidth: 120,
     proseWrap: 'never',
     singleQuote: true,
-    singleAttributePerLine: true,
+    singleAttributePerLine: false,
     semi: true,
     trailingComma: 'none',
 

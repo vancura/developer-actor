@@ -1,13 +1,14 @@
 <script>
     import { createLogger, type ILogger } from '../utils/logger';
-    import type { HeadingEntry } from '../types';
+    import type { IHeadingEntry } from '../types';
     import { headingStore } from '../stores/heading';
     import { HEADING_LINKS } from '../config/components';
     import { smoothScrollTo } from '../utils/scroll';
+    import { HTMLHeadingElement, NodeListOf } from 'typescript/lib/lib.dom.d.ts';
 
     const logger: ILogger = createLogger({ prefix: 'HeadingLinks' });
 
-    interface ValidHeading extends HeadingEntry {
+    interface ValidHeading extends IHeadingEntry {
         id: string;
         text: string;
         depth: number;
@@ -117,7 +118,7 @@
          * @param {MouseEvent} e - The click event object.
          * @param {string} id - The target element's ID, used to update the URL hash and scroll to the element.
          */
-        private anchorClick = (e: MouseEvent, id: string): void => {
+        private readonly anchorClick = (e: MouseEvent, id: string): void => {
             e.preventDefault();
 
             const url = new URL(window.location.href);
@@ -168,8 +169,8 @@
          *
          * @returns Array of headings.
          */
-        public collectHeadings(): HeadingEntry[] {
-            let headings: HeadingEntry[] = [];
+        public collectHeadings(): IHeadingEntry[] {
+            let headings: IHeadingEntry[] = [];
             const headingElements = document.querySelectorAll(HeadingLinksManager.HEADING_SELECTOR);
 
             if (headingElements.length > 0) {
