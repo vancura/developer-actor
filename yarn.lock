@@ -2591,7 +2591,7 @@ astro-meta-tags@^0.3.1:
   resolved "https://registry.yarnpkg.com/astro-meta-tags/-/astro-meta-tags-0.3.1.tgz#334c71d7f3b1d4c28acc9892f69dab6266756efa"
   integrity sha512-6g/SfAVTV7BsGlfWU+s/Kvo6atyn9DpfI7Dq3fE/ck3ppfg30aoeT2Uxu7UH4yla3QXAUWaJIher7fGjewf0ew==
 
-astro@*, astro@^4.16.9:
+astro@*, astro@^4.16.12:
   version "4.16.12"
   resolved "https://registry.yarnpkg.com/astro/-/astro-4.16.12.tgz#884177fd8a2bd6dac80ac55147534df7a6cb253b"
   integrity sha512-NnFeIKhGW6MdXCQT2hRariUwfxqJUIRs6qKqaovaQkTojzxh2r1L8C49qanKc+huH9wK2C94VZB2T/tosyRl1A==
@@ -3775,7 +3775,7 @@ eslint-plugin-jsx-a11y@6.10.0:
     safe-regex-test "^1.0.3"
     string.prototype.includes "^2.0.0"
 
-eslint-plugin-n@^17.13.1:
+eslint-plugin-n@^17.13.2:
   version "17.13.2"
   resolved "https://registry.yarnpkg.com/eslint-plugin-n/-/eslint-plugin-n-17.13.2.tgz#6d1532e68de196189540271bb7188234b8b086c8"
   integrity sha512-MhBAKkT01h8cOXcTBTlpuR7bxH5OBUNpUXefsvwSVEy46cY4m/Kzr2osUCQvA3zJFD6KuCeNNDv0+HDuWk/OcA==
@@ -6586,7 +6586,7 @@ postcss-value-parser@^4.0.0, postcss-value-parser@^4.2.0:
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz#723c09920836ba6d3e5af019f92bc0971c02e514"
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
 
-postcss@^8.4.14, postcss@^8.4.4, postcss@^8.4.43, postcss@^8.4.47:
+postcss@^8.4.14, postcss@^8.4.4, postcss@^8.4.43, postcss@^8.4.47, postcss@^8.4.49:
   version "8.4.49"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.49.tgz#4ea479048ab059ab3ae61d082190fabfd994fe19"
   integrity sha512-OCVPnIObs4N29kxTjzLfUryOkvZEq+pf8jTF0lg8E7uETuWHA+v7j3c/xJmiqpX450191LlmZfUKkXxkTry7nA==
@@ -7711,7 +7711,7 @@ synckit@^0.9.0, synckit@^0.9.1:
     "@pkgr/core" "^0.1.0"
     tslib "^2.6.2"
 
-tailwindcss@^3.4.14:
+tailwindcss@^3.4.15:
   version "3.4.15"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-3.4.15.tgz#04808bf4bf1424b105047d19e7d4bfab368044a9"
   integrity sha512-r4MeXnfBmSOuKUWmXe6h2CcyfzJCEk4F0pptO5jlnYSIViUkVmsawj80N5h2lO3gwcmSb4n3PuN+e+GC1Guylw==
