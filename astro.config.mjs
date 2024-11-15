@@ -1,7 +1,7 @@
 import mdx from '@astrojs/mdx';
 import tailwind from '@astrojs/tailwind';
-import metaTags from 'astro-meta-tags';
 import { defineConfig, sharpImageService } from 'astro/config';
+import metaTags from 'astro-meta-tags';
 import remarkGfm from 'remark-gfm';
 import remarkSmartypants from 'remark-smartypants';
 

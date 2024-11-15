@@ -34,7 +34,7 @@ You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web d
     ```
 -   **Components**: Place reusable UI components in `src/components/`.
 -   **Config**: Store component and feature configurations in `src/config/*.ts`:
-    -   Use `components.ts` for Astro component configurations
+    -   Use `Components.ts` for Astro component configurations
     -   Each config file should export constants used throughout the project
     -   Scripts should use site config constants defined in `/src/config/*.ts`
 -   **Types**:

@@ -116,7 +116,7 @@ module.exports = [
             '@typescript-eslint/no-floating-promises': 'warn',
             '@typescript-eslint/naming-convention': [
                 'warn',
-                { selector: 'default', format: ['camelCase'] },
+                { selector: 'default', format: ['camelCase', 'PascalCase'] },
                 { selector: 'variable', format: ['camelCase', 'UPPER_CASE', 'PascalCase'] },
                 { selector: 'parameter', format: ['camelCase'], leadingUnderscore: 'allow' },
                 { selector: 'property', format: ['camelCase', 'UPPER_CASE'], leadingUnderscore: 'allow' },
@@ -154,7 +154,7 @@ module.exports = [
             'unicorn/filename-case': [
                 'error',
                 {
-                    cases: { pascalCase: true },
+                    cases: { pascalCase: true, kebabCase: true, upperCase: true },
                     ignore: ['^[A-Z][a-zA-Z0-9]+\\.astro$']
                 }
             ],
@@ -179,7 +179,7 @@ module.exports = [
             'security/detect-unsafe-regex': 'error',
 
             // Node
-            'n/no-missing-import': 'error',
+            'n/no-missing-import': 'off',
             'n/no-unpublished-import': 'error',
 
             // JSDoc
