@@ -98,9 +98,11 @@
                 'anchor absolute left-1 px-2 rounded-full border-none hover:bg-primary dark:hover:bg-primary-dark ' +
                 'font-source text-[10pt] hover:text-background dark:hover:text-background-dark select-none';
             anchor.href = `#${id}`;
-            anchor.innerHTML = '#';
             anchor.setAttribute('aria-hidden', 'true');
             anchor.setAttribute('tabindex', '-1');
+
+            const textNode = document.createTextNode('#');
+            anchor.appendChild(textNode);
 
             // logger.info(`Anchor element created for ID: ${id}`);
 
