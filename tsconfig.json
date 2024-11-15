@@ -1,10 +1,23 @@
 {
     "extends": "astro/tsconfigs/strict",
     "compilerOptions": {
+        "strict": true,
+        "noImplicitAny": true,
         "strictNullChecks": true,
-        "checkJs": true,
-        "allowJs": true,
-        "declaration": true,
-        "declarationMap": true
-    }
+        "strictFunctionTypes": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": true,
+        "noImplicitThis": true,
+        "useUnknownInCatchVariables": true,
+        "alwaysStrict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "exactOptionalPropertyTypes": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedIndexedAccess": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true
+    },
+    "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.mjs", "src/**/*.astro"]
 }
