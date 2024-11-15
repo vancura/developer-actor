@@ -1,4 +1,4 @@
-import type { ITOCConfig } from '../types/toc';
+import type { ITOCConfig } from '../types/TOC.ts';
 
 /** Component-specific configuration constants. */
 export const COMPONENT_CONFIG = {
@@ -18,7 +18,7 @@ export const COMPONENT_CONFIG = {
     // Heading Links constants.
     HEADING_LINKS: {
         SELECTOR: '.mdx-content h2, .mdx-content h3, .mdx-content h4',
-        ID_REGEX: /[^a-z0-9]+/g,
+        ID_REGEX: /[^\da-z]+/g,
         TRIM_REGEX: /(^-|-$)/g
     },
 

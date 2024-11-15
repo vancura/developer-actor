@@ -1,2 +1,2 @@
-export * from './types/seo';
-export * from './types/toc';
+export * from './types/SEO.ts';
+export * from './types/TOC.ts';

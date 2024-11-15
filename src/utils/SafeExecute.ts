@@ -1,4 +1,4 @@
-import { createLogger } from './logger';
+import { createLogger } from './Logger.ts';
 
 const logger = createLogger({ prefix: 'SafeExecute' });
 

@@ -70,14 +70,14 @@
 </style>
 
 <script>
-    import { createLogger, type ILogger } from '../utils/logger';
-    import { debounce } from '../utils/debounce';
-    import { safeExecute } from '../utils/safe-execute';
-    import { TOC } from '../config/components';
-    import { headingStore } from '../stores/heading';
-    import { safeQuerySelector } from '../utils/dom';
-    import { smoothScrollTo } from '../utils/scroll';
-    import { type IHeadingEntry, type IProgressBarStyles, type ITOCEntry } from '../types/toc';
+    import { createLogger, type ILogger } from '../utils/Logger';
+    import { debounce } from '../utils/Debounce';
+    import { safeExecute } from '../utils/SafeExecute';
+    import { TOC } from '../config/Components';
+    import { headingStore } from '../stores/Heading';
+    import { safeQuerySelector } from '../utils/DOM';
+    import { smoothScrollTo } from '../utils/Scroll';
+    import type { IHeadingEntry, IProgressBarStyles, ITOCEntry } from '../types/TOC';
 
     const logger: ILogger = createLogger({ prefix: 'TOC' });
 

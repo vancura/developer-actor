@@ -1,9 +1,9 @@
 <script>
-    import { createLogger, type ILogger } from '../utils/logger';
+    import { createLogger, type ILogger } from '../utils/Logger';
     import type { IHeadingEntry } from '../types';
-    import { headingStore } from '../stores/heading';
-    import { HEADING_LINKS } from '../config/components';
-    import { smoothScrollTo } from '../utils/scroll';
+    import { headingStore } from '../stores/Heading';
+    import { HEADING_LINKS } from '../config/Components';
+    import { smoothScrollTo } from '../utils/Scroll';
 
     const logger: ILogger = createLogger({ prefix: 'HeadingLinks' });
 

@@ -14,7 +14,7 @@ export function debounce<T extends (...args: any[]) => any>(func: T, wait: numbe
             clearTimeout(timeout);
         }
 
-        timeout = window.setTimeout(() => {
+        timeout = globalThis.setTimeout(() => {
             func(...args);
             timeout = null;
         }, wait);

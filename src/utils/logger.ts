@@ -20,14 +20,14 @@ export interface ILogger {
      *
      * @param message - Message to log.
      */
-    info(message: string): void;
+    info: (message: string) => void;
 
     /**
      * Log a warning message. Only displays if LOG_LEVEL is 'info' or 'warning'.
      *
      * @param message - Message to log.
      */
-    warn(message: string): void;
+    warn: (message: string) => void;
 
     /**
      * Log an error message. Always displays regardless of LOG_LEVEL.
@@ -35,7 +35,7 @@ export interface ILogger {
      * @param message - Message to log.
      * @param error - Optional error object to log.
      */
-    error(message: string, error?: unknown): void;
+    error: (message: string, error?: unknown) => void;
 }
 
 /**
@@ -57,7 +57,7 @@ class Logger implements ILogger {
 
     constructor(options: LoggerOptions = {}) {
         this.prefix = options.prefix ? `[${options.prefix}]` : '';
-        this.minLevel = options.minLevel ?? import.meta.env.LOG_LEVEL ?? 'info';
+        this.minLevel = options.minLevel ?? 'info';
     }
 
     /**
@@ -116,5 +116,12 @@ class Logger implements ILogger {
     }
 }
 
-/** Create a new logger instance */
+/**
+ * CreateLogger is a function that returns a new instance of Logger.
+ *
+ * The function accepts an optional parameter, `options`, which is used to configure the Logger instance.
+ *
+ * @param {Object} [options={}] - The configuration options for the Logger instance. Default is `{}`.
+ * @returns {Logger} - A new Logger instance configured with the provided options.
+ */
 export const createLogger: LoggerFactory = (options = {}) => new Logger(options);

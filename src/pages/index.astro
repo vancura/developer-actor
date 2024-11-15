@@ -1,15 +1,9 @@
 ---
 import strings from '../../strings.mjs';
-import CodeExample from '../components/CodeExample.astro';
-import CodeSwitcher from '../components/CodeSwitcher.astro';
 import MDXWrapper from '../components/MDXWrapper.astro';
 import Content from '../content/pages/index.mdx';
 import Layout from '../layouts/Layout.astro';
 
-const components = {
-    CodeSwitcher,
-    CodeExample
-};
 ---
 
 <Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()}>
@@ -23,7 +17,7 @@ const components = {
 
     <div class="mdx-content mx-auto max-w-screen-lg">
         <MDXWrapper>
-            <Content components={components} />
+            <Content />
         </MDXWrapper>
     </div>
 </Layout>

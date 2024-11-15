@@ -22,7 +22,7 @@ export interface ScrollResult {
 /**
  * Asynchronously performs a smooth scroll to a target element identified by its ID.
  *
- * @param {Object} options - Configuration options for the scroll action.
+ * @param {object} options - Configuration options for the scroll action.
  * @param {string} options.targetId - The ID of the target element to scroll to.
  * @param {number} [options.offset=0] - Additional offset to adjust the final scroll position. Default is `0`
  * @param {Function} [options.onComplete] - Callback function to be executed upon completion of the scroll.
