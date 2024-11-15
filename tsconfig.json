@@ -29,5 +29,5 @@
         "resolveJsonModule": true,
         "allowJs": true
     },
-    "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.mjs", "src/**/*.astro"]
+    "include": ["src/**/*", "**/*.ts", "**/*.tsx", "**/*.mjs", "**/*.astro", "**/*.mdx"]
 }
