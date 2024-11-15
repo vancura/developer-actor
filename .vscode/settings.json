@@ -1,4 +1,5 @@
 {
+    "eslint.validate": ["javascript", "javascriptreact", "astro", "typescript"],
     "cSpell.words": [
         "accumsan",
         "Actorization",
@@ -18,6 +19,7 @@
         "augue",
         "automations",
         "AutoscaledPool",
+        "classname",
         "Condimentum",
         "congue",
         "consectetur",
@@ -108,6 +110,7 @@
         "pretium",
         "primis",
         "Proin",
+        "proptypes",
         "pulvinar",
         "quis",
         "Rhoncus",
@@ -115,6 +118,7 @@
         "Sagittis",
         "shiki",
         "sollicitudin",
+        "sonarjs",
         "splinetool",
         "stylesheet",
         "suscipit",
@@ -126,6 +130,7 @@
         "tortor",
         "Trunkát",
         "tsconfigs",
+        "tseslint",
         "typeof",
         "ullamcorper",
         "Ullamcorper",
