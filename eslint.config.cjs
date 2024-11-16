@@ -15,7 +15,7 @@ const tsParser = require('@typescript-eslint/parser');
 const astroParser = require('astro-eslint-parser');
 
 module.exports = [
-    // Base configuration
+    // Ignores
     {
         ignores: [
             '.astro/**',
@@ -33,8 +33,18 @@ module.exports = [
             'dist/**',
             'node_modules/**',
             'public/**',
-            'jsconfig.json'
-        ],
+            'jsconfig.json',
+            '.prettierrc.cjs',
+            'eslint.config.cjs',
+            'postcss.config.cjs',
+            'tailwind.config.cjs',
+            'astro.config.mjs',
+            'src/env.d.ts'
+        ]
+    },
+
+    // Base configuration
+    {
         languageOptions: {
             parser: tsParser,
             ecmaVersion: 'latest',
@@ -92,6 +102,7 @@ module.exports = [
             complexity: ['error', { max: 10 }],
 
             // TypeScript Specific Rules
+            '@typescript-eslint/no-unused-expressions': 'off',
             '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
             '@typescript-eslint/no-explicit-any': 'warn',
             '@typescript-eslint/explicit-function-return-type': 'warn',
@@ -150,6 +161,8 @@ module.exports = [
             'sonarjs/cognitive-complexity': 'error',
             'sonarjs/no-duplicate-string': ['error', { threshold: 5 }],
             'sonarjs/no-identical-functions': 'error',
+            'sonarjs/no-empty-function': 'off',
+            'sonarjs/no-unused-expressions': 'off',
 
             // Promise
             'promise/always-return': 'error',
