@@ -10,7 +10,6 @@
         "build": "astro build",
         "preview": "astro preview",
         "astro": "astro",
-        "clean": "rimraf dist node_modules",
         "format": "prettier --write \"**/*.{js,ts,mjs,astro,json,yml,yaml,md,mdx}\"",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix && yarn format"
@@ -61,7 +60,6 @@
         "prettier-plugin-organize-attributes": "^1.0.0",
         "prettier-plugin-organize-imports": "^4.1.0",
         "prettier-plugin-tailwindcss": "^0.6.8",
-        "rimraf": "^6.0.1",
         "yaml-eslint-parser": "^1.2.3"
     }
 }
