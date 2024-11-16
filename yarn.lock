@@ -2593,11 +2593,6 @@ astro-eslint-parser@^1.0.2, astro-eslint-parser@^1.1.0:
     is-glob "^4.0.3"
     semver "^7.3.8"
 
-astro-meta-tags@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/astro-meta-tags/-/astro-meta-tags-0.3.1.tgz#334c71d7f3b1d4c28acc9892f69dab6266756efa"
-  integrity sha512-6g/SfAVTV7BsGlfWU+s/Kvo6atyn9DpfI7Dq3fE/ck3ppfg30aoeT2Uxu7UH4yla3QXAUWaJIher7fGjewf0ew==
-
 astro@*, astro@^4.16.12:
   version "4.16.12"
   resolved "https://registry.yarnpkg.com/astro/-/astro-4.16.12.tgz#884177fd8a2bd6dac80ac55147534df7a6cb253b"

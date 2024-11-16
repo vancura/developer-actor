@@ -1,7 +1,6 @@
 import mdx from '@astrojs/mdx';
 import tailwind from '@astrojs/tailwind';
 import { defineConfig, sharpImageService } from 'astro/config';
-import metaTags from 'astro-meta-tags';
 import remarkGfm from 'remark-gfm';
 import remarkSmartypants from 'remark-smartypants';
 
@@ -41,8 +40,6 @@ export default defineConfig({
             },
             remarkPlugins: [remarkGfm, remarkSmartypants]
         }),
-
-        metaTags(),
 
         tailwind(),
 
