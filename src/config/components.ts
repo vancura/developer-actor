@@ -32,7 +32,7 @@ export const COMPONENT_CONFIG = {
         PROGRESS_BAR_SPACING: 4,
         PROGRESS_BAR_HEIGHT: 2,
         PROGRESS_BAR_BASE_WIDTH: 8,
-        SCROLL_CHECK_INTERVAL: 1000,
+        SCROLL_CHECK_INTERVAL: 1000 / 20,
         VIEWPORT_MARGINS: {
             TOP: 0.1,
             BOTTOM: 0.9
