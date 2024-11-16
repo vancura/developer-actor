@@ -121,7 +121,7 @@ class Logger implements ILogger {
  *
  * The function accepts an optional parameter, `options`, which is used to configure the Logger instance.
  *
- * @param {Object} [options={}] - The configuration options for the Logger instance. Default is `{}`.
+ * @param {object} [options={}] - The configuration options for the Logger instance. Default is `{}`
  * @returns {Logger} - A new Logger instance configured with the provided options.
  */
 export const createLogger: LoggerFactory = (options = {}) => new Logger(options);

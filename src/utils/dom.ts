@@ -1,4 +1,4 @@
-import { createLogger } from './Logger.ts';
+import { createLogger } from './logger';
 
 const logger = createLogger({ prefix: 'DOM' });
 

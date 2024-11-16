@@ -1,4 +1,4 @@
-import type { ITOCConfig } from '../types/TOC.ts';
+import type { ITOCConfig } from '../types/toc';
 
 /** Component-specific configuration constants. */
 export const COMPONENT_CONFIG = {
