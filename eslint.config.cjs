@@ -11,7 +11,6 @@ const securityPlugin = require('eslint-plugin-security');
 const sonarjsPlugin = require('eslint-plugin-sonarjs');
 const tailwindcssPlugin = require('eslint-plugin-tailwindcss');
 const tseslintPlugin = require('@typescript-eslint/eslint-plugin');
-const unicornPlugin = require('eslint-plugin-unicorn');
 const tsParser = require('@typescript-eslint/parser');
 const astroParser = require('astro-eslint-parser');
 
@@ -54,7 +53,6 @@ module.exports = [
             sonarjs: sonarjsPlugin,
             security: securityPlugin,
             tailwindcss: tailwindcssPlugin,
-            unicorn: unicornPlugin,
             n: nodePlugin,
             'optimize-regex': regexPlugin,
             perfectionist: perfectionistPlugin
@@ -84,7 +82,6 @@ module.exports = [
             ...promisePlugin.configs.recommended.rules,
             ...sonarjsPlugin.configs.recommended.rules,
             ...securityPlugin.configs.recommended.rules,
-            ...unicornPlugin.configs.recommended.rules,
             ...nodePlugin.configs.recommended.rules,
 
             // General Rules
@@ -148,16 +145,6 @@ module.exports = [
 
             // Regex
             'optimize-regex/optimize-regex': 'warn',
-
-            // Unicorn
-            'unicorn/prevent-abbreviations': 'off',
-            'unicorn/filename-case': [
-                'error',
-                {
-                    cases: { pascalCase: true, kebabCase: true, upperCase: true },
-                    ignore: ['^[A-Z][a-zA-Z0-9]+\\.astro$']
-                }
-            ],
 
             // SonarJS
             'sonarjs/cognitive-complexity': 'error',

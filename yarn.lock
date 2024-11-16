@@ -4013,28 +4013,6 @@ eslint-plugin-tailwindcss@^3.17.5:
     fast-glob "^3.2.5"
     postcss "^8.4.4"
 
-eslint-plugin-unicorn@^56.0.0:
-  version "56.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-unicorn/-/eslint-plugin-unicorn-56.0.0.tgz#9fd3ebe6f478571734541fa745026b743175b59e"
-  integrity sha512-aXpddVz/PQMmd69uxO98PA4iidiVNvA0xOtbpUoz1WhBd4RxOQQYqN618v68drY0hmy5uU2jy1bheKEVWBjlPw==
-  dependencies:
-    "@babel/helper-validator-identifier" "^7.24.7"
-    "@eslint-community/eslint-utils" "^4.4.0"
-    ci-info "^4.0.0"
-    clean-regexp "^1.0.0"
-    core-js-compat "^3.38.1"
-    esquery "^1.6.0"
-    globals "^15.9.0"
-    indent-string "^4.0.0"
-    is-builtin-module "^3.2.1"
-    jsesc "^3.0.2"
-    pluralize "^8.0.0"
-    read-pkg-up "^7.0.1"
-    regexp-tree "^0.1.27"
-    regjsparser "^0.10.0"
-    semver "^7.6.3"
-    strip-indent "^3.0.0"
-
 eslint-plugin-yaml@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/eslint-plugin-yaml/-/eslint-plugin-yaml-1.0.3.tgz#aefba992815c7d7da1799d4ae7b3e2dfe965267b"
