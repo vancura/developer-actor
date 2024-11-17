@@ -57,9 +57,6 @@ export interface ITOCConfig {
         readonly BOTTOM: number;
     };
 
-    /** Debounce delay for progress bar updates in milliseconds. */
-    readonly PROGRESS_BAR_DEBOUNCE: number;
-
     /** Threshold for scroll position changes. */
     readonly SCROLL_THRESHOLD: number;
 

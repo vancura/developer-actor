@@ -119,9 +119,6 @@
         /** Interval ID for rendering progress bars. */
         private readonly intervalId: number;
 
-        /** Debounced function to render progress bars. */
-        private readonly debouncedRenderProgressBars: () => void;
-
         /**
          * Initializes an IntersectionObserver, sets up debounced rendering of progress bars, and initiates periodic
          * scroll checks.
@@ -144,8 +141,6 @@
             this.updateProgressVisibility = this.updateProgressVisibility.bind(this);
             this.updateTOCMode = this.updateTOCMode.bind(this);
             this.updateTOCPosition = this.updateTOCPosition.bind(this);
-
-            this.debouncedRenderProgressBars = debounce(this.renderProgressBars, TOC.PROGRESS_BAR_DEBOUNCE);
 
             this.observer = new IntersectionObserver((entries) => this.intersection(entries), {
                 rootMargin: TOC.OBSERVER_MARGIN
@@ -201,10 +196,6 @@
             window.addEventListener('resize', () => {
                 this.updateTOCMode();
                 this.updateProgressVisibility();
-
-                if (window.innerWidth < TOC.WIDE_SCREEN_WIDTH) {
-                    this.debouncedRenderProgressBars();
-                }
             });
         }
 
@@ -363,7 +354,7 @@
                             this.elements.progressBars.style.top = '50%';
                             this.elements.progressBars.style.transform = 'translateY(-50%)';
 
-                            logger.info(`Rendered ${headings.length} progress bars`);
+                            // logger.info(`Rendered ${headings.length} progress bars`);
                         } else {
                             logger.warn('No headings available for progress bars');
                         }
@@ -429,7 +420,6 @@
                                 }
                             }
 
-                            this.debouncedRenderProgressBars();
                             this.updateAriaLabels();
                             this.updateTOCPosition();
 
@@ -462,8 +452,6 @@
                                     `<li class="toc-item ${heading.id === this.activeId ? 'is-active' : ''}" role="listitem"><a class="toc-depth-${heading.depth - 1}" href="#${heading.id}" aria-current="${heading.id === this.activeId ? 'true' : 'false'}">${heading.text}</a></li>`
                             )
                             .join('');
-
-                        this.debouncedRenderProgressBars();
                     }
                 },
                 undefined,

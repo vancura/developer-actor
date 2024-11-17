@@ -31,13 +31,12 @@ export const COMPONENT_CONFIG = {
     TOC: {
         PROGRESS_BAR_SPACING: 4,
         PROGRESS_BAR_HEIGHT: 2,
-        PROGRESS_BAR_BASE_WIDTH: 8,
+        PROGRESS_BAR_BASE_WIDTH: 5,
         SCROLL_CHECK_INTERVAL: 1000 / 20,
         VIEWPORT_MARGINS: {
             TOP: 0.1,
             BOTTOM: 0.9
         },
-        PROGRESS_BAR_DEBOUNCE: 16,
         SCROLL_THRESHOLD: 50,
         MOUSE_THRESHOLD_INACTIVE: 32,
         MOUSE_THRESHOLD_ACTIVE: 320 + 32, // panel width + safe area for accidental mouse movement
