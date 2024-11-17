@@ -29,6 +29,17 @@
         @apply font-medium not-italic text-accent selection:bg-accent dark:text-accent-dark dark:selection:bg-accent-dark;
     }
 
+    & strong em {
+        /* Special styling for the Actors logo */
+        &::before {
+            @apply inline-block mr-1 h-4 w-4 ml-0.5 content-[''];
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath fill='white' fill-rule='evenodd' d='m10.512 10.824-.364-.954H5.852l-.364.954-1.328 3.488H1.712l2.905-7.395h6.766l2.905 7.395H11.84l-1.328-3.488Zm.289-5.388L9.247 1.481H6.753L5.199 5.436h5.602Zm-.344 9.403-1.329-3.488H6.872l-1.329 3.488a1.48 1.48 0 0 1-1.383.954H.988a.987.987 0 0 1-.919-1.348L5.498.625A.987.987 0 0 1 6.417 0h3.166c.406 0 .77.248.919.626l5.429 13.819a.987.987 0 0 1-.919 1.348H11.84a1.48 1.48 0 0 1-1.383-.954Z' clip-rule='evenodd'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath fill='white' fill-rule='evenodd' d='m10.512 10.824-.364-.954H5.852l-.364.954-1.328 3.488H1.712l2.905-7.395h6.766l2.905 7.395H11.84l-1.328-3.488Zm.289-5.388L9.247 1.481H6.753L5.199 5.436h5.602Zm-.344 9.403-1.329-3.488H6.872l-1.329 3.488a1.48 1.48 0 0 1-1.383.954H.988a.987.987 0 0 1-.919-1.348L5.498.625A.987.987 0 0 1 6.417 0h3.166c.406 0 .77.248.919.626l5.429 13.819a.987.987 0 0 1-.919 1.348H11.84a1.48 1.48 0 0 1-1.383-.954Z' clip-rule='evenodd'/%3E%3C/svg%3E");
+            background-color: theme('colors.accent.DEFAULT');
+            @apply dark:bg-primary;
+        }
+    }
+
     & h1,
     & h2,
     & h3,
