@@ -5,9 +5,10 @@ interface Props {
     description: string;
     position?: 'left' | 'right' | 'content';
     image: typeof Image;
+    transparent?: boolean;
 }
 
-const { description, position = 'content', image } = Astro.props;
+const { description, position = 'content', image, transparent = false } = Astro.props;
 
 // Calculate width and alignment classes based on position.
 const containerClasses = {
@@ -30,7 +31,11 @@ const imageClasses = {
 };
 
 const containerClass = containerClasses[position as keyof typeof containerClasses] || containerClasses.default;
-const imageClass = imageClasses[position as keyof typeof imageClasses] || imageClasses.default;
+let imageClass = imageClasses[position as keyof typeof imageClasses] || imageClasses.default;
+
+if (transparent) {
+    imageClass += ' mix-blend-multiply border-none';
+}
 ---
 
 {
