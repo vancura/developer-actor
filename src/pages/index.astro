@@ -6,9 +6,12 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()}>
-    <header id="hero" aria-label="Hero" role="banner" class="-mx-8 h-[73vh] select-none">
-        <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.42/build/spline-viewer.js"></script>
-        <spline-viewer url="https://prod.spline.design/GXEb1ojLFPk2DFaj/scene.splinecode"></spline-viewer>
+    <header id="hero" aria-label="Hero" role="banner" class="-mx-8 h-[100vh] select-none">
+        <script type="module" src="https://unpkg.com/@splinetool/viewer@^1.9.42/build/spline-viewer.js"></script>
+        <spline-viewer
+            loading-anim-type="spinner-small-dark"
+            loading="eager"
+            url="https://prod.spline.design/GXEb1ojLFPk2DFaj/scene.splinecode"></spline-viewer>
     </header>
 
     <div class="mdx-content mx-auto max-w-screen-lg">
