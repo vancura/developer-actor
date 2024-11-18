@@ -470,12 +470,6 @@ The input is an object with properties. If the Actor defines the input schema, t
 
 ### Key-value store access
 
-<Illustration
-    description="The Key-value store is a storage for arbitrary files. When an Actor starts, by default it is associated with a newly-created key-value store, which only contains one file with input of the Actor."
-    position="content"
-    image={illuKeyValueStoreAccess}
-/>
-
 Write and read arbitrary files using a storage called [Key-value store](https://sdk.apify.com/docs/api/key-value-store). When an Actor starts, by default it is associated with a newly-created key-value store, which only contains one file with input of the Actor (see [Get input](#get-input)).
 
 The user can override this behavior and specify another key-value store or input key when running the Actor.
@@ -526,12 +520,6 @@ The user can override this behavior and specify another key-value store or input
 </CodeSwitcher>
 
 ### Push results to dataset
-
-<Illustration
-    description="The Dataset is an append-only storage that allows you to store a series of data objects such as results from web scraping, crawling, or data processing jobs."
-    position="content"
-    image={illuPushResultsToDataset}
-/>
 
 Larger results can be saved to append-only object storage called [Dataset](https://sdk.apify.com/docs/api/dataset). When an Actor starts, by default it is associated with a newly-created empty default dataset. The Actor can create additional datasets or access existing datasets created by other Actors, and use those as needed.
 
