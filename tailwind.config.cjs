@@ -38,7 +38,8 @@ module.exports = {
                 'toc-toolbar': 'rgba(248, 248, 248, 0.9)',
                 'toc-toolbar-dark': 'rgba(17, 17, 17, 0.9)',
                 illustration: '#f3c3de',
-                'illustration-dark': '#684358'
+                'illustration-dark': '#684358',
+                'hero-mobile': 'rgba(245, 245, 245, 0.66)'
             },
 
             text: {

@@ -1,9 +1,17 @@
-<header class="absolute top-0 w-[50vw]">
+<header
+    class="absolute left-0 top-0 mx-auto w-full bg-background-hero-mobile px-8 pb-12 shadow-md backdrop-blur-md lg:bg-transparent lg:shadow-none lg:backdrop-blur-none"
+>
     <slot />
 </header>
 
 <style is:global>
+    header h1,
     header p {
-        width: 41%;
+        @apply text-balance lg:w-1/2 lg:max-w-screen-lg;
+    }
+
+    header a {
+        /** Prevent text wrapping for links */
+        @apply text-nowrap;
     }
 </style>
