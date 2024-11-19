@@ -7,7 +7,8 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()}>
     <header id="hero" aria-label="Hero" role="banner" class="pointer-events-none -mx-8 h-[100vh] select-none">
-        <script type="module" src="https://unpkg.com/@splinetool/viewer@^1.9.42/build/spline-viewer.js"></script>
+        <script is:inline type="module" src="https://unpkg.com/@splinetool/viewer@^1.9.42/build/spline-viewer.js"
+        ></script>
         <spline-viewer
             loading-anim-type="spinner-small-dark"
             loading="eager"
