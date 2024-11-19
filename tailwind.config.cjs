@@ -11,7 +11,7 @@ module.exports = {
         },
 
         colors: {
-            debug: '#f0f',
+            debug: 'rgba(255, 0, 255, 0.33)',
             transparent: 'transparent',
 
             primary: {
