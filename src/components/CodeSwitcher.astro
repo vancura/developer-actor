@@ -7,10 +7,10 @@ const { class: className } = Astro.props;
 ---
 
 <div class:list={['code-switcher relative mb-6', className]}>
-    <div class="code-switcher-tabs flex px-5"></div>
+    <div class="code-switcher-tabs flex justify-center"></div>
 
     <div
-        class="code-switcher-content rounded-xl border border-ui-border p-5 dark:border-ui-border-dark [&>.code-example>.code-switcher-content>*:last-child]:mb-0"
+        class="code-switcher-content rounded-2xl border border-ui-border p-4 dark:border-ui-border-dark [&>.code-example>.code-switcher-content>*:last-child]:mb-0"
     >
         <slot />
     </div>
