@@ -1,23 +1,35 @@
 import { Picture } from 'astro:assets';
-import illuApifyActor from './illu-apify-actor.png';
-import illuInput from './illu-input.png';
-import illuOutput from './illu-output.png';
-import illuDocker from './illu-docker.png';
-import illuStorage from './illu-storage.png';
-import illuKeyValueStore from './illu-key-value-store.png';
-import illuDataSet from './illu-dataset.png';
-import illuIntegrations from './illu-integrations.png';
-import illuWhyTheName from './illu-why-the-name.png';
-import illuGetInput from './illu-get-input.png';
-import illuExitActor from './illu-exit-actor.png';
-import illuStartAnotherActor from './illu-start-another-actor.png';
-import illuMetamorph from './illu-metamorph.png';
-import illuFutureWork from './illu-future-work.png';
-import takerInput from './taker-input.png';
-import apifyStore from './apify-store.png';
-import Illustration from '../../components/Illustration.astro';
-import CodeSwitcher from '../../components/CodeSwitcher.astro';
 import CodeExample from '../../components/CodeExample.astro';
+import CodeSwitcher from '../../components/CodeSwitcher.astro';
+import illuAPIAbort from './illu-api-abort.png';
+import illuAPIChargingMoney from './illu-api-charging-money.png';
+import illuAPIExit from './illu-api-exit.png';
+import illuApifyStore from './illu-apify-store.png';
+import illuAPIGetInput from './illu-get-input.png';
+import illuAPIInitialization from './illu-api-initialization.png';
+import illuAPIKeyValueStoreAccess from './illu-api-key-value-store-access.png';
+import illuAPIMetamorph from './illu-api-metamorph.png';
+import illuAPIPush from './illu-api-push.png';
+import illuAPIReboot from './illu-api-reboot.png';
+import illuAPIStartAnother from './illu-api-start-another.png';
+import illuAPIStatus from './illu-api-status.png';
+import illuAPIWebHook from './illu-api-webhook.png';
+import illuAPIWebServer from './illu-api-webserver.png';
+import illuBasicConceptsInput from './illu-basic-concepts-input.png';
+import illuBasicConceptsIntegrations from './illu-basic-concepts-integrations.png';
+import illuBasicConceptsOutput from './illu-basic-concepts-output.png';
+import illuBasicConceptsRunEnvironment from './illu-basic-concepts-docker.png';
+import illuBasicConceptsStorage from './illu-basic-concepts-storage.png';
+import illuBasicConceptsStorageDataset from './illu-basic-concepts-storage-dataset.png';
+import illuBasicConceptsStorageKeyValueStore from './illu-basic-concepts-storage-key-value-store.png';
+import illuDefinitionFiles from './illu-definition-files.png';
+import illuDefinitionFilesInputSchemaFile from './illu-definition-files-input-schema-file.png';
+import illuDefinitionFilesOutputSchemaFile from './illu-definition-files-output-schema-file.png';
+import illuDiagram from './illu-diagram.png';
+import illuFutureWork from './illu-future-work.png';
+import illuPhilosophyWhyTheName from './illu-philosophy-why-the-name.png';
+import Illustration from '../../components/Illustration.astro';
+import illuTakerInput from './illu-taker-input.png';
 import IndexHero from '../../components/IndexHero.astro';
 
 <IndexHero>
@@ -58,7 +70,7 @@ Actors have the following elements:
 
 The documentation and the input/output schemas make it possible for people to easily understand what the Actor does, enter the required inputs both in user interface or API, and integrate the results of the Actor into their other workflows. Actors can easily call and interact with each other, enabling building more complex systems on top of simple ones.
 
-<Picture src={illuApifyActor} alt="Actor drawing" formats={['avif', 'webp']} />
+<Picture src={illuDiagram} alt="Actor drawing" formats={['avif', 'webp']} />
 
 ### Apify platform
 
@@ -75,7 +87,7 @@ This section describes core features of Actors, what they are good for, and how 
 <Illustration
     description="Each Actor accepts an input object, which tells it what it should do."
     position="content"
-    image={illuInput}
+    image={illuBasicConceptsInput}
 />
 
 Each Actor accepts an **input object**, which tells it what it should do. The object is passed in JSON format, and its properties have a similar role as command-line arguments when running a program in a UNIX-like operating system.
@@ -97,11 +109,15 @@ The input schema is used by the system to generate user interface, API examples,
 
 #### Example of auto-generated Actor input UI
 
-<Picture src={takerInput} alt="Taker input" formats={['avif', 'webp']} />
+<Picture src={illuTakerInput} alt="Taker input" formats={['avif', 'webp']} />
 
 ### Run environment
 
-<Illustration description="The Actors run within an isolated Docker container" position="right" image={illuDocker} />
+<Illustration
+    description="The Actors run within an isolated Docker container"
+    position="right"
+    image={illuBasicConceptsRunEnvironment}
+/>
 
 The Actors run within an isolated Docker container with access to local file system and network, and they can perform an arbitrary computing activity or call external APIs. The **standard output** of the Actor's program (stdout and stderr) is printed out and logged, which is useful for development and debugging.
 
@@ -116,7 +132,7 @@ The Actors can store their working data or results into specialized **storages**
 <Illustration
     description="The Actors can generate an output object, which is a standardized way to display, consume, and integrate Actors' results."
     position="content"
-    image={illuOutput}
+    image={illuBasicConceptsOutput}
 />
 
 While the input object provides a standardized way to invoke Actors, the Actors can also generate an **output object**, which is a standardized way to display, consume, and integrate Actors' results.
@@ -143,7 +159,7 @@ The output object is similar to input object, as it contains properties and valu
 <Illustration
     description="The Actor system provides two specialized storages that can be used by Actors for storing files and results: Key-value store and Dataset."
     position="content"
-    image={illuStorage}
+    image={illuBasicConceptsStorage}
 />
 
 The Actor system provides two specialized storages that can be used by Actors for storing files and results: **Key-value store** and **Dataset**, respectively. For each Actor run, the system automatically creates so-called **default storages** of both these types in empty state and makes them readily available for the Actor.
@@ -159,7 +175,7 @@ Note that the Actors are free to access any other external storage system throug
 <Illustration
     description="The Key-value store is a simple data storage that is used for saving and reading files or data records."
     position="right"
-    image={illuKeyValueStore}
+    image={illuBasicConceptsStorageKeyValueStore}
 />
 
 The Key-value store is a simple data storage that is used for saving and reading files or data records. The records are represented by a unique text key and the data associated with a MIME content type. Key-value stores are ideal for saving things like screenshots, web pages, PDFs, or to persist the state of Actors e.g. as a JSON file.
@@ -175,7 +191,7 @@ The Actor can define a schema for the Key-value store to ensure files stored in 
 <Illustration
     description="The Dataset is an append-only storage that allows you to store a series of data objects such as results from web scraping, crawling, or data processing jobs."
     position="right"
-    image={illuDataSet}
+    image={illuBasicConceptsStorageDataset}
 />
 
 The Dataset is an append-only storage that allows you to store a series of data objects such as results from web scraping, crawling, or data processing jobs. You or your users can then export the Dataset to formats such as JSON, CSV, XML, RSS, Excel, or HTML.
@@ -189,7 +205,7 @@ The Actor can define a schema for the Dataset to ensure objects stored in it con
 <Illustration
     description="Actors are designed for interoperability. Thanks to the input and output schemas, it's easy to connect Actors with external systems, be it directly via REST API, Node.js or Python clients, CLI, or no-code automations."
     position="content"
-    image={illuIntegrations}
+    image={illuBasicConceptsIntegrations}
 />
 
 **Actors are designed for interoperability.** Thanks to the input and output schemas, it easy to connect Actors with external systems, be it directly via REST API, Node.js or Python clients, CLI, or no-code automations. From the schema files, the system can automatically generate API documentation, OpenAPI specification, and validate inputs and outputs, simplifying their integrations to any other systems.
@@ -258,7 +274,7 @@ In movies and theater, an _actor_ is someone who gets a script and plays a role 
 
 To make it clear Actors are not people, the letter "A" is capitalized.
 
-<Illustration description="Actors" position="content" image={illuWhyTheName} />
+<Illustration description="Actors" position="content" image={illuPhilosophyWhyTheName} />
 
 ## Installation and setup
 
@@ -334,6 +350,12 @@ The commands described in this section are expected to be called from within a c
 The Actor runtime system passes the context via [environment variables](#environment-variables), such as `APIFY_TOKEN` or `ACTOR_RUN_ID`, which is used by the SDK or CLI to interact with the runtime.
 
 ### Initialization
+
+<Illustration
+    description="The SDKs provide convenience methods to initialize the Actor and handle its result. During initialization, the SDK loads environment variables, checks configuration, prepares to receive system events, and optionally purges previous state from local storage."
+    position="right"
+    image={illuAPIInitialization}
+/>
 
 The SDKs provide convenience methods to initialize the Actor and handle its result. During initialization, the SDK loads environment variables, checks configuration, prepares to receive system events, and optionally purges previous state from local storage.
 
@@ -411,7 +433,7 @@ The SDKs provide convenience methods to initialize the Actor and handle its resu
 <Illustration
     description="The input object is passed by the user and stored in the Actor's default key-value store. The input is an object with properties. If the Actor defines the input schema, the input object is guaranteed to conform to it."
     position="content"
-    image={illuGetInput}
+    image={illuAPIGetInput}
 />
 
 Get access to the Actor input object passed by the user. It is parsed from a JSON file, which is stored by the system in the Actor's default key-value store, Usually the file is called `INPUT`, but the exact key is defined in the `ACTOR_INPUT_KEY` [environment variable](#environment-variables).
@@ -467,6 +489,12 @@ The input is an object with properties. If the Actor defines the input schema, t
 
 ### Key-value store access
 
+<Illustration
+    description="Write and read arbitrary files using a storage called [Key-value store](https://sdk.apify.com/docs/api/key-value-store). When an Actor starts, by default it is associated with a newly-created key-value store, which only contains one file with input of the Actor (see [Get input](#get-input))."
+    position="content"
+    image={illuAPIKeyValueStoreAccess}
+/>
+
 Write and read arbitrary files using a storage called [Key-value store](https://sdk.apify.com/docs/api/key-value-store). When an Actor starts, by default it is associated with a newly-created key-value store, which only contains one file with input of the Actor (see [Get input](#get-input)).
 
 The user can override this behavior and specify another key-value store or input key when running the Actor.
@@ -517,6 +545,12 @@ The user can override this behavior and specify another key-value store or input
 </CodeSwitcher>
 
 ### Push results to dataset
+
+<Illustration
+    description="Larger results can be saved to append-only object storage called [Dataset](https://sdk.apify.com/docs/api/dataset). When an Actor starts, by default it is associated with a newly-created empty default dataset. The Actor can create additional datasets or access existing datasets created by other Actors, and use those as needed."
+    position="right"
+    image={illuAPIPush}
+/>
 
 Larger results can be saved to append-only object storage called [Dataset](https://sdk.apify.com/docs/api/dataset). When an Actor starts, by default it is associated with a newly-created empty default dataset. The Actor can create additional datasets or access existing datasets created by other Actors, and use those as needed.
 
@@ -588,7 +622,7 @@ Note that Datasets can optionally be equipped with schema that ensures only cert
 <Illustration
     description="When the main Actor process exits (i.e. the Docker container stops running), the Actor run is considered finished and the process exit code is used to determine whether the Actor has succeeded or failed."
     position="right"
-    image={illuExitActor}
+    image={illuAPIExit}
 />
 
 When the main Actor process exits (i.e. the Docker container stops running), the Actor run is considered finished and the process exit code is used to determine whether the Actor has succeeded (exit code `0` leads to status `SUCCEEDED`) or failed (exit code not equal to `0` leads to status `SUCCEEDED`). In this case, the platforms set a status message to a default value like `Actor exit with exit code 0`, which is not very descriptive for the users.
@@ -725,6 +759,12 @@ The environment variables can be set as secure in order to protect sensitive dat
 </CodeSwitcher>
 
 ### Actor status
+
+<Illustration
+    description="Each Actor run has a status (the `status` field), which indicates its stage in the Actor's lifecycle. The status can be one of the following values:"
+    position="right"
+    image={illuAPIStatus}
+/>
 
 Each Actor run has a status (the `status` field), which indicates its stage in the Actor's lifecycle. The status can be one of the following values:
 
@@ -892,7 +932,7 @@ Get information about the total and available memory of the Actor’s container 
 <Illustration
     description="Actor can start other Actors, if they have a permission. It can override the default dataset or key-value store, and e.g. forwarding the data to another named dataset, that will be consumed by the other Actor."
     position="content"
-    image={illuStartAnotherActor}
+    image={illuAPIStartAnother}
 />
 
 Actor can start other Actors, if they have a permission.
@@ -984,7 +1024,7 @@ The `call` operation waits for the other Actor to finish, the `start` operation 
 <Illustration
     description="Metamorph is the most magical Actor operation. It replaces running Actor’s Docker image with another Actor, similarly to UNIX `exec` command. It is used for building new Actors on top of existing ones. You simply define input schema and write README for a specific use case, and then delegate the work to another Actor."
     position="content"
-    image={illuMetamorph}
+    image={illuAPIMetamorph}
 />
 
 This is the most magical Actor operation. It replaces running Actor’s Docker image with another Actor, similarly to UNIX `exec` command. It is used for building new Actors on top of existing ones. You simply define input schema and write README for a specific use case, and then delegate the work to another Actor.
@@ -1024,6 +1064,12 @@ An Actor can metamorph only to Actors that have compatible output schema as the 
 </CodeSwitcher>
 
 ### Attach webhook to an Actor run
+
+<Illustration
+    description="Run another Actor or an external HTTP API endpoint after Actor run finishes or fails."
+    position="right"
+    image={illuAPIWebHook}
+/>
 
 Run another Actor or an external HTTP API endpoint after Actor run finishes or fails.
 
@@ -1081,6 +1127,12 @@ Run another Actor or an external HTTP API endpoint after Actor run finishes or f
 
 ### Abort another Actor
 
+<Illustration
+    description="Abort itself or another Actor running on the Apify platform. Aborting an Actor changes its [status](#actor-status) to `ABORTED`."
+    position="right"
+    image={illuAPIAbort}
+/>
+
 Abort itself or another Actor running on the Apify platform. Aborting an Actor changes its [status](#actor-status) to `ABORTED`.
 
 <CodeSwitcher>
@@ -1113,6 +1165,12 @@ Abort itself or another Actor running on the Apify platform. Aborting an Actor c
 </CodeSwitcher>
 
 ### Reboot the Actor
+
+<Illustration
+    description="Sometimes, an Actor might get into some error state from which it's not safe or possible to recover, e.g. an assertion error or a web browser crash. Rather than crashing and potentially failing the user job, the Actor can reboot its own Docker container and continue work from its previously persisted state."
+    position="right"
+    image={illuAPIReboot}
+/>
 
 Sometimes, an Actor might get into some error state from which it's not safe or possible to recover, e.g. an assertion error or a web browser crash. Rather than crashing and potentially failing the user job, the Actor can reboot its own Docker container and continue work from its previously persisted state.
 
@@ -1147,6 +1205,12 @@ Normally, if an Actor crashes, the system restarts its container too, but if tha
 </CodeSwitcher>
 
 ### Actor web server
+
+<Illustration
+    description="An Actor can launch an HTTP web server that is exposed to the outer world to handle requests. This enables Actors to provide a custom HTTP API to integrate with other systems, to provide a web application for human users, to show Actor run details, diagnostics, charts, or to run an arbitrary web app."
+    position="right"
+    image={illuAPIWebServer}
+/>
 
 An Actor can launch an HTTP web server that is exposed to the outer world to handle requests. This enables Actors to provide a custom HTTP API to integrate with other systems, to provide a web application for human users, to show Actor run details, diagnostics, charts, or to run an arbitrary web app.
 
@@ -1205,6 +1269,12 @@ The Actors can be migrated from another host server from time to time, especiall
 
 ### Charging money
 
+<Illustration
+    description="To run an Actor on the Apify platform or another cloud platform, a user typically needs to pay to cover the computing costs. Additionally, the platforms are free to introduce other [monetization](#monetization) mechanisms, such as charging the users a fixed monthly fee for 'renting' the Actor, or a variable fee for the number of results produced by the Actor. These charging mechanisms are beyond the scope of this whitepaper."
+    position="right"
+    image={illuAPIChargingMoney}
+/>
+
 To run an Actor on the Apify platform or another cloud platform, a user typically needs to pay to cover the computing costs. Additionally, the platforms are free to introduce other [monetization](#monetization) mechanisms, such as charging the users a fixed monthly fee for "renting" the Actor, or a variable fee for the number of results produced by the Actor. These charging mechanisms are beyond the scope of this whitepaper.
 
 On top of these external monetization systems, Actors provide a built-in monetization system that enables developers to charge users variable amounts per event, e.g. based on the number of returned results, complexity of the input, or the cost of external APIs used internally by the Actor.
@@ -1251,6 +1321,12 @@ If your Actor is charging users, you need to make sure at the earliest time poss
 You also must charge the users only **after** you have incurred the costs, not before. If the Actor fails in the middle or is aborted, the users only need to be charged for results they actually received. Nothing will make users of your Actors angrier than charging them for something they didn't receive.
 
 ## Actor definition files
+
+<Illustration
+    description="The Actor system uses several special files that define Actor metadata, documentation, instructions how to build and run it, input and output schema, etc. These files MUST be stored in the `.actor` directory placed in Actor's top-level directory."
+    position="content"
+    image={illuDefinitionFiles}
+/>
 
 The Actor system uses several special files that define Actor metadata, documentation, instructions how to build and run it, input and output schema, etc.
 
@@ -1355,6 +1431,12 @@ Good documentation makes good Actors. [Learn more](https://docs.apify.com/academ
 
 ### Input schema file
 
+<Illustration
+    description="Actors accept an [input](#input) JSON object on start, whose schema can be defined by the input schema file. This file is referenced in the Actor file (`.actor/actor.json`) file as the `input` property. It is a standard JSON Schema file with our extensions, and it is typically stored at `.actor/input_schema.json`."
+    position="right"
+    image={illuDefinitionFilesInputSchemaFile}
+/>
+
 Actors accept an [input](#input) JSON object on start, whose schema can be defined by the input schema file. This file is referenced in the Actor file (`.actor/actor.json`) file as the `input` property. It is a standard JSON Schema file with our extensions, and it is typically stored at `.actor/input_schema.json`.
 
 The input schema file defines properties accepted by Actor on input. It is used by the system to:
@@ -1395,6 +1477,12 @@ This is an example of the input schema file for the `bob/screenshot-taker` Actor
 ```
 
 ### Output schema file
+
+<Illustration
+    description="Similarly to input, Actors can generate an [output](#output) JSON object, which links to their results. The Actor output schema file defines how such output object looks like, including types of its properties and description. This file is referenced in the Actor file (`.actor/actor.json`) file as the `output` property. It is a standard JSON Schema file with our extensions, and it is typically stored at `.actor/output_schema.json`."
+    position="right"
+    image={illuDefinitionFilesOutputSchemaFile}
+/>
 
 Similarly to input, Actors can generate an [output](#output) JSON object, which links to their results. The Actor output schema file defines how such output object looks like, including types of its properties and description. This file is referenced in the Actor file (`.actor/actor.json`) file as the `output` property. It is a standard JSON Schema file with our extensions, and it is typically stored at `.actor/output_schema.json`.
 
@@ -1497,7 +1585,7 @@ Once an Actor is developed, the Actor platform lets you share it with other spec
 
 You can also publish the Actor for anyone to use on a marketplace like [Apify Store](https://apify.com/store). The Actor will get its public landing page like `https://apify.com/bob/screenshot-taker`, showing its README, description of inputs, outputs, API examples, etc. Once published, your Actor is automatically exposed to organic traffic of users and potential customers.
 
-<Picture src={apifyStore} alt="Apify Store" formats={['avif', 'webp']} />
+<Picture src={illuApifyStore} alt="Apify Store" formats={['avif', 'webp']} />
 
 ### Monetization
 
