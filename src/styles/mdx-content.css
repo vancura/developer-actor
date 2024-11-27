@@ -77,7 +77,7 @@
     & code,
     & table,
     & img {
-        @apply mb-4 leading-[1.35rem] lg:mb-6 lg:text-base lg:leading-[1.68rem];
+        @apply mb-3 leading-[1.35rem] lg:text-base lg:leading-[1.68rem];
     }
 
     & ul li {
