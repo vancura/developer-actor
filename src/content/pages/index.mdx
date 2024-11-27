@@ -3,7 +3,6 @@ import CodeExample from '../../components/CodeExample.astro';
 import CodeSwitcher from '../../components/CodeSwitcher.astro';
 import illuAPIAbort from './illu-api-abort.png';
 import illuAPIChargingMoney from './illu-api-charging-money.png';
-import illuAPIExit from './illu-api-exit.png';
 import illuApifyStore from './illu-apify-store.png';
 import illuAPIGetInput from './illu-get-input.png';
 import illuAPIInitialization from './illu-api-initialization.png';
@@ -615,12 +614,6 @@ Note that Datasets can optionally be equipped with schema that ensures only cert
 </CodeSwitcher>
 
 ### Exit Actor
-
-<Illustration
-    description="When the main Actor process exits (i.e. the Docker container stops running), the Actor run is considered finished and the process exit code is used to determine whether the Actor has succeeded or failed."
-    position="right"
-    image={illuAPIExit}
-/>
 
 When the main Actor process exits and the Docker container stops running, the Actor run is considered finished and the process exit code is used to determine whether the Actor has succeeded (exit code `0` leads to status `SUCCEEDED`) or failed (exit code not equal to `0` leads to status `FAILED`).
 
