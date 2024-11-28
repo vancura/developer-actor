@@ -96,7 +96,7 @@
 
             anchor.className =
                 'anchor absolute left-1 px-2 rounded-full border-none hover:bg-primary dark:hover:bg-primary-dark ' +
-                'font-source text-[10pt] hover:text-background dark:hover:text-background-dark select-none';
+                'font-source text-[10pt] hover:text-background dark:hover:text-background-dark select-none no-underline';
             anchor.href = `#${id}`;
             anchor.setAttribute('aria-hidden', 'true');
             anchor.setAttribute('tabindex', '-1');
@@ -244,3 +244,9 @@
         logger.error('Failed to initialize heading links manager', error);
     }
 </script>
+
+<style is:global>
+    .anchor {
+        text-decoration: none !important;
+    }
+</style>
