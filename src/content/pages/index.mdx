@@ -84,6 +84,7 @@ This section describes core features of Actors, what they are good for, and how 
     description="Each Actor accepts an input object, which tells it what it should do."
     position="content"
     image={illuBasicConceptsInput}
+    noCaption
 />
 
 Each Actor accepts an **input object**, which tells it what it should do. The object is passed in JSON format, and its properties have a similar role as command-line arguments when running a program in a UNIX-like operating system.
@@ -156,6 +157,7 @@ The output object is similar to input object, as it contains properties and valu
     description="The Actor system provides two specialized storages that can be used by Actors for storing files and results: Key-value store and Dataset."
     position="content"
     image={illuBasicConceptsStorage}
+    noCaption
 />
 
 The Actor system provides two specialized storages that can be used by Actors for storing files and results: **Key-value store** and **Dataset**, respectively. For each Actor run, the system automatically creates so-called **default storages** of both these types in empty state and makes them readily available for the Actor.
@@ -202,6 +204,7 @@ The Actor can define a schema for the Dataset to ensure objects stored in it con
     description="Actors are designed for interoperability. Thanks to the input and output schemas, it's easy to connect Actors with external systems, be it directly via REST API, Node.js or Python clients, CLI, or no-code automations."
     position="content"
     image={illuBasicConceptsIntegrations}
+    noCaption
 />
 
 **Actors are designed for interoperability.** Thanks to the input and output schemas, it easy to connect Actors with external systems, be it directly via REST API, Node.js or Python clients, CLI, or no-code automations. From the schema files, the system can automatically generate API documentation, OpenAPI specification, and validate inputs and outputs, simplifying their integrations to any other systems.
@@ -270,7 +273,7 @@ In movies and theater, an _actor_ is someone who gets a script and plays a role 
 
 To make it clear Actors are not people, the letter "A" is capitalized.
 
-<Illustration description="Actors" position="content" image={illuPhilosophyWhyTheName} />
+<Illustration description="Actors" position="content" image={illuPhilosophyWhyTheName} noCaption />
 
 ## Installation and setup
 
@@ -351,6 +354,7 @@ The Actor runtime system passes the context via [environment variables](#environ
     description="The SDKs provide convenience methods to initialize the Actor and handle its result. During initialization, the SDK loads environment variables, checks configuration, prepares to receive system events, and optionally purges previous state from local storage."
     position="right"
     image={illuAPIInitialization}
+    noCaption
 />
 
 The SDKs provide convenience methods to initialize the Actor and handle its result. During initialization, the SDK loads environment variables, checks configuration, prepares to receive system events, and optionally purges previous state from local storage.

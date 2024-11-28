@@ -6,9 +6,10 @@ interface Props {
     position?: 'left' | 'right' | 'content';
     image: typeof Image;
     transparent?: boolean;
+    noCaption?: boolean;
 }
 
-const { description, position = 'content', image, transparent = false } = Astro.props;
+const { description, position = 'content', image, transparent = false, noCaption = false } = Astro.props;
 
 // Calculate width and alignment classes based on position.
 const containerClasses = {
@@ -43,9 +44,11 @@ if (transparent) {
         <figure class={containerClass}>
             <Image src={image} alt={description} class={imageClass} />
 
-            <figcaption class="text-balance text-center text-sm text-text-muted dark:text-text-muted-dark">
-                {description}
-            </figcaption>
+            {!noCaption && (
+                <figcaption class="mb-2 text-balance text-center text-sm text-text-muted dark:text-text-muted-dark">
+                    {description}
+                </figcaption>
+            )}
         </figure>
     ) : (
         <p class="text-balance rounded-md bg-debug p-6 text-center font-medium text-background">
