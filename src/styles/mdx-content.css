@@ -41,7 +41,7 @@
     & h2,
     & h3,
     & h4 {
-        @apply relative -mx-8 text-balance px-8 font-heading oldstyle-nums proportional-nums stacked-fractions tracking-tight;
+        @apply relative clear-both -mx-8 text-balance px-8 font-heading oldstyle-nums proportional-nums stacked-fractions tracking-tight;
 
         & .anchor {
             @apply opacity-0;
@@ -57,15 +57,15 @@
     }
 
     & h2 {
-        @apply mb-3 mt-10 border-t-4 border-ui-border-hr pt-8 text-3xl first-of-type:mt-0 first-of-type:border-none lg:mb-6 lg:mt-14 lg:pt-12 lg:text-4xl dark:border-ui-border-hr-dark;
+        @apply mb-3 mt-12 border-t-4 border-ui-border-hr pt-10 text-3xl first-of-type:mt-0 first-of-type:border-none lg:mb-6 lg:mt-16 lg:pt-14 lg:text-4xl dark:border-ui-border-hr-dark;
     }
 
     & h3 {
-        @apply pb-4 pt-3 text-2xl lg:pb-6 lg:pt-4 lg:text-3xl;
+        @apply pb-3 pt-5 text-2xl lg:pb-6 lg:pt-10 lg:text-3xl;
     }
 
     & h4 {
-        @apply pb-4 pt-3 text-xl lg:pb-6 lg:pt-4 lg:text-2xl;
+        @apply pb-3 pt-5 text-xl lg:pb-6 lg:pt-10 lg:text-2xl;
     }
 
     & p,
@@ -153,7 +153,7 @@
     }
 
     & blockquote {
-        @apply text-pretty border-l-4 border-ui-border-hr pl-4 dark:border-ui-border-hr-dark;
+        @apply my-6 text-pretty border-l-4 border-ui-border-hr pl-4 lg:my-8 dark:border-ui-border-hr-dark;
     }
 }
 
