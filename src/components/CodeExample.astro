@@ -9,7 +9,9 @@ const { title } = Astro.props;
 ---
 
 <section class="code-example">
-    <button type="button" data-tab class="code-switcher-tab rounded-t px-4 py-1">{title}</button>
+    <button type="button" data-tab class="code-switcher-tab rounded-t px-2 py-1 text-[12px] lg:px-4 lg:text-[14px]"
+        >{title}</button
+    >
 
     <div data-content class="code-switcher-content hidden">
         <slot />
