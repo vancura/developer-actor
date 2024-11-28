@@ -138,6 +138,8 @@ The Actor results are typically fully available only after the Actor run finishe
 
 You can define how the Actor output looks like using the [Output schema file](#output-schema-file). The system uses this information to automatically generate an immutable JSON file, which tells users where to find the results produced by the Actor. The output object is stored by the system to the Actor run object under the `output` property, and returned via API immediately when the Actor is started, without the need to wait for it to finish or generate the actual results. This is useful to automatically generate UI previews of the results, API examples, and integrations.
 
+<div class="clear-both" />
+
 The output object is similar to input object, as it contains properties and values. For example, for the `bob/screenshot-taker` Actor, the output object can look like this:
 
 ```jsonc
@@ -359,6 +361,8 @@ The Actor runtime system passes the context via [environment variables](#environ
 
 The SDKs provide convenience methods to initialize the Actor and handle its result. During initialization, the SDK loads environment variables, checks configuration, prepares to receive system events, and optionally purges previous state from local storage.
 
+<div class="clear-both" />
+
 <CodeSwitcher>
 
     <CodeExample title="Node.js">
@@ -555,6 +559,8 @@ The user can override this behavior and specify another key-value store or input
 Larger results can be saved to append-only object storage called [Dataset](https://sdk.apify.com/docs/api/dataset). When an Actor starts, by default it is associated with a newly-created empty default dataset. The Actor can create additional datasets or access existing datasets created by other Actors, and use those as needed.
 
 Note that Datasets can optionally be equipped with schema that ensures only certain kinds of objects are stored in them. See [Dataset schema file](./pages/DATASET_SCHEMA.md) for more details.
+
+<div class="clear-both" />
 
 <CodeSwitcher>
 
@@ -764,6 +770,8 @@ The environment variables can be set as secure in order to protect sensitive dat
 />
 
 Each Actor run has a status (the `status` field), which indicates its stage in the Actor's lifecycle. The status can be one of the following values:
+
+<div class="clear-both" />
 
 | Status       | Type         | Description                                 |
 | ------------ | ------------ | ------------------------------------------- |
@@ -1070,6 +1078,8 @@ An Actor can metamorph only to Actors that have compatible output schema as the 
 
 Run another Actor or an external HTTP API endpoint after Actor run finishes or fails.
 
+<div class="clear-both" />
+
 <CodeSwitcher>
 
     <CodeExample title="Node.js">
@@ -1132,6 +1142,8 @@ Run another Actor or an external HTTP API endpoint after Actor run finishes or f
 
 Abort itself or another Actor running on the Apify platform. Aborting an Actor changes its [status](#actor-status) to `ABORTED`.
 
+<div class="clear-both" />
+
 <CodeSwitcher>
 
     <CodeExample title="Node.js">
@@ -1172,6 +1184,8 @@ Abort itself or another Actor running on the Apify platform. Aborting an Actor c
 Sometimes, an Actor might get into some error state from which it's not safe or possible to recover, e.g. an assertion error or a web browser crash. Rather than crashing and potentially failing the user job, the Actor can reboot its own Docker container and continue work from its previously persisted state.
 
 Normally, if an Actor crashes, the system restarts its container too, but if that happens too often in a short period of time, the system might completely [abort](#actor-status) the Actor run. The reboot operation can be used by the Actor developer to indicate this is a controlled operation, not considered by the system as a crash.
+
+<div class="clear-both" />
 
 <CodeSwitcher>
 
@@ -1220,6 +1234,8 @@ https://hard-to-guess-identifier.runs.apify.net
 ```
 
 The live view URL has a unique hostname, which is practically impossible to guess. This lets you keep the web server hidden from public yet accessible from the external internet by the parties, with whom you share the URL.
+
+<div class="clear-both" />
 
 <CodeSwitcher>
 
@@ -1497,6 +1513,8 @@ The input schema file defines properties accepted by Actor on input. It is used 
 
 For details, see [Actor input schema file specification](./pages/INPUT_SCHEMA.md).
 
+<div class="clear-both" />
+
 This is an example of the input schema file for the `bob/screenshot-taker` Actor::
 
 ```json
@@ -1542,6 +1560,8 @@ The output schema describes how the Actor stores its results, and it is used by 
 -   Enable integrating Actors with external systems and automated workflows.
 
 For details, see [Actor output schema file specification](./pages/OUTPUT_SCHEMA.md).
+
+<div class="clear-both" />
 
 This is an example of the output schema file for the `bob/screenshot-taker` Actor:
 
