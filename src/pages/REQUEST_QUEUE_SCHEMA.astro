@@ -1,0 +1,14 @@
+---
+import strings from '../../strings.mjs';
+import MDXWrapper from '../components/MDXWrapper.astro';
+import Content from '../content/pages/REQUEST_QUEUE_SCHEMA.mdx';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()}>
+    <div class="mdx-content mx-auto max-w-screen-lg">
+        <MDXWrapper>
+            <Content />
+        </MDXWrapper>
+    </div>
+</Layout>
