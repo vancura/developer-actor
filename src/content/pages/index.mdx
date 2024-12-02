@@ -1,18 +1,14 @@
 import { Picture } from 'astro:assets';
 import CodeExample from '../../components/CodeExample.astro';
 import CodeSwitcher from '../../components/CodeSwitcher.astro';
-import illuAPIAbort from './illu-api-abort.png';
 import illuAPIChargingMoney from './illu-api-charging-money.png';
 import illuApifyStore from './illu-apify-store.png';
 import illuAPIGetInput from './illu-get-input.png';
-import illuAPIInitialization from './illu-api-initialization.png';
 import illuAPIKeyValueStoreAccess from './illu-api-key-value-store-access.png';
 import illuAPIMetamorph from './illu-api-metamorph.png';
 import illuAPIPush from './illu-api-push.png';
 import illuAPIReboot from './illu-api-reboot.png';
 import illuAPIStartAnother from './illu-api-start-another.png';
-import illuAPIStatus from './illu-api-status.png';
-import illuAPIWebHook from './illu-api-webhook.png';
 import illuAPIWebServer from './illu-api-webserver.png';
 import illuBasicConceptsInput from './illu-basic-concepts-input.gif';
 import illuBasicConceptsIntegrations from './illu-basic-concepts-integrations.png';
@@ -21,7 +17,6 @@ import illuBasicConceptsRunEnvironment from './illu-basic-concepts-docker.gif';
 import illuBasicConceptsStorage from './illu-basic-concepts-storage.png';
 import illuBasicConceptsStorageDataset from './illu-basic-concepts-storage-dataset.png';
 import illuBasicConceptsStorageKeyValueStore from './illu-basic-concepts-storage-key-value-store.png';
-import illuDefinitionFiles from './illu-definition-files.png';
 import illuDefinitionFilesInputSchemaFile from './illu-definition-files-input-schema-file.gif';
 import illuDefinitionFilesOutputSchemaFile from './illu-definition-files-output-schema-file.png';
 import illuDiagram from './illu-diagram.png';
@@ -351,13 +346,6 @@ The commands described in this section are expected to be called from within a c
 The Actor runtime system passes the context via [environment variables](#environment-variables), such as `APIFY_TOKEN` or `ACTOR_RUN_ID`, which is used by the SDK or CLI to interact with the runtime.
 
 ### Initialization
-
-<Illustration
-    description="The SDKs provide convenience methods to initialize the Actor and handle its result. During initialization, the SDK loads environment variables, checks configuration, prepares to receive system events, and optionally purges previous state from local storage."
-    position="right"
-    image={illuAPIInitialization}
-    noCaption
-/>
 
 The SDKs provide convenience methods to initialize the Actor and handle its result. During initialization, the SDK loads environment variables, checks configuration, prepares to receive system events, and optionally purges previous state from local storage.
 
@@ -766,13 +754,6 @@ The environment variables can be set as secure in order to protect sensitive dat
 
 ### Actor status
 
-<Illustration
-    description="Each Actor run has a status (the `status` field), which indicates its stage in the Actor's lifecycle."
-    position="right"
-    image={illuAPIStatus}
-    noCaption
-/>
-
 Each Actor run has a status (the `status` field), which indicates its stage in the Actor's lifecycle. The status can be one of the following values:
 
 <div class="clear-both" />
@@ -1076,13 +1057,6 @@ An Actor can metamorph only to Actors that have compatible output schema as the 
 
 ### Attach webhook to an Actor run
 
-<Illustration
-    description="Run another Actor or an external HTTP API endpoint after Actor run finishes or fails"
-    position="right"
-    image={illuAPIWebHook}
-    noCaption
-/>
-
 Run another Actor or an external HTTP API endpoint after Actor run finishes or fails.
 
 <div class="clear-both" />
@@ -1140,13 +1114,6 @@ Run another Actor or an external HTTP API endpoint after Actor run finishes or f
 </CodeSwitcher>
 
 ### Abort another Actor
-
-<Illustration
-    description="Abort itself or another Actor running on the Apify platform. Aborting an Actor changes its status to ABORTED."
-    position="right"
-    image={illuAPIAbort}
-    noCaption
-/>
 
 Abort itself or another Actor running on the Apify platform. Aborting an Actor changes its [status](#actor-status) to `ABORTED`.
 
@@ -1397,13 +1364,6 @@ If your Actor is charging users, you need to make sure at the earliest time poss
 You also must charge the users only **after** you have incurred the costs, not before. If the Actor fails in the middle or is aborted, the users only need to be charged for results they actually received. Nothing will make users of your Actors angrier than charging them for something they didn't receive.
 
 ## Actor definition files
-
-<Illustration
-    description="The Actor system uses several special files that define Actor metadata, documentation, instructions how to build and run it, input and output schema, etc. These files MUST be stored in the `.actor` directory placed in Actor's top-level directory."
-    position="content"
-    image={illuDefinitionFiles}
-    noCaption
-/>
 
 The Actor system uses several special files that define Actor metadata, documentation, instructions how to build and run it, input and output schema, etc.
 
