@@ -65,12 +65,14 @@ import Layout from '../layouts/Layout.astro';
                 iframe.src = src + '?inModal=1';
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
             }
 
             function closeModal() {
                 modal.classList.remove('flex');
                 modal.classList.add('hidden');
                 iframe.src = '';
+                document.body.style.overflow = '';
             }
 
             closeButton.addEventListener('click', function () {
