@@ -1,3 +1,6 @@
+import { Picture } from 'astro:assets';
+import illuDatasetSchema from './illu-dataset-schema.png';
+
 # Dataset schema file specification 1.0
 
 Dataset storage enables you to sequentially store and retrieve data records, in various formats. Each Actor run is assigned its own dataset, which is created when the first item is stored to it. Datasets usually contain results from web scraping, crawling or data processing jobs. The data can be visualized as a table where each object is a row and its attributes are the columns. The data can be exported in JSON, CSV, XML, RSS, Excel, or HTML formats.
@@ -10,10 +13,7 @@ Dataset can be assigned a schema which describes:
 -   Different views on how we can look at the data, aka transformations
 -   Visualization of the View using predefined components (grid, table, ...), which improves the run view interface at Apify Console and also provides a better interface for datasets shared by Apify users
 
-<img
-    src="https://user-images.githubusercontent.com/594801/147474979-a224008c-8cba-43a6-8d2e-c24f6b0d5b37.png"
-    width="500"
-/>
+<Picture src={illuDatasetSchema} alt="Dataset schema" formats={['avif', 'webp']} />
 
 ## Basic properties
 
@@ -22,7 +22,7 @@ Dataset can be assigned a schema which describes:
 
 There are two ways how to create a dataset with schema:
 
-1. User can start the Actor that has dataset schema linked from its [OUTPUT_SCHEMA.json](./OUTPUT_SCHEMA.md)
+1. User can start the Actor that has dataset schema linked from its [OUTPUT_SCHEMA.json](/output-schema)
 2. Or user can do it pragmatically via API (for empty dataset) by
 
     - either by passing the schema as payload to [create dataset](https://docs.apify.com/api#/reference/datasets/dataset-collection/create-dataset) API endpoint.

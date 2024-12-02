@@ -561,7 +561,7 @@ The user can override this behavior and specify another key-value store or input
 
 Larger results can be saved to append-only object storage called [Dataset](https://sdk.apify.com/docs/api/dataset). When an Actor starts, by default it is associated with a newly-created empty default dataset. The Actor can create additional datasets or access existing datasets created by other Actors, and use those as needed.
 
-Note that Datasets can optionally be equipped with schema that ensures only certain kinds of objects are stored in them. See [Dataset schema file](./pages/DATASET_SCHEMA.md) for more details.
+Note that Datasets can optionally be equipped with schema that ensures only certain kinds of objects are stored in them. See [Dataset schema file](/dataset-schema) for more details.
 
 <div class="clear-both" />
 
@@ -1415,7 +1415,7 @@ The Actor definition files are used by the CLI (e.g. by `apify push` and `apify 
 
 This is the main definition file of the Actor, and it always must be present at `.actor/actor.json`. This file has JSON format and contains a single object, whose properties define the main features of the Actor and link to all other necessary files.
 
-For details, see the [Actor file specification](./pages/ACTOR_FILE.md) page.
+For details, see the [Actor file specification](/actor-file) page.
 
 #### Example Actor file at `.actor/actor.json`
 
@@ -1524,7 +1524,7 @@ The input schema file defines properties accepted by Actor on input. It is used 
 -   Generate Actor API documentation and integration code examples on the web or in CLI, making Actors easy to integrate for users.
 -   Simplify integration of Actors into automation workflows such as Zapier or Make, by providing smart connectors that smartly pre-populate and link Actor input properties.
 
-For details, see [Actor input schema file specification](./pages/INPUT_SCHEMA.md).
+For details, see [Actor input schema file specification](/input-schema).
 
 <div class="clear-both" />
 
@@ -1573,7 +1573,7 @@ The output schema describes how the Actor stores its results, and it is used by 
 -   Publish OpenAPI specification to make it easy for callers of Actors to figure where to find results.
 -   Enable integrating Actors with external systems and automated workflows.
 
-For details, see [Actor output schema file specification](./pages/OUTPUT_SCHEMA.md).
+For details, see [Actor output schema file specification](/output-schema).
 
 <div class="clear-both" />
 
@@ -1608,9 +1608,9 @@ This is an example of the output schema file for the `bob/screenshot-taker` Acto
 
 Both main Actor file and input and output schema files can additionally reference schema files for specific storages. These files have custom JSON-based formats, see:
 
--   [Dataset schema file](./pages/DATASET_SCHEMA.md)
--   [Key-value store schema file](./pages/KEY_VALUE_STORE_SCHEMA.md)
--   [Request queue schema file](./pages/REQUEST_QUEUE_SCHEMA.md)
+-   [Dataset schema file](/dataset-schema)
+-   [Key-value store schema file](/key-value-store-schema)
+-   [Request queue schema file](/request-queue-schema)
 
 These storage schemas are used to ensure that stored objects or files fulfil specific criteria, their fields have certain types, etc. On the Apify platform, the schemas can be applied to the storages directly, without Actors.
 
