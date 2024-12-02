@@ -109,6 +109,13 @@ import Layout from '../layouts/Layout.astro';
                 if (data && data.type === 'navigate' && data.url) {
                     closeModal();
                     window.location.href = data.url;
+
+                    if (data.shouldScroll) {
+                        window.addEventListener('load', () => {
+                            const element = document.querySelector(new URL(data.url).hash);
+                            element?.scrollIntoView({ behavior: 'smooth' });
+                        });
+                    }
                 }
             });
         });
