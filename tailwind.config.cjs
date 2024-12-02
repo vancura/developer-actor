@@ -27,10 +27,10 @@ module.exports = {
             },
 
             background: {
-                DEFAULT: 'rgba(245, 245, 245, 1)',
-                dark: 'rgba(34, 34, 34, 1)',
-                toc: 'rgba(248, 248, 248, 1)',
-                'toc-dark': 'rgba(17, 17, 17, 1)',
+                DEFAULT: 'rgb(245, 245, 245)',
+                dark: 'rgb(34, 34, 34)',
+                toc: 'rgb(248, 248, 248)',
+                'toc-dark': 'rgb(17, 17, 17)',
                 'toc-filter': 'white',
                 'toc-filter-dark': 'rgba(255, 255, 255, 0.1)',
                 'toc-active': 'white',
