@@ -2,7 +2,7 @@
     id="banner"
     class="sticky left-0 top-0 z-50 mx-auto mb-2 max-w-md text-balance rounded-b-xl bg-background-banner p-4 pb-5 text-center shadow-md dark:bg-background-banner-dark dark:shadow-none"
 >
-    This is an inner page of the Actor Whitepaper site.
+    This is an inner page of the Actor Whitepaper site.
 
     <a href="/" class="block font-medium text-accent underline decoration-2 underline-offset-4 dark:text-accent-dark"
         >Go back to the main page</a
@@ -13,13 +13,23 @@
     (function () {
         const urlParams = new URLSearchParams(window.location.search);
         const inModal = urlParams.get('inModal') === '1';
+        const banner = document.getElementById('banner');
 
         if (inModal) {
-            const banner = document.getElementById('banner');
-
             if (banner) {
                 banner.style.display = 'none';
             }
+
+            document.addEventListener('click', function (e) {
+                const link = e.target.closest('a');
+
+                if (link && link.href && link.origin === window.location.origin) {
+                    e.preventDefault();
+                    parent.postMessage({ type: 'navigate', url: link.href }, window.location.origin);
+                } else if (link && link.href) {
+                    link.target = 'blank';
+                }
+            });
         }
     })();
 </script>
