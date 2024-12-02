@@ -10,6 +10,10 @@
 </div>
 
 <script>
+    import { createLogger, type ILogger } from '../utils/logger';
+
+    const logger: ILogger = createLogger({ prefix: 'Banner' });
+
     (function () {
         const urlParams = new URLSearchParams(window.location.search);
         const inModal = urlParams.get('inModal') === '1';
@@ -18,18 +22,49 @@
         if (inModal) {
             if (banner) {
                 banner.style.display = 'none';
+            } else {
+                logger.warn('Banner element not found');
             }
 
             document.addEventListener('click', function (e) {
-                const link = e.target.closest('a');
+                const target = e.target as Element;
+                const link = target.closest('a');
 
                 if (link && link.href && link.origin === window.location.origin) {
                     e.preventDefault();
-                    parent.postMessage({ type: 'navigate', url: link.href }, window.location.origin);
+
+                    // Get the pathname and hash directly from the link element.
+                    const pathname = link.pathname;
+                    const hash = link.hash;
+
+                    logger.info(`Intercepted internal navigation to: ${pathname}${hash}`);
+
+                    // If it's a hash link to the index page, navigate parent directly.
+                    if (pathname === '/' && hash) {
+                        logger.info(`Direct parent navigation to: ${pathname}${hash}`);
+
+                        window.parent.location.href = pathname + hash;
+
+                        return;
+                    }
+
+                    logger.info(`Posting navigation message for: ${pathname}${hash}`);
+
+                    parent.postMessage(
+                        {
+                            type: 'navigate',
+                            url: pathname + hash
+                        },
+                        window.location.origin
+                    );
                 } else if (link && link.href) {
+                    logger.info(`Setting external link target to blank: ${link.href}`);
+
                     link.target = 'blank';
                 }
             });
+        } else {
+            logger.info('Banner initialized in non-modal mode');
         }
     })();
 </script>
