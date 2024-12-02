@@ -5,7 +5,7 @@ import illuDatasetSchema from './illu-dataset-schema.png';
 
 Dataset storage enables you to sequentially store and retrieve data records, in various formats. Each Actor run is assigned its own dataset, which is created when the first item is stored to it. Datasets usually contain results from web scraping, crawling or data processing jobs. The data can be visualized as a table where each object is a row and its attributes are the columns. The data can be exported in JSON, CSV, XML, RSS, Excel, or HTML formats.
 
-The specification is also at https://docs.apify.com/platform/actors/development/actor-definition/output-schema
+The specification is also at [Apify documentation](https://docs.apify.com/platform/actors/development/actor-definition/output-schema).
 
 Dataset can be assigned a schema which describes:
 
@@ -22,7 +22,7 @@ Dataset can be assigned a schema which describes:
 
 There are two ways how to create a dataset with schema:
 
-1. User can start the Actor that has dataset schema linked from its [OUTPUT_SCHEMA.json](/output-schema)
+1. User can start the Actor that has dataset schema linked from its [Output schema](/output-schema)
 2. Or user can do it pragmatically via API (for empty dataset) by
 
     - either by passing the schema as payload to [create dataset](https://docs.apify.com/api#/reference/datasets/dataset-collection/create-dataset) API endpoint.
