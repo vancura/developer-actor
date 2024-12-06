@@ -124,7 +124,6 @@
          * scroll checks.
          */
         constructor() {
-            this.activateFirstVisibleHeading = this.activateFirstVisibleHeading.bind(this);
             this.cleanup = this.cleanup.bind(this);
             this.getProgressBarStyles = this.getProgressBarStyles.bind(this);
             this.initialize = this.initialize.bind(this);
@@ -508,46 +507,12 @@
                     this.updateTOCMode();
                     this.updateProgressVisibility();
                     this.renderTOC();
-                    this.activateFirstVisibleHeading();
 
                     logger.info('TOC manager initialized successfully');
                 },
                 undefined,
                 'Failed to initialize TOC manager'
             );
-        }
-
-        /**
-         * Activates the first visible heading from the headingStore based on its position in the viewport. Returns true
-         * if a heading is successfully activated and is within the top 20% of the viewport. Logs a warning if no
-         * heading elements are found or if the headingStore is empty.
-         *
-         * @returns {boolean} - True if a valid heading is found and activated within the viewport's criteria, false
-         *   otherwise.
-         */
-        private activateFirstVisibleHeading(): void {
-            const entries = headingStore.get();
-            let o;
-
-            if (entries.length > 0) {
-                const firstVisibleHeading = entries.find((heading) => {
-                    const element = document.getElementById(heading.id);
-
-                    if (element) {
-                        const rect = element.getBoundingClientRect();
-
-                        o = rect.top >= 0 && rect.top <= window.innerHeight * 0.2;
-                    } else {
-                        logger.warn(`Heading element not found for ID: ${heading.id}`);
-                    }
-                });
-
-                this.updateActiveHeading(firstVisibleHeading?.id || entries[0].id);
-            } else {
-                logger.warn('No headings available to activate');
-            }
-
-            return o;
         }
 
         /**
