@@ -10,6 +10,9 @@ This repository contains the documentation website for the Actor Programming Mod
 -   Code syntax highlighting with copy functionality
 -   Dark mode support
 -   MDX content support with custom components
+-   Modal-based navigation system for internal links
+-   Smooth scroll behavior for navigation
+-   Banner component for improved inner page context
 
 ## Tech Stack
 
@@ -17,6 +20,9 @@ This repository contains the documentation website for the Actor Programming Mod
 -   [Tailwind CSS](https://tailwindcss.com) - Styling
 -   [MDX](https://mdxjs.com) - Content
 -   [TypeScript](https://www.typescriptlang.org) - Type Safety
+-   [Sharp](https://sharp.pixelplumbing.com/) - Image optimization
+-   [ESLint](https://eslint.org/) - Code linting
+-   [Prettier](https://prettier.io/) - Code formatting
 -   [Vercel](https://vercel.com) - Deployment
 
 ## Installation
@@ -47,6 +53,8 @@ yarn dev
 -   `yarn preview` - Preview production build
 -   `yarn clean` - Clean dist and node_modules directories
 -   `yarn format` - Format code with Prettier
+-   `yarn lint` - Run ESLint checks
+-   `yarn lint:fix` - Fix ESLint issues and format code
 
 ## Project Structure
 
