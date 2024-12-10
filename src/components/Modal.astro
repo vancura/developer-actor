@@ -47,36 +47,51 @@
         const loader = document.getElementById('modal-loader');
         const closeButton = document.getElementById('modal-close-button');
 
+        if (!modal || !iframe || !loader || !closeButton) {
+            logger.error('Modal elements not found');
+        }
+
+        /**
+         * Open the modal.
+         *
+         * @param src - The source URL to load into the modal.
+         */
         function openModal(src: string) {
-            iframe.style.opacity = '0';
-            loader.style.display = 'flex';
+            iframe!.style.opacity = '0';
+            loader!.style.display = 'flex';
+            iframe!.src = src + '?inModal=1';
 
-            iframe.src = src + '?inModal=1';
+            modal!.classList.remove('hidden');
+            modal!.classList.add('flex');
 
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden'; // prevent scrolling on the parent page
         }
 
+        /** Close the modal. */
         function closeModal() {
-            modal.classList.remove('flex');
-            modal.classList.add('hidden');
-            iframe.src = '';
-            document.body.style.overflow = '';
-            iframe.style.opacity = '0';
-            loader.style.display = 'flex';
+            iframe!.style.opacity = '0';
+            loader!.style.display = 'flex';
+            iframe!.src = '';
+
+            modal!.classList.remove('flex');
+            modal!.classList.add('hidden');
+
+            document.body.style.overflow = ''; // restore the parent page scrolling
         }
 
-        closeButton.addEventListener('click', function () {
+        /** Close the modal when the close button is clicked. */
+        closeButton!.addEventListener('click', function () {
             closeModal();
         });
 
-        modal.addEventListener('click', function (e) {
+        /** Close the modal when the modal is clicked. */
+        modal!.addEventListener('click', function (e) {
             if (e.target === modal) {
                 closeModal();
             }
         });
 
+        // Open the modal when a link is clicked.
         const links = document.querySelectorAll('a[href^="/"]:not([href="/"])');
 
         links.forEach(function (link) {
@@ -93,6 +108,7 @@
             });
         });
 
+        // Close the modal when a message is received from the parent window.
         window.addEventListener('message', function (event) {
             if (event.origin !== window.location.origin) return;
 
@@ -100,6 +116,7 @@
 
             if (data && data.type === 'navigate' && data.url) {
                 closeModal();
+
                 window.location.href = data.url;
 
                 if (data.shouldScroll) {
