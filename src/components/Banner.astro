@@ -37,10 +37,8 @@
                     const pathname = link.pathname;
                     const hash = link.hash;
 
-                    logger.info(`Intercepted internal navigation to: ${pathname}${hash}`);
-
-                    // If it's a hash link to the index page, navigate parent directly.
-                    if (pathname === '/' && hash) {
+                    // If it's the index page (with or without hash), navigate the parent window.
+                    if (pathname === '/') {
                         logger.info(`Direct parent navigation to: ${pathname}${hash}`);
 
                         window.parent.location.href = pathname + hash;
@@ -60,7 +58,7 @@
                 } else if (link && link.href) {
                     logger.info(`Setting external link target to blank: ${link.href}`);
 
-                    link.target = 'blank';
+                    link.target = '_blank';
                 }
             });
         } else {

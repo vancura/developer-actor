@@ -57,6 +57,8 @@
          * @param src - The source URL to load into the modal.
          */
         function openModal(src: string) {
+            logger.info(`Opening modal with src: ${src}`);
+
             iframe!.style.opacity = '0';
             loader!.style.display = 'flex';
             iframe!.src = src + '?inModal=1';
@@ -69,12 +71,17 @@
 
         /** Close the modal. */
         function closeModal() {
+            logger.info('Closing modal');
+
             iframe!.style.opacity = '0';
             loader!.style.display = 'flex';
             iframe!.src = '';
 
             modal!.classList.remove('flex');
             modal!.classList.add('hidden');
+
+            // Force a reflow to ensure the changes take effect.
+            void modal!.offsetHeight;
 
             document.body.style.overflow = ''; // restore the parent page scrolling
         }
@@ -110,13 +117,21 @@
 
                     // Parse the URL to check if it's the index page with or without hash.
                     const url = new URL(href, window.location.origin);
-                    const isIndexPage = url.pathname === '/';
-                    const hasHash = url.hash !== '';
+                    const isIndexPage = url.pathname === '/' && (url.hash === '' || url.hash.startsWith('#'));
 
-                    // If it's the index page, handle direct navigation.
+                    // If it's the index page, send a message to the parent window.
                     if (isIndexPage) {
-                        logger.info(`Navigating directly to index page${hasHash ? ' with hash' : ''}: ${href}`);
-                        window.location.href = href;
+                        logger.info(
+                            `Sending navigation message to parent for index page${url.hash ? ' with hash' : ''}: ${href}`
+                        );
+                        parent.postMessage(
+                            {
+                                type: 'navigate',
+                                url: href,
+                                shouldScroll: url.hash !== ''
+                            },
+                            window.location.origin
+                        );
                         return;
                     }
 
@@ -131,7 +146,7 @@
             );
         });
 
-        // Close the modal when a message is received from the parent window.
+        // Add message handler in the parent window context.
         window.addEventListener('message', function (event) {
             if (event.origin !== window.location.origin) return;
 
