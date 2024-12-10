@@ -555,9 +555,14 @@
          */
         private updateProgressVisibility(): void {
             const progressElement = document.getElementById('toc-progress');
+            const isWideScreen = window.innerWidth >= TOC.WIDE_SCREEN_WIDTH;
 
             if (progressElement) {
-                progressElement.style.display = window.innerWidth >= TOC.WIDE_SCREEN_WIDTH ? 'none' : 'block';
+                progressElement.style.display = isWideScreen ? 'none' : 'block';
+
+                if (!isWideScreen) {
+                    this.renderProgressBars();
+                }
             }
         }
     }
