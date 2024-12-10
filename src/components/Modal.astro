@@ -95,17 +95,24 @@
         const links = document.querySelectorAll('a[href^="/"]:not([href="/"])');
 
         links.forEach(function (link) {
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
+            link.addEventListener(
+                'click',
+                function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
 
-                const href = link.getAttribute('href');
+                    const href = link.getAttribute('href');
+                    const scrollPos = window.scrollY;
 
-                if (href) {
-                    openModal(href);
-                } else {
-                    logger.warn(`No href found for the link ${link}`);
-                }
-            });
+                    if (href) {
+                        openModal(href);
+                        window.scrollTo(0, scrollPos);
+                    } else {
+                        logger.warn(`No href found for the link ${link}`);
+                    }
+                },
+                { capture: true }
+            );
         });
 
         // Close the modal when a message is received from the parent window.
