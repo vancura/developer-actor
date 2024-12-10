@@ -18,8 +18,18 @@
             id="toc-filter"
             placeholder="Filter..."
             aria-label="Filter TOC"
-            class="w-full rounded-md bg-background-toc-filter px-2 py-1 text-toc-item shadow-sm dark:bg-background-toc-filter-dark"
+            class="w-full rounded-md bg-background-toc-filter px-2 py-1 text-toc-item shadow-sm dark:bg-background-toc-filter-dark dark:text-text-dark"
         />
+
+        <button
+            id="toc-close"
+            class="ml-2 rounded-md p-1 hover:bg-background-toc-active min-[1140px]:hidden dark:hover:bg-background-toc-active-dark"
+            aria-label="Close TOC"
+        >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </button>
     </div>
 
     <ul id="toc-list" class="mb-4 text-toc-item" role="list"></ul>
@@ -31,7 +41,7 @@
             @apply pointer-events-auto right-0 top-0 h-full rounded-none bg-transparent opacity-100 shadow-none;
 
             & .toc-filter {
-                @apply bg-transparent;
+                @apply bg-background-toc-toolbar-wide dark:bg-background-toc-toolbar-wide-dark;
             }
         }
     }
@@ -65,6 +75,10 @@
             & a {
                 @apply text-text-toc-active dark:text-text-toc-active-dark;
             }
+        }
+
+        &.is-muted a {
+            @apply text-text-muted dark:text-text-muted-dark;
         }
     }
 </style>
@@ -192,10 +206,19 @@
 
             this.elements.tocList?.addEventListener('click', this.linkClick);
 
-            window.addEventListener('resize', () => {
-                this.updateTOCMode();
-                this.updateProgressVisibility();
-            });
+            window.addEventListener(
+                'resize',
+                debounce(() => {
+                    this.updateTOCMode();
+                    this.updateProgressVisibility();
+                    this.renderProgressBars();
+                }, 100)
+            );
+
+            const closeButton = document.getElementById('toc-close');
+            if (closeButton) {
+                closeButton.addEventListener('click', () => this.hideTOC());
+            }
         }
 
         /**
@@ -380,14 +403,26 @@
                 const thresholdHide = windowWidth - TOC.MOUSE_THRESHOLD_ACTIVE;
 
                 if (!this.state.isVisible && mouseX > thresholdShow) {
-                    this.state.isVisible = true;
-                    this.elements.nav.style.pointerEvents = 'auto';
-                    this.elements.nav.style.opacity = '1';
+                    this.showTOC();
                 } else if (this.state.isVisible && mouseX < thresholdHide) {
-                    this.state.isVisible = false;
-                    this.elements.nav.style.pointerEvents = 'none';
-                    this.elements.nav.style.opacity = '0';
+                    this.hideTOC();
                 }
+            }
+        }
+
+        private showTOC(): void {
+            if (this.elements.nav) {
+                this.state.isVisible = true;
+                this.elements.nav.style.pointerEvents = 'auto';
+                this.elements.nav.style.opacity = '1';
+            }
+        }
+
+        private hideTOC(): void {
+            if (this.elements.nav) {
+                this.state.isVisible = false;
+                this.elements.nav.style.pointerEvents = 'none';
+                this.elements.nav.style.opacity = '0';
             }
         }
 
@@ -441,15 +476,39 @@
             safeExecute(
                 () => {
                     if (this.elements.tocList) {
-                        const headings = headingStore
-                            .get()
-                            .filter((heading) => heading.text.toLowerCase().includes(filter));
+                        const headings = headingStore.get();
+                        const filteredHeadings = new Set<string>();
+
+                        headings.forEach((heading) => {
+                            if (heading.text.toLowerCase().includes(filter.toLowerCase())) {
+                                filteredHeadings.add(heading.id);
+
+                                let currentDepth = heading.depth;
+                                let i = headings.indexOf(heading) - 1;
+
+                                while (i >= 0) {
+                                    if (headings[i].depth < currentDepth) {
+                                        filteredHeadings.add(headings[i].id);
+                                        currentDepth = headings[i].depth;
+                                    }
+
+                                    i--;
+                                }
+                            }
+                        });
 
                         this.elements.tocList.innerHTML = headings
-                            .map(
-                                (heading) =>
-                                    `<li class="toc-item ${heading.id === this.activeId ? 'is-active' : ''}" role="listitem"><a class="toc-depth-${heading.depth - 1}" href="#${heading.id}" aria-current="${heading.id === this.activeId ? 'true' : 'false'}">${heading.text}</a></li>`
-                            )
+                            .map((heading) => {
+                                if (!filteredHeadings.has(heading.id)) return '';
+
+                                const isDirectMatch = heading.text.toLowerCase().includes(filter.toLowerCase());
+
+                                return `<li class="toc-item ${heading.id === this.activeId ? 'is-active' : ''} ${!isDirectMatch ? 'is-muted' : ''}" role="listitem">
+                                    <a class="toc-depth-${heading.depth - 1}"
+                                       href="#${heading.id}"
+                                       aria-current="${heading.id === this.activeId ? 'true' : 'false'}">${heading.text}</a>
+                                </li>`;
+                            })
                             .join('');
                     }
                 },
@@ -507,6 +566,7 @@
                     this.updateTOCMode();
                     this.updateProgressVisibility();
                     this.renderTOC();
+                    this.renderProgressBars();
 
                     logger.info('TOC manager initialized successfully');
                 },
@@ -555,9 +615,14 @@
          */
         private updateProgressVisibility(): void {
             const progressElement = document.getElementById('toc-progress');
+            const isWideScreen = window.innerWidth >= TOC.WIDE_SCREEN_WIDTH;
 
             if (progressElement) {
-                progressElement.style.display = window.innerWidth >= TOC.WIDE_SCREEN_WIDTH ? 'none' : 'block';
+                progressElement.style.display = isWideScreen ? 'none' : 'block';
+
+                if (!isWideScreen) {
+                    this.renderProgressBars();
+                }
             }
         }
     }
