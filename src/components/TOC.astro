@@ -18,7 +18,7 @@
             id="toc-filter"
             placeholder="Filter..."
             aria-label="Filter TOC"
-            class="w-full rounded-md bg-background-toc-filter px-2 py-1 text-toc-item shadow-sm dark:bg-background-toc-filter-dark"
+            class="w-full rounded-md bg-background-toc-filter px-2 py-1 text-toc-item shadow-sm dark:bg-background-toc-filter-dark dark:text-text-dark"
         />
     </div>
 
@@ -31,7 +31,7 @@
             @apply pointer-events-auto right-0 top-0 h-full rounded-none bg-transparent opacity-100 shadow-none;
 
             & .toc-filter {
-                @apply bg-transparent;
+                @apply bg-background-toc-toolbar-wide dark:bg-background-toc-toolbar-wide-dark;
             }
         }
     }
