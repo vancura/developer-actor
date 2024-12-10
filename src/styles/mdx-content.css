@@ -15,7 +15,7 @@
             @apply ml-[0.2rem] inline-block -translate-y-[0.2rem] align-top font-heading text-[18px] transition-transform content-['↗︎'] hover:-translate-y-[0.4rem] hover:translate-x-[0.2rem];
         }
 
-        &[href^='/']::after {
+        &[href^='/']:not([href='/']):not([href^='/#'])::after {
             @apply ml-[0.2rem] inline-block -translate-y-[0.2rem] align-top font-heading text-[18px] transition-transform content-['▣'] hover:-translate-y-[0.4rem] hover:translate-x-[0.2rem];
         }
     }

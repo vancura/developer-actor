@@ -102,14 +102,30 @@
                     e.stopPropagation();
 
                     const href = link.getAttribute('href');
+
+                    if (!href) {
+                        logger.warn(`No href found for the link ${link}`);
+                        return;
+                    }
+
+                    // Parse the URL to check if it's the index page with or without hash.
+                    const url = new URL(href, window.location.origin);
+                    const isIndexPage = url.pathname === '/';
+                    const hasHash = url.hash !== '';
+
+                    // If it's the index page, handle direct navigation.
+                    if (isIndexPage) {
+                        logger.info(`Navigating directly to index page${hasHash ? ' with hash' : ''}: ${href}`);
+                        window.location.href = href;
+                        return;
+                    }
+
+                    // Store current scroll position.
                     const scrollPos = window.scrollY;
 
-                    if (href) {
-                        openModal(href);
-                        window.scrollTo(0, scrollPos);
-                    } else {
-                        logger.warn(`No href found for the link ${link}`);
-                    }
+                    // Open modal for non-index pages.
+                    openModal(href);
+                    window.scrollTo(0, scrollPos);
                 },
                 { capture: true }
             );
