@@ -119,11 +119,15 @@
                     const url = new URL(href, window.location.origin);
                     const isIndexPage = url.pathname === '/' && (url.hash === '' || url.hash.startsWith('#'));
 
+                    // Check if we're already inside a modal.
+                    const isInModal = window.location.search.includes('inModal=1');
+
                     // If it's the index page, send a message to the parent window.
                     if (isIndexPage) {
                         logger.info(
                             `Sending navigation message to parent for index page${url.hash ? ' with hash' : ''}: ${href}`
                         );
+
                         parent.postMessage(
                             {
                                 type: 'navigate',
@@ -132,13 +136,29 @@
                             },
                             window.location.origin
                         );
+
+                        return;
+                    }
+
+                    // If we're already in a modal, send message to parent to update existing modal.
+                    if (isInModal) {
+                        logger.info(`Updating existing modal with: ${href}`);
+
+                        parent.postMessage(
+                            {
+                                type: 'updateModal',
+                                url: href
+                            },
+                            window.location.origin
+                        );
+
                         return;
                     }
 
                     // Store current scroll position.
                     const scrollPos = window.scrollY;
 
-                    // Open modal for non-index pages.
+                    // Open modal for non-index pages (only if we're not already in a modal).
                     openModal(href);
                     window.scrollTo(0, scrollPos);
                 },
@@ -162,6 +182,16 @@
                         const element = document.querySelector(new URL(data.url).hash);
                         element?.scrollIntoView({ behavior: 'smooth' });
                     });
+                }
+            } else if (data && data.type === 'updateModal' && data.url) {
+                // Update existing modal with new content.
+                const iframe = document.getElementById('modal-iframe') as HTMLIFrameElement;
+                const loader = document.getElementById('modal-loader');
+
+                if (iframe && loader) {
+                    iframe.style.opacity = '0';
+                    loader.style.display = 'flex';
+                    iframe.src = data.url + '?inModal=1';
                 }
             }
         });
