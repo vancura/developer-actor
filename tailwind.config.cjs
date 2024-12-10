@@ -47,8 +47,8 @@ module.exports = {
             text: {
                 DEFAULT: '#333333',
                 dark: '#F5F5F5',
-                muted: 'rgba(0, 0, 0, 0.66)',
-                'muted-dark': 'rgba(255, 255, 255, 0.66)',
+                muted: 'rgba(0, 0, 0, 0.5)',
+                'muted-dark': 'rgba(255, 255, 255, 0.5)',
                 toc: '#333',
                 'toc-dark': '#fafafa',
                 'toc-active': '#2833FF',

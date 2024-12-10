@@ -66,6 +66,10 @@
                 @apply text-text-toc-active dark:text-text-toc-active-dark;
             }
         }
+
+        &.is-muted a {
+            @apply text-text-muted dark:text-text-muted-dark;
+        }
     }
 </style>
 
@@ -445,15 +449,39 @@
             safeExecute(
                 () => {
                     if (this.elements.tocList) {
-                        const headings = headingStore
-                            .get()
-                            .filter((heading) => heading.text.toLowerCase().includes(filter));
+                        const headings = headingStore.get();
+                        const filteredHeadings = new Set<string>();
+
+                        headings.forEach((heading) => {
+                            if (heading.text.toLowerCase().includes(filter.toLowerCase())) {
+                                filteredHeadings.add(heading.id);
+
+                                let currentDepth = heading.depth;
+                                let i = headings.indexOf(heading) - 1;
+
+                                while (i >= 0) {
+                                    if (headings[i].depth < currentDepth) {
+                                        filteredHeadings.add(headings[i].id);
+                                        currentDepth = headings[i].depth;
+                                    }
+
+                                    i--;
+                                }
+                            }
+                        });
 
                         this.elements.tocList.innerHTML = headings
-                            .map(
-                                (heading) =>
-                                    `<li class="toc-item ${heading.id === this.activeId ? 'is-active' : ''}" role="listitem"><a class="toc-depth-${heading.depth - 1}" href="#${heading.id}" aria-current="${heading.id === this.activeId ? 'true' : 'false'}">${heading.text}</a></li>`
-                            )
+                            .map((heading) => {
+                                if (!filteredHeadings.has(heading.id)) return '';
+
+                                const isDirectMatch = heading.text.toLowerCase().includes(filter.toLowerCase());
+
+                                return `<li class="toc-item ${heading.id === this.activeId ? 'is-active' : ''} ${!isDirectMatch ? 'is-muted' : ''}" role="listitem">
+                                    <a class="toc-depth-${heading.depth - 1}"
+                                       href="#${heading.id}"
+                                       aria-current="${heading.id === this.activeId ? 'true' : 'false'}">${heading.text}</a>
+                                </li>`;
+                            })
                             .join('');
                     }
                 },
