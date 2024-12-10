@@ -1,6 +1,6 @@
 <div
     id="banner"
-    class="sticky left-0 top-0 z-50 mx-auto mb-2 max-w-md text-balance rounded-b-xl bg-background-banner p-4 pb-5 text-center shadow-md dark:bg-background-banner-dark dark:shadow-none"
+    class="invisible sticky left-0 top-0 z-50 mx-auto mb-2 max-w-md text-balance rounded-b-xl bg-background-banner p-4 pb-5 text-center shadow-md dark:bg-background-banner-dark dark:shadow-none"
 >
     This is an inner page of the Actor Whitepaper site.
 
@@ -64,6 +64,10 @@
                 }
             });
         } else {
+            if (banner) {
+                banner.classList.remove('invisible');
+            }
+
             logger.info('Banner initialized in non-modal mode');
         }
     })();

@@ -1,5 +1,15 @@
 <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50">
     <div class="relative h-4/5 w-3/5 rounded-2xl bg-background dark:bg-background-dark">
+        <div
+            id="modal-loader"
+            class="absolute inset-0 flex items-center justify-center rounded-2xl bg-background dark:bg-background-dark"
+        >
+            <div
+                class="h-8 w-8 animate-spin rounded-full border-4 border-accent border-t-transparent dark:border-accent-dark dark:border-t-transparent"
+            >
+            </div>
+        </div>
+
         <button id="modal-close-button" class="absolute right-1.5 top-1.5 z-10">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +29,10 @@
             </svg>
         </button>
 
-        <iframe id="modal-iframe" src="" class="h-full w-full rounded-2xl"></iframe>
+        <iframe
+            id="modal-iframe"
+            class="h-full w-full rounded-2xl opacity-0 transition-opacity duration-300"
+            onload="this.style.opacity='1'; document.getElementById('modal-loader').style.display='none';"></iframe>
     </div>
 </div>
 
@@ -30,11 +43,16 @@
 
     document.addEventListener('DOMContentLoaded', function () {
         const modal = document.getElementById('modal');
-        const iframe = document.getElementById('modal-iframe');
+        const iframe = document.getElementById('modal-iframe') as HTMLIFrameElement;
+        const loader = document.getElementById('modal-loader');
         const closeButton = document.getElementById('modal-close-button');
 
         function openModal(src: string) {
+            iframe.style.opacity = '0';
+            loader.style.display = 'flex';
+
             iframe.src = src + '?inModal=1';
+
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             document.body.style.overflow = 'hidden';
@@ -45,6 +63,8 @@
             modal.classList.add('hidden');
             iframe.src = '';
             document.body.style.overflow = '';
+            iframe.style.opacity = '0';
+            loader.style.display = 'flex';
         }
 
         closeButton.addEventListener('click', function () {
