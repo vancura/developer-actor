@@ -20,6 +20,16 @@
             aria-label="Filter TOC"
             class="w-full rounded-md bg-background-toc-filter px-2 py-1 text-toc-item shadow-sm dark:bg-background-toc-filter-dark dark:text-text-dark"
         />
+
+        <button
+            id="toc-close"
+            class="ml-2 rounded-md p-1 hover:bg-background-toc-active min-[1140px]:hidden dark:hover:bg-background-toc-active-dark"
+            aria-label="Close TOC"
+        >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+        </button>
     </div>
 
     <ul id="toc-list" class="mb-4 text-toc-item" role="list"></ul>
@@ -204,6 +214,11 @@
                     this.renderProgressBars();
                 }, 100)
             );
+
+            const closeButton = document.getElementById('toc-close');
+            if (closeButton) {
+                closeButton.addEventListener('click', () => this.hideTOC());
+            }
         }
 
         /**
@@ -388,14 +403,26 @@
                 const thresholdHide = windowWidth - TOC.MOUSE_THRESHOLD_ACTIVE;
 
                 if (!this.state.isVisible && mouseX > thresholdShow) {
-                    this.state.isVisible = true;
-                    this.elements.nav.style.pointerEvents = 'auto';
-                    this.elements.nav.style.opacity = '1';
+                    this.showTOC();
                 } else if (this.state.isVisible && mouseX < thresholdHide) {
-                    this.state.isVisible = false;
-                    this.elements.nav.style.pointerEvents = 'none';
-                    this.elements.nav.style.opacity = '0';
+                    this.hideTOC();
                 }
+            }
+        }
+
+        private showTOC(): void {
+            if (this.elements.nav) {
+                this.state.isVisible = true;
+                this.elements.nav.style.pointerEvents = 'auto';
+                this.elements.nav.style.opacity = '1';
+            }
+        }
+
+        private hideTOC(): void {
+            if (this.elements.nav) {
+                this.state.isVisible = false;
+                this.elements.nav.style.pointerEvents = 'none';
+                this.elements.nav.style.opacity = '0';
             }
         }
 
