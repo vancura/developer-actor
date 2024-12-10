@@ -192,10 +192,14 @@
 
             this.elements.tocList?.addEventListener('click', this.linkClick);
 
-            window.addEventListener('resize', () => {
-                this.updateTOCMode();
-                this.updateProgressVisibility();
-            });
+            window.addEventListener(
+                'resize',
+                debounce(() => {
+                    this.updateTOCMode();
+                    this.updateProgressVisibility();
+                    this.renderProgressBars();
+                }, 100)
+            );
         }
 
         /**
@@ -507,6 +511,7 @@
                     this.updateTOCMode();
                     this.updateProgressVisibility();
                     this.renderTOC();
+                    this.renderProgressBars();
 
                     logger.info('TOC manager initialized successfully');
                 },
