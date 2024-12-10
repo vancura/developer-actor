@@ -1,0 +1,94 @@
+<div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50">
+    <div class="relative h-4/5 w-3/5 rounded-2xl bg-white">
+        <button id="modal-close-button" class="absolute right-1.5 top-1.5 z-10">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <circle cx="12" cy="12" r="10" stroke="transparent" fill="white"></circle>
+
+                <path
+                    stroke="black"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M15 9l-6 6m0-6l6 6"></path>
+            </svg>
+        </button>
+
+        <iframe id="modal-iframe" src="" class="h-full w-full rounded-2xl"></iframe>
+    </div>
+</div>
+
+<script>
+    import { createLogger, type ILogger } from '../utils/logger';
+
+    const logger: ILogger = createLogger({ prefix: 'Modal' });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById('modal');
+        const iframe = document.getElementById('modal-iframe');
+        const closeButton = document.getElementById('modal-close-button');
+
+        function openModal(src: string) {
+            iframe.src = src + '?inModal=1';
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+            iframe.src = '';
+            document.body.style.overflow = '';
+        }
+
+        closeButton.addEventListener('click', function () {
+            closeModal();
+        });
+
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        const links = document.querySelectorAll('a[href^="/"]:not([href="/"])');
+
+        links.forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const href = link.getAttribute('href');
+
+                if (href) {
+                    openModal(href);
+                } else {
+                    logger.warn(`No href found for the link ${link}`);
+                }
+            });
+        });
+
+        window.addEventListener('message', function (event) {
+            if (event.origin !== window.location.origin) return;
+
+            const data = event.data;
+
+            if (data && data.type === 'navigate' && data.url) {
+                closeModal();
+                window.location.href = data.url;
+
+                if (data.shouldScroll) {
+                    window.addEventListener('load', () => {
+                        const element = document.querySelector(new URL(data.url).hash);
+                        element?.scrollIntoView({ behavior: 'smooth' });
+                    });
+                }
+            }
+        });
+    });
+</script>
