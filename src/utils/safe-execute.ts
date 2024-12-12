@@ -1,6 +1,6 @@
-import { createLogger } from './logger';
+import { createLogger, type ILogger } from './logger';
 
-const logger = createLogger({ prefix: 'SafeExecute' });
+const logger: ILogger = createLogger({ prefix: 'SafeExecute' });
 
 /**
  * Executes a function and returns its result. If the function throws an error, a fallback value is returned instead.

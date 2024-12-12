@@ -1,6 +1,6 @@
-import { createLogger } from './logger';
+import { createLogger, type ILogger } from './logger';
 
-const logger = createLogger({ prefix: 'DOM' });
+const logger: ILogger = createLogger({ prefix: 'DOM' });
 
 /**
  * Selects and returns the first element within the document that matches the specified group of selectors. Unlike the
