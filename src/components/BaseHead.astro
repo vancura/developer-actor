@@ -46,3 +46,5 @@ canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
 {HEAD.FONTS.PRECONNECT.map((url) => <link rel="preconnect" href={url} crossorigin />)}
 
 <link href={`https://fonts.googleapis.com/css2?family=${HEAD.FONTS.FAMILIES.join('&family=')}`} rel="stylesheet" />
+
+{import.meta.env.MODE === 'production' && <script defer data-domain="whitepaper.actor" data-category="analytics" src="https://plausible.io/js/script.hash.js" />}
