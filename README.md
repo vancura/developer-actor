@@ -13,6 +13,7 @@ This repository contains the documentation website for the Actor Programming Mod
 -   Modal-based navigation system for internal links
 -   Smooth scroll behavior for navigation
 -   Banner component for improved inner page context
+- Automatic sitemap generation for improved SEO
 
 ## Tech Stack
 
@@ -24,6 +25,11 @@ This repository contains the documentation website for the Actor Programming Mod
 -   [ESLint](https://eslint.org/) - Code linting
 -   [Prettier](https://prettier.io/) - Code formatting
 -   [Vercel](https://vercel.com) - Deployment
+
+## Prerequisites
+
+- Node.js v16+ (recommended: v18.0 or higher)
+- Yarn v1.22 or later
 
 ## Installation
 
@@ -89,6 +95,7 @@ The site implements comprehensive SEO practices including:
 -   Canonical URLs
 -   OpenGraph data
 -   Structured data
+- Automatic sitemap generation for search engine crawling
 
 SEO configuration can be found in the BaseHead component: [src/components/BaseHead.astro](src/components/BaseHead.astro).
 
