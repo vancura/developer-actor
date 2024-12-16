@@ -7,9 +7,14 @@ export interface Props extends ISEOMetadata {
     description: string;
     permalink: string;
     ogImage?: string;
+    ogImageAlt?: string;
 }
 
-const { title, description, permalink } = Astro.props;
+const { title, description, permalink, ogImage, ogImageAlt } = Astro.props;
+
+const siteDomain = Astro.url.origin;
+const ogImageURL = ogImage === '' ? `${siteDomain}/opengraph.png` : `${siteDomain}/opengraph/${ogImage}`;
+const ogImageAltSafe = ogImageAlt === '' ? title : ogImageAlt;
 
 let canonical = new URL(permalink).toString();
 canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
@@ -57,12 +62,16 @@ canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:site_name" content={title} />
+<meta property="og:image" content={ogImageURL} />
+<meta property="og:image:alt" content={ogImageAltSafe} />
 <meta property="og:author" content={HEAD.META.AUTHOR} />
 
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={permalink} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={ogImageURL} />
+<meta property="twitter:image:alt" content={ogImageAltSafe} />
 
 <meta property="article:author" content={HEAD.META.AUTHOR} />
 
