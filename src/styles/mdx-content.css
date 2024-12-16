@@ -102,18 +102,14 @@
     }
 
     & pre {
-        @apply relative overflow-hidden overflow-x-auto rounded-md border border-code-stroke bg-code-bg p-4 dark:border-code-stroke-dark dark:bg-code-bg-dark;
+        @apply relative overflow-hidden overflow-x-auto rounded-md border border-code-stroke bg-code-bg py-3 dark:border-code-stroke-dark dark:bg-code-bg-dark;
 
-        & .copy-button {
-            @apply icon-[solar--copy-linear] absolute right-2 top-2 block h-5 w-5 cursor-pointer opacity-40;
-
-            &.has-passed {
-                @apply icon-[solar--check-square-bold] h-5 w-5;
+        code {
+            @apply m-0 block pl-4;
             }
 
-            &.has-failed {
-                @apply icon-[solar--forbidden-circle-bold] h-5 w-5;
-            }
+        & .line {
+            @apply pr-4;
         }
 
         * {
@@ -128,6 +124,18 @@
             & .copy-button {
                 @apply hover:opacity-100;
             }
+        }
+    }
+
+    & .copy-button {
+        @apply icon-[solar--copy-bold] absolute right-2 top-2 z-10 h-5 w-5 cursor-pointer opacity-40 hover:opacity-80;
+
+        &.has-passed {
+            @apply icon-[solar--check-square-bold] h-5 w-5 opacity-80;
+        }
+
+        &.has-failed {
+            @apply icon-[solar--forbidden-circle-bold] h-5 w-5 opacity-80;
         }
     }
 
