@@ -10,7 +10,7 @@ export const COMPONENT_CONFIG = {
             REFERRER: 'origin'
         },
         FONTS: {
-            PRECONNECT: ['https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
+            PRECONNECT: ['https://fonts.googleapis.com', 'https://fonts.gstatic.com', 'https://apify.com'],
             FAMILIES: ['IBM+Plex+Mono:ital,wght@0,500']
         }
     },

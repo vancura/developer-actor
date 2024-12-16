@@ -45,4 +45,6 @@ canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
 
 {HEAD.FONTS.PRECONNECT.map((url) => <link rel="preconnect" href={url} crossorigin />)}
 
+<link rel="preload" href="https://apify.com/fonts/Gt-Walsheim-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+
 <link href={`https://fonts.googleapis.com/css2?family=${HEAD.FONTS.FAMILIES.join('&family=')}`} rel="stylesheet" />
