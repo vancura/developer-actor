@@ -1,3 +1,67 @@
+# 1.0.0
+
+## Major Features
+
+### GitHub Integration
+
+- Added new GitHub repository header component with real-time star count
+- Implemented automatic star count updates every 3 minutes
+- Added support for both development and production environments
+- Included GitHub API integration with token authentication
+
+### Analytics & Production Setup
+
+- Integrated Plausible Analytics for website tracking
+- Added production environment settings
+- Enhanced logging system with improved type annotations
+
+### Modal System Enhancements
+
+- Implemented comprehensive modal navigation system
+- Added detection for nested modal states using `inModal` URL parameter
+- Added content updating for existing modals instead of creating new ones
+- Improved loading states with visual feedback
+- Fixed scroll position and event propagation issues
+- Enhanced iframe communication with new message types
+- Added special handling for index page navigation
+
+### Table of Contents (TOC) Improvements
+
+- Added close button functionality
+- Enhanced filtering system to show parent headings with context hierarchy
+- Improved dark mode styling for filter and toolbar
+- Optimized progress bar visibility logic
+- Added debounced window resize handling
+- Adjusted muted text opacity values in both light and dark themes
+
+### Visual and Content Updates
+
+- Updated various diagrams and illustrations
+- Fine-tuned Dataset sections in diagrams
+- Improved Push illustration
+- Enhanced dark mode compatibility
+- Updated documentation and README
+
+## Technical Improvements
+
+- Removed unused heading activation method
+- Disabled Astro dev toolbar
+- Updated Spline runtime
+- Enhanced type safety across components
+- Improved error handling and logging
+
+## Notes
+
+- This release marks version 1.0.0 of the project
+- Includes significant improvements to navigation, user interface, and overall stability
+- Added proper documentation in RELEASES file
+
+## Development Environment
+
+- Enhanced development workflow with better error handling
+- Improved TypeScript integration and type safety
+- Added support for mock data in development environment
+
 # 0.5.1
 
 ## Navigation & Modal System
