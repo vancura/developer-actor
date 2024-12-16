@@ -1,2 +1,15 @@
+# Allow all crawlers
 User-agent: *
-Disallow: /
+Allow: /
+
+# Prevent crawling of error pages
+Disallow: /404
+Disallow: /500
+
+# Prevent crawling of potential sensitive paths
+# Disallow: /private/
+
+Sitemap: https://whitepaper.actor/sitemap-index.xml
+
+# Crawl-delay for heavy crawlers (optional)
+# Crawl-delay: 10
