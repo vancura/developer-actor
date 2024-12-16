@@ -75,6 +75,10 @@ canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
 
 <meta property="article:author" content={HEAD.META.AUTHOR} />
 
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content={title} />
+
 {HEAD.FONTS.PRECONNECT.map((url) => <link rel="preconnect" href={url} crossorigin />)}
 
 <link href={`https://fonts.googleapis.com/css2?family=${HEAD.FONTS.FAMILIES.join('&family=')}`} rel="stylesheet" />
