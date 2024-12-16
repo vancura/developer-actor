@@ -2,24 +2,13 @@
 import strings from '../../strings.mjs';
 import MDXWrapper from '../components/MDXWrapper.astro';
 import Modal from '../components/Modal.astro';
+import SplineHero from '../components/SplineHero.astro';
 import Content from '../content/pages/index.mdx';
 import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()}>
-    <header id="hero" aria-label="Hero" role="banner" class="-mx-8 h-[70vh] select-none">
-        <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js" async></script>
-        <spline-viewer
-            loading-anim-type="spinner-small-light"
-            loading="eager"
-            url="https://prod.spline.design/BdmEAV7DmkhW-riF/scene.splinecode"
-            ><img
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAATCAYAAADxlA/3AAAJ+ElEQVR4AQCBAH7/AMWzwL7Fs8C/xbPAwMW0wMHFtMDExbTAyMW0wM3FtMDTxLTA28S1wOPEtcDtxLXA9sO1wP7DtsD/w7bA/8K3wP/Ct8D/wbfA/8G4wP/BuMD/wLnA/8C5wPu/ucD0v7rA7b+6wOe+usDivrvA3767wNy+u8DbvbvA2r27wNm9u8DZAIEAfv8AxbTAwMW0wMDFtMDBxbTAw8W0wMbEtMDKxLXA0MS1wNbEtcDexLXA58O1wPHDtsD6w7bA/8K2wP/Ct8D/wrfA/8G4wP/BuMD/wLjA/8C5wP/AucD/v7rA/7+6wPe+usDwvrvA6r67wOS+u8DgvbzA3b28wNu9vMDavbzA2b28wNkAgQB+/wDEtcDAw7XAwcO1wMLDtcDEw7bAx8O2wMzDtsDSw7bA2sO2wOLCtsDswrfA9sK3wP/Ct8D/wbjA/8G4wP/AuMD/wLnA/8C5wP+/ucD/v7rA/766wP++u8D/vrvA+727wPO9vMDsvbzA5by8wOC8vcDcvL3A2ry9wNi8vcDXvL3A1gCBAH7/AMK3wLrCt8C7wrfAvcK3wL/Ct8DDwbfAycG3wNDBuMDYwbjA4sG4wO3AuMD4wLnA/8C5wP/AucD/v7rA/7+6wP+/usD/vrvA/767wP+9u8D/vbzA/728wP+8vcD8vL3A8ry9wOq7vsDiu77A3Lu+wNe7vsDTur7A0Lq+wM66v8DOAIEAfv8AwLnAq8C5wKzAucCuwLnAscC5wLa/ucC8v7nAxL+6wM6/usDZv7rA5b+6wPK+u8D+vrvA/767wP+9u8D/vbzA/728wP+8vMD/vL3A/7y9wP+7vsD/u77A/7q+wPW6v8Dqur/A4Lq/wNe5wMDPucDAyLnAwMO5wMDAucDAvbnAwLwAgQB+/wC+u8CQvrvAkb67wJS+u8CYvbvAnr27wKW9vMCuvbzAub28wMa9vMDTvLzA4by9wO+8vcD7vL3A/7u9wP+7vsD/u77A/7q+wP+6v8D/ur/A/7m/wP65wMDyucDA5rjAwNq4wcDOuMHAw7jBwLm3wcCxt8LAq7fCwKe3wsCkt8LAogCBAH7/ALy9wG28vcBvu73Acru9wHa7vcB9u77Ahbu+wI+7vsCcu77Aqru+wLi7vsDIur7A17q/wOW6v8Dxur/A+rnAwP+5wMD/ucDA/7jBwPy4wcD0uMHA6rfCwN23wsDQt8LAwrbCwLW2w8CptsPAnrbDwJS1w8CNtcPAiLXEwIS1xMCCAIEAfv8Aur/AR7q/wEm6v8BMur/AUbq/wFm5v8Biub/AbbnAwHu5wMCKucDAmrnAwKq5wMC7uMDAyrjBwNe4wcDhuMHA6LfBwOy3wsDrt8LA5rbCwN62w8DTtsPAxrbDwLi1xMCptcTAmrXEwI20xMCBtMTAd7TFwG60xcBotMXAZLTFwGIAgQB+/wC4wcAluMHAJ7jBwCu4wcAwuMHAOLjBwEK4wcBOuMHAXLjBwGy4wcB9t8HAj7fBwKC3wsCxt8LAv7fCwMq2wsDStsPA1rbDwNa2w8DStcPAyrXEwL+1xMCxtMTAo7TFwJO0xcCEtMXAdrTFwGmzxcBes8bAVbPGwE6zxsBJs8bARwCBAH7/ALfBwA23wcAPt8HAE7fCwBi3wsAgt8LAKrfCwDe3wsBFt8LAVrfCwGi3wsB6t8LAjbbCwJ62w8CttsPAubbDwMK2w8DHtcPAx7XEwMO1xMC8tcTAsbTFwKS0xcCVtMXAhbTFwHazxcBns8bAWrPGwE6zxsBFs8bAPbPGwDmzxsA2AIEAfv8At8LAArfCwAO3wsAHt8LADLfCwBS3wsAet8LAKrfCwDm3wsBJt8LAW7bCwG62wsCBtsPAk7bDwKK2w8CvtsPAubXDwL61xMC/tcTAvLXEwLW1xMCrtMTAnrTFwI+0xcCAtMXAcbPFwGKzxsBUs8bASbPGwD+zxsA4s8bAM7PGwDAAgQB+/wC3wsABt8LAArfCwAW3wsAKt8LAErfCwBu3wsAnt8LANbfCwEW3wsBXt8LAabfCwHy2wsCNtsLAnbbDwKu2w8C1tsPAurbDwLy1w8C6tcTAtLXEwKq1xMCetcTAkLTEwIG0xcBytMXAY7TFwFa0xcBKtMXAQbTFwDmzxcA0s8XAMgCBAH7/ALjBwAW4wcAHuMHACrjBwA64wcAVuMHAHbjBwCi4wcA1uMHARLjBwFW3wcBmt8HAebfCwIq3wsCat8LAp7fCwLG3wsC3t8LAubbCwLi2w8CytsPAqbbDwJ62w8CQtcPAgrXDwHO1xMBltcTAWbXEwE21xMBEtcTAPbXEwDi1xMA2AIEAfv8AucDACrnAwAu5wMAOucDAEbnAwBe5wMAeucDAJ7nAwDO5wMBBucDAULnAwGG4wMByuMDAg7jAwJK4wcCfuMHAqbjBwK+4wcCyuMHAsLfBwKu3wcCjt8LAmLfCwIy3wsB+t8LAcLfCwGO2wsBXtsPATLbDwEO2w8A8tsPAOLbDwDYAgQB+/wC6v8AKur/AC7q/wA26v8AQur/AFLq/wBq6v8Aiur/ALLq/wDi6v8BGur/AVbq/wGW6v8B1ur/Ag7q/wI+5v8CZub/An7nAwKK5wMChucDAnLnAwJW5wMCLuMDAf7jAwHK4wcBluMHAWLjBwE24wcBCuMHAOrjBwDS4wcAvuMHALQCBAH7/ALu+wAS7vsAEu77ABbu+wAe7vsAKu77AD7u+wBW7vsAeu77AKLu+wDW7vsBDu77AUbu+wGC7vsBtu77Aebu+wIK7vsCIu77Ai7q+wIq6vsCFur/Afrq/wHW6v8Bqur/AXbq/wFG6v8BFub/AOrm/wDC5wMAoucDAIrnAwB65wMAcAIEAfv8AvL3AALy9wAC8vcAAvL3AALy9wAC8vcAAvL3ABby9wAy8vcAVvL3AILy9wCy8vcA6vL3AR7y9wFS8vcBfvL3AZ7y9wG28vcBwvL3Ab7y9wGu7vcBku73AW7u+wFC7vsBFu77AObu+wC27vsAju77AGru+wBK7vsAMur7ACLq+wAYAgQB+/wC9vMAAvbzAAL28wAC9vMAAvbzAAL28wAC9vMAAvbzAAL28wAO9vMANvbzAGb28wCW9vMAxvbzAPb28wEi9vMBQvbzAVb28wFi9vMBXvbzAU7y8wE28vMBEvL3AOby9wC68vcAjvL3AGLy9wA68vcAFvL3AALy9wAC7vcAAu73AAAGBAH7/AL27wAC9u8AAvbvAAL27wAC9u8AAvbvAAL27wAC9u8AAvbvAAL67wAK+u8ANvrvAGb27wCW9u8AwvbvAOr27wEK9u8BIvbzASr28wEm9vMBFvbzAP728wDa9vMAsvbzAIby8wBa8vMALvL3AAby9wAC8vcAAvL3AALy9wAC8vcAANACG8k01fbgAAAAASUVORK5CYII="
-                alt="Spline preview"
-                style="width: 100%; height: 100%;"
-            /></spline-viewer
-        >
-    </header>
+    <SplineHero />
 
     <div class="mdx-content mx-auto max-w-screen-lg">
         <MDXWrapper>
