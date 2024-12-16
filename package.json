@@ -2,7 +2,6 @@
     "name": "@apify/actor-developer",
     "author": "Apify (https://github.com/apify)",
     "description": "Actor Programming Model",
-    "private": false,
     "type": "module",
     "scripts": {
         "dev": "NODE_ENV=development astro dev --host",
@@ -60,5 +59,6 @@
         "prettier-plugin-organize-imports": "^4.1.0",
         "prettier-plugin-tailwindcss": "^0.6.8",
         "yaml-eslint-parser": "^1.2.3"
-    }
+    },
+    "packageManager": "yarn@4.5.3"
 }

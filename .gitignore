@@ -32,9 +32,11 @@ cmake-build-debug/
 
 # Yarn
 .yarn/*
-!.yarn/cache
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
