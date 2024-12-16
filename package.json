@@ -32,6 +32,7 @@
         "@astrojs/mdx": "^3.1.9",
         "@astrojs/rss": "^4.0.9",
         "@astrojs/tailwind": "^5.1.2",
+        "@astrojs/sitemap": "^3.2.1",
         "@eslint/js": "^9.15.0",
         "@iconify-json/solar": "^1.2.1",
         "@iconify/tailwind": "^1.1.3",
