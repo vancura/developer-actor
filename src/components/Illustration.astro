@@ -26,9 +26,9 @@ const imageClasses = {
     right: 'aspect-square w-full rounded-md border border-code-stroke bg-code-bg dark:border-code-stroke-dark dark:bg-code-bg-dark',
     center: 'aspect-square w-full rounded-md border border-code-stroke bg-code-bg dark:border-code-stroke-dark dark:bg-code-bg-dark',
     content:
-        'aspect-auto w-full rounded-md border border-code-stroke bg-code-bg dark:border-code-stroke-dark dark:bg-code-bg-dark',
+        'w-full rounded-md border border-code-stroke bg-code-bg dark:border-code-stroke-dark dark:bg-code-bg-dark',
     default:
-        'aspect-auto w-full rounded-md border border-code-stroke bg-code-bg dark:border-code-stroke-dark dark:bg-code-bg-dark'
+        'w-full rounded-md border border-code-stroke bg-code-bg dark:border-code-stroke-dark dark:bg-code-bg-dark'
 };
 
 const containerClass = containerClasses[position as keyof typeof containerClasses] || containerClasses.default;
@@ -42,7 +42,7 @@ if (transparent) {
 {
     image ? (
         <figure class={containerClass}>
-            <Image src={image} alt={description} class={imageClass} />
+            <Image src={image} alt={description} class={imageClass} formats={['avif', 'webp']} width={image.width} height={image.height} />
 
             {!noCaption && (
                 <figcaption class="mb-2 text-balance text-center text-sm text-text-muted dark:text-text-muted-dark">
