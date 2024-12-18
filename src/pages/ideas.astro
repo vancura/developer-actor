@@ -7,7 +7,13 @@ import Content from '../content/pages/ideas.mdx';
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()}>
+<Layout
+    title={`Sandbox for Various Ideas • ${strings.title}`}
+    description="Here you can find random ideas and notes, in no particular order, relevance, or promise they will be implemented."
+    ogImage="https://whitepaper.actor/opengraph.png"
+    permalink={Astro.url.toString()}
+    showTOC={false}
+>
     <Banner />
 
     <div class="mdx-content mx-auto max-w-screen-lg">

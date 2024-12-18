@@ -5,7 +5,7 @@ import remarkGfm from 'remark-gfm';
 import remarkSmartypants from 'remark-smartypants';
 
 export default defineConfig({
-    site: 'https://developer.actor',
+    site: 'https://whitepaper.actor',
     prefetch: true,
     devToolbar: { enabled: false },
 

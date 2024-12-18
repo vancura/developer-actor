@@ -1,4 +1,4 @@
-# Actor Framework Documentation Site
+# The Web Actor Programming Model Whitepaper
 
 This repository contains the documentation website for the Actor Programming Model, a new concept for building serverless microapps called _Actors_. The site is built using Astro and provides comprehensive documentation about developing, sharing, and integrating Actors.
 

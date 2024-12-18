@@ -9,7 +9,7 @@ export interface Props extends ISEOMetadata {
     ogImage?: string;
 }
 
-const { title, description, permalink } = Astro.props;
+const { title, description, ogImage, permalink } = Astro.props;
 
 let canonical = new URL(permalink).toString();
 canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
@@ -35,13 +35,29 @@ canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
 <meta property="og:description" content={description} />
 <meta property="og:site_name" content={title} />
 <meta property="og:author" content={HEAD.META.AUTHOR} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:alt" content={title} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="627" />
+<meta property="og:image:type" content="image/png" />
 
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={permalink} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={permalink} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={title} />
+<meta name="twitter:image:width" content="1200" />
+<meta name="twitter:image:height" content="627" />
+<meta name="twitter:image:type" content="image/png" />
+<meta name="twitter:creator" content={HEAD.META.AUTHOR} />
+<meta name="twitter:site" content="@apify" />
+<meta name="twitter:domain" content="whitepaper.actor" />
 
 <meta property="article:author" content={HEAD.META.AUTHOR} />
+
+<link href="/favicon.png" rel="icon" media="(prefers-color-scheme: light)" />
+<link href="/favicon-dark.png" rel="icon" media="(prefers-color-scheme: dark)" />
 
 {HEAD.FONTS.PRECONNECT.map((url) => <link rel="preconnect" href={url} crossorigin />)}
 
