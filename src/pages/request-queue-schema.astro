@@ -7,7 +7,13 @@ import Content from '../content/pages/request-queue-schema.mdx';
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()}>
+<Layout
+    title={`Request Queue Schema File Specification • ${strings.title}`}
+    description="Currently, this is neither specified nor implemented. We think that request queue schema might be useful for two things."
+    ogImage="https://whitepaper.actor/opengraph.png"
+    permalink={Astro.url.toString()}
+    showTOC={false}
+>
     <Banner />
 
     <div class="mdx-content mx-auto max-w-screen-lg">

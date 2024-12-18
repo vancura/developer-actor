@@ -1,7 +1,7 @@
 {
     "name": "@apify/actor-developer",
     "author": "Apify (https://github.com/apify)",
-    "description": "Framework documentation for the Actor Programming Model, designed for serverless microapps called 'Actors'.",
+    "description": "The Web Actor Programming Model Whitepaper",
     "type": "module",
     "scripts": {
         "dev": "NODE_ENV=development astro dev --host",

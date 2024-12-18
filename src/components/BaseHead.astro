@@ -7,17 +7,13 @@ export interface Props extends ISEOMetadata {
     description: string;
     permalink: string;
     ogImage?: string;
-    ogImageAlt?: string;
 }
 
-const { title, description, permalink, ogImage, ogImageAlt } = Astro.props;
-
-const siteDomain = Astro.url.origin;
-const ogImageURL = ogImage === '' ? `${siteDomain}/opengraph.png` : `${siteDomain}/opengraph/${ogImage}`;
-const ogImageAltSafe = ogImageAlt === '' ? title : ogImageAlt;
+const { title, description, ogImage, permalink } = Astro.props;
 
 let canonical = new URL(permalink).toString();
 canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
+const siteDomain = Astro.url.origin;
 ---
 
 <meta
@@ -27,7 +23,7 @@ canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
     script-src 'self' https://plausible.io https://unpkg.com 'unsafe-inline' 'unsafe-eval' blob:;
     style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
     img-src 'self' data: blob:;
-    font-src 'self' https://fonts.gstatic.com data:;
+    font-src 'self' https://fonts.gstatic.com https://apify.com data:;
     connect-src 'self' https://plausible.io https://prod.spline.design https://www.gstatic.com https://unpkg.com;
     frame-ancestors 'none';
     base-uri 'self';
@@ -62,24 +58,43 @@ canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:site_name" content={title} />
-<meta property="og:image" content={ogImageURL} />
-<meta property="og:image:alt" content={ogImageAltSafe} />
 <meta property="og:author" content={HEAD.META.AUTHOR} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:alt" content={title} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="627" />
+<meta property="og:image:type" content="image/png" />
 
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={permalink} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={ogImageURL} />
-<meta property="twitter:image:alt" content={ogImageAltSafe} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={permalink} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={title} />
+<meta name="twitter:image:width" content="1200" />
+<meta name="twitter:image:height" content="627" />
+<meta name="twitter:image:type" content="image/png" />
+<meta name="twitter:creator" content={HEAD.META.AUTHOR} />
+<meta name="twitter:site" content="@apify" />
+<meta name="twitter:domain" content="whitepaper.actor" />
 
 <meta property="article:author" content={HEAD.META.AUTHOR} />
 
+<link href="/favicon.png" rel="icon" media="(prefers-color-scheme: light)" />
+<link href="/favicon-dark.png" rel="icon" media="(prefers-color-scheme: dark)" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="apple-mobile-web-app-title" content={title} />
 
 {HEAD.FONTS.PRECONNECT.map((url) => <link rel="preconnect" href={url} crossorigin />)}
+
+<link
+    rel="preload"
+    href="https://apify.com/fonts/GT-Walsheim-Regular.ttf"
+    as="font"
+    type="font/ttf"
+    crossorigin="anonymous"
+/>
 
 <link href={`https://fonts.googleapis.com/css2?family=${HEAD.FONTS.FAMILIES.join('&family=')}`} rel="stylesheet" />
 
@@ -101,7 +116,7 @@ canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
             name: 'Apify',
             logo: {
                 '@type': 'ImageObject',
-                url: ogImageURL
+                url: ogImage
             }
         }
     })}

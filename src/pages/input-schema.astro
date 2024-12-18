@@ -7,7 +7,13 @@ import Content from '../content/pages/input-schema.mdx';
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()}>
+<Layout
+    title={`Actor Input Schema File Specification 1.0 • ${strings.title}`}
+    description="This JSON file defines the schema and description of the input object accepted by the Actor."
+    ogImage="https://whitepaper.actor/opengraph.png"
+    permalink={Astro.url.toString()}
+    showTOC={false}
+>
     <Banner />
 
     <div class="mdx-content mx-auto max-w-screen-lg">
