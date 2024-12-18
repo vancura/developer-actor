@@ -10,12 +10,12 @@ import '../styles/mdx-content.css';
 import '../styles/tailwind.css';
 import '../styles/typography.css';
 
-const { title, description, permalink, showTOC = true } = Astro.props;
+const { title, description, ogImage, permalink, showTOC = true } = Astro.props;
 ---
 
 <html lang="en" class="overscroll-none">
     <Head>
-        <BaseHead title={title} description={description} permalink={permalink} />
+        <BaseHead title={title} description={description} ogImage={ogImage} permalink={permalink} />
     </Head>
 
     <body class="flex min-h-screen flex-col bg-background pb-24 dark:bg-background-dark">

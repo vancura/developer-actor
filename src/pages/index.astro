@@ -6,7 +6,12 @@ import Content from '../content/pages/index.mdx';
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()}>
+<Layout
+    title={strings.title}
+    description={strings.description}
+    ogImage="https://whitepaper.actor/opengraph.png"
+    permalink={Astro.url.toString()}
+>
     <header id="hero" aria-label="Hero" role="banner" class="-mx-8 h-[70vh] select-none">
         <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js" async></script>
         <spline-viewer
