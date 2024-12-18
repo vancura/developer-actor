@@ -43,6 +43,9 @@ canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
 
 <meta property="article:author" content={HEAD.META.AUTHOR} />
 
+<link href="/favicon.png" rel="icon" media="(prefers-color-scheme: light)" />
+<link href="/favicon-dark.png" rel="icon" media="(prefers-color-scheme: dark)" />
+
 {HEAD.FONTS.PRECONNECT.map((url) => <link rel="preconnect" href={url} crossorigin />)}
 
 <link href={`https://fonts.googleapis.com/css2?family=${HEAD.FONTS.FAMILIES.join('&family=')}`} rel="stylesheet" />
