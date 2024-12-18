@@ -21,20 +21,30 @@ export default defineConfig({
                     light: 'light-plus',
                     dark: 'dark-plus'
                 },
-                wrap: true,
                 transformers: [
                     {
                         pre(node) {
-                            node.children.unshift({
+                            const wrapper = {
                                 type: 'element',
-                                tagName: 'button',
+                                tagName: 'div',
                                 properties: {
-                                    class: 'copy-button',
-                                    'aria-label': 'Copy code to clipboard'
+                                    class: 'code-block-wrapper relative'
                                 },
-                                children: [{ type: 'text', value: 'Copy' }]
-                            });
-                            return node;
+                                children: [
+                                    {
+                                        type: 'element',
+                                        tagName: 'button',
+                                        properties: {
+                                            class: 'copy-button',
+                                            'aria-label': 'Copy code to clipboard'
+                                        },
+                                        children: [{ type: 'text', value: 'Copy' }]
+                                    },
+                                    node
+                                ]
+                            };
+
+                            return wrapper;
                         }
                     }
                 ]
