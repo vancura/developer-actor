@@ -7,7 +7,13 @@ import Content from '../content/pages/dataset-schema.mdx';
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()}>
+<Layout
+    title={`Dataset Schema File Specification 1.0 • ${strings.title}`}
+    description="Dataset storage enables you to sequentially store and retrieve data records, in various formats."
+    ogImage="https://whitepaper.actor/opengraph.png"
+    permalink={Astro.url.toString()}
+    showTOC={false}
+>
     <Banner />
 
     <div class="mdx-content mx-auto max-w-screen-lg">

@@ -7,7 +7,13 @@ import Content from '../content/pages/key-value-store-schema.mdx';
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title={strings.title} description={strings.description} permalink={Astro.url.toString()}>
+<Layout
+    title={`Key-value Store Schema File Specification • ${strings.title}`}
+    description="This JSON file should contain schema for files stored in the key-value store, defining their name, format, or content type."
+    ogImage="https://whitepaper.actor/opengraph.png"
+    permalink={Astro.url.toString()}
+    showTOC={false}
+>
     <Banner />
 
     <div class="mdx-content mx-auto max-w-screen-lg">

@@ -4,7 +4,13 @@ import Content from '../content/pages/404.mdx';
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title={`404 • ${strings.title}`} description="Page not found." permalink={Astro.url.toString()} showTOC={false}>
+<Layout
+    title={`404 • ${strings.title}`}
+    description="Page not found."
+    ogImage="https://whitepaper.actor/opengraph.png"
+    permalink={Astro.url.toString()}
+    showTOC={false}
+>
     <header class="mdx-content mx-auto max-w-screen-lg" role="banner">
         <Content />
     </header>
