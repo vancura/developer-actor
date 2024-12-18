@@ -4,26 +4,32 @@ This repository contains the documentation website for the Actor Programming Mod
 
 ## Features
 
--   Built with Astro for optimal static site generation
--   Responsive design with Tailwind CSS
--   Interactive Table of Contents with progress tracking
--   Code syntax highlighting with copy functionality
--   Dark mode support
--   MDX content support with custom components
--   Modal-based navigation system for internal links
--   Smooth scroll behavior for navigation
--   Banner component for improved inner page context
+- Built with Astro for optimal static site generation
+- Responsive design with Tailwind CSS
+- Interactive Table of Contents with progress tracking
+- Code syntax highlighting with copy functionality
+- Dark mode support
+- MDX content support with custom components
+- Modal-based navigation system for internal links
+- Smooth scroll behavior for navigation
+- Banner component for improved inner page context
+- Automatic sitemap generation for improved SEO
 
 ## Tech Stack
 
--   [Astro](https://astro.build) - Static Site Generator
--   [Tailwind CSS](https://tailwindcss.com) - Styling
--   [MDX](https://mdxjs.com) - Content
--   [TypeScript](https://www.typescriptlang.org) - Type Safety
--   [Sharp](https://sharp.pixelplumbing.com/) - Image optimization
--   [ESLint](https://eslint.org/) - Code linting
--   [Prettier](https://prettier.io/) - Code formatting
--   [Vercel](https://vercel.com) - Deployment
+- [Astro](https://astro.build) - Static Site Generator
+- [Tailwind CSS](https://tailwindcss.com) - Styling
+- [MDX](https://mdxjs.com) - Content
+- [TypeScript](https://www.typescriptlang.org) - Type Safety
+- [Sharp](https://sharp.pixelplumbing.com/) - Image optimization
+- [ESLint](https://eslint.org/) - Code linting
+- [Prettier](https://prettier.io/) - Code formatting
+- [Vercel](https://vercel.com) - Deployment
+
+## Prerequisites
+
+- Node.js v16+ (recommended: v18.0 or higher)
+- Yarn v1.22 or later
 
 ## Installation
 
@@ -48,13 +54,13 @@ yarn dev
 
 ## Available Scripts
 
--   `yarn dev` - Start development server with host access
--   `yarn build` - Build for production
--   `yarn preview` - Preview production build
--   `yarn clean` - Clean dist and node_modules directories
--   `yarn format` - Format code with Prettier
--   `yarn lint` - Run ESLint checks
--   `yarn lint:fix` - Fix ESLint issues and format code
+- `yarn dev` - Start development server with host access
+- `yarn build` - Build for production
+- `yarn preview` - Preview production build
+- `yarn clean` - Clean dist and node_modules directories
+- `yarn format` - Format code with Prettier
+- `yarn lint` - Run ESLint checks
+- `yarn lint:fix` - Fix ESLint issues and format code
 
 ## Project Structure
 
@@ -74,10 +80,10 @@ src/
 
 The project uses Tailwind CSS for styling with custom configurations for:
 
--   Typography
--   Colors
--   Responsive design
--   Dark mode
+- Typography
+- Colors
+- Responsive design
+- Dark mode
 
 Custom styles for MDX content can be found in [src/styles/mdx-content.css](src/styles/mdx-content.css).
 
@@ -85,10 +91,11 @@ Custom styles for MDX content can be found in [src/styles/mdx-content.css](src/s
 
 The site implements comprehensive SEO practices including:
 
--   Meta tags
--   Canonical URLs
--   OpenGraph data
--   Structured data
+- Meta tags
+- Canonical URLs
+- OpenGraph data
+- Structured data
+- Automatic sitemap generation for search engine crawling
 
 SEO configuration can be found in the BaseHead component: [src/components/BaseHead.astro](src/components/BaseHead.astro).
 
@@ -96,10 +103,10 @@ SEO configuration can be found in the BaseHead component: [src/components/BaseHe
 
 The site implements various performance optimizations:
 
--   Image optimization with Sharp
--   Asset caching through Vercel
--   CSS and JavaScript minification
--   Responsive images with multiple formats
+- Image optimization with Sharp
+- Asset caching through Vercel
+- CSS and JavaScript minification
+- Responsive images with multiple formats
 
 ## Contributing
 
@@ -115,11 +122,11 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Authors
 
--   [Václav Vančura](https://github.com/vancura) - Designer, Developer
--   [Adam Kliment](https://github.com/netmilk) - Owner
+- [Václav Vančura](https://github.com/vancura) - Designer, Developer
+- [Adam Kliment](https://github.com/netmilk) - Owner
 
 ## Acknowledgments
 
--   [Apify Team](https://apify.com) for creating the Actor Programming Model
--   [Astro](https://astro.build) for the amazing static site generator
--   [Tailwind CSS](https://tailwindcss.com) for the utility-first CSS framework
+- [Apify Team](https://apify.com) for creating the Actor Programming Model
+- [Astro](https://astro.build) for the amazing static site generator
+- [Tailwind CSS](https://tailwindcss.com) for the utility-first CSS framework

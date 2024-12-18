@@ -7,7 +7,8 @@ export const COMPONENT_CONFIG = {
         META: {
             LANGUAGE: 'English',
             AUTHOR: 'Apify',
-            REFERRER: 'origin'
+            REFERRER: 'origin',
+            URL: 'https://apify.com'
         },
         FONTS: {
             PRECONNECT: ['https://fonts.googleapis.com', 'https://fonts.gstatic.com', 'https://apify.com'],

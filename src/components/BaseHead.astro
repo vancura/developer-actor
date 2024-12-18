@@ -13,11 +13,35 @@ const { title, description, ogImage, permalink } = Astro.props;
 
 let canonical = new URL(permalink).toString();
 canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
+const siteDomain = Astro.url.origin;
 ---
+
+<meta
+    http-equiv="Content-Security-Policy"
+    content="
+    default-src 'self';
+    script-src 'self' https://plausible.io https://unpkg.com 'unsafe-inline' 'unsafe-eval' blob:;
+    style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
+    img-src 'self' data: blob:;
+    font-src 'self' https://fonts.gstatic.com https://apify.com data:;
+    connect-src 'self' https://plausible.io https://prod.spline.design https://www.gstatic.com https://unpkg.com;
+    frame-ancestors 'none';
+    base-uri 'self';
+    form-action 'self';
+    upgrade-insecure-requests;
+"
+/>
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+<!-- The website does not use camera, microphone, or geolocation. These features are explicitly disabled for security. -->
+
+<link rel="preconnect" href="https://plausible.io" />
+<link rel="dns-prefetch" href="https://plausible.io" />
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="canonical" href={canonical} />
+<link rel="sitemap" href="/sitemap-index.xml" />
 
 <title>{title}</title>
 
@@ -58,12 +82,45 @@ canonical = canonical.endsWith('/') ? canonical.slice(0, -1) : canonical;
 
 <link href="/favicon.png" rel="icon" media="(prefers-color-scheme: light)" />
 <link href="/favicon-dark.png" rel="icon" media="(prefers-color-scheme: dark)" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content={title} />
 
 {HEAD.FONTS.PRECONNECT.map((url) => <link rel="preconnect" href={url} crossorigin />)}
 
-<link rel="preload" href="https://apify.com/fonts/GT-Walsheim-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+<link
+    rel="preload"
+    href="https://apify.com/fonts/GT-Walsheim-Regular.ttf"
+    as="font"
+    type="font/ttf"
+    crossorigin="anonymous"
+/>
 
 <link href={`https://fonts.googleapis.com/css2?family=${HEAD.FONTS.FAMILIES.join('&family=')}`} rel="stylesheet" />
+
+<script
+    type="application/ld+json"
+    set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: title,
+        description: description,
+        url: siteDomain,
+        author: {
+            '@type': 'Organization',
+            name: HEAD.META.AUTHOR,
+            url: HEAD.META.URL
+        },
+        publisher: {
+            '@type': 'Organization',
+            name: 'Apify',
+            logo: {
+                '@type': 'ImageObject',
+                url: ogImage
+            }
+        }
+    })}
+/>
 
 {
     import.meta.env.MODE === 'production' && (

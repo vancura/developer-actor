@@ -106,7 +106,7 @@
 
         code {
             @apply m-0 block pl-4;
-            }
+        }
 
         & .line {
             @apply pr-4;
@@ -140,7 +140,7 @@
     }
 
     & img {
-        @apply rounded-md border border-code-stroke bg-code-bg dark:border-code-stroke-dark dark:bg-code-bg-dark;
+        @apply rounded-md border border-code-stroke bg-code-bg text-sm dark:border-code-stroke-dark dark:bg-code-bg-dark;
     }
 
     & table {

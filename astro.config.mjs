@@ -1,4 +1,5 @@
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import { defineConfig, sharpImageService } from 'astro/config';
 import remarkGfm from 'remark-gfm';
@@ -14,6 +15,8 @@ export default defineConfig({
     },
 
     integrations: [
+        sitemap(),
+
         mdx({
             syntaxHighlight: 'shiki',
             shikiConfig: {
