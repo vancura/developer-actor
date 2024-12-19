@@ -16,7 +16,7 @@
     "dependencies": {
         "@nanostores/persistent": "^0.10.2",
         "@playform/compress": "^0.1.6",
-        "astro": "^5.0.5",
+        "astro": "^5.0.8",
         "astro-capo": "^0.0.1",
         "autoprefixer": "^10.4.20",
         "nanostores": "^0.11.3",
