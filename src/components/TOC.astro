@@ -595,6 +595,11 @@
                 if (targetId) {
                     smoothScrollTo({ targetId: targetId });
 
+                    // Hide the TOC if the screen is narrow.
+                    if (window.innerWidth < TOC.WIDE_SCREEN_WIDTH) {
+                        this.hideTOC();
+                    }
+
                     try {
                         history.pushState(null, '', `#${targetId}`);
                     } catch (error) {
