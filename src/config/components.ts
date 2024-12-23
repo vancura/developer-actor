@@ -42,7 +42,8 @@ export const COMPONENT_CONFIG = {
         MOUSE_THRESHOLD_INACTIVE: 24,
         MOUSE_THRESHOLD_ACTIVE: 320 + 24, // panel width + safe area for accidental mouse movement
         OBSERVER_MARGIN: '0px 0px -80% 0px',
-        WIDE_SCREEN_WIDTH: 1710
+        WIDE_SCREEN_WIDTH: 1710,
+        SWIPE_THRESHOLD: 50
     } satisfies ITOCConfig
 } as const;
 
