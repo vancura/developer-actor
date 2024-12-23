@@ -71,4 +71,7 @@ export interface ITOCConfig {
 
     /** Width at which TOC is considered wide, used to determine if TOC should be rendered in a separate panel. */
     readonly WIDE_SCREEN_WIDTH: number;
+
+    /** Minimum distance for a swipe. */
+    readonly SWIPE_THRESHOLD: number;
 }

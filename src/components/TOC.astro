@@ -133,6 +133,10 @@
         /** Interval ID for rendering progress bars. */
         private readonly intervalId: number;
 
+        /** Touch start and end positions. */
+        private touchStartX: number = 0;
+        private touchEndX: number = 0;
+
         /**
          * Initializes an IntersectionObserver, sets up debounced rendering of progress bars, and initiates periodic
          * scroll checks.
@@ -219,6 +223,23 @@
             if (closeButton) {
                 closeButton.addEventListener('click', () => this.hideTOC());
             }
+
+            document.addEventListener(
+                'touchstart',
+                (e) => {
+                    this.touchStartX = e.touches[0]?.clientX ?? 0;
+                },
+                { passive: true }
+            );
+
+            document.addEventListener(
+                'touchend',
+                (e) => {
+                    this.touchEndX = e.changedTouches[0]?.clientX ?? 0;
+                    this.handleSwipe();
+                },
+                { passive: true }
+            );
         }
 
         /**
@@ -627,6 +648,24 @@
 
                 if (!isWideScreen) {
                     this.renderProgressBars();
+                }
+            }
+        }
+
+        /** Handles swipe events on mobile devices. */
+        private handleSwipe(): void {
+            const swipeDistance = this.touchEndX - this.touchStartX;
+
+            // Only handle swipes on mobile screens.
+            if (window.innerWidth >= TOC.WIDE_SCREEN_WIDTH) {
+                return;
+            }
+
+            if (Math.abs(swipeDistance) >= TOC.SWIPE_THRESHOLD) {
+                if (swipeDistance > 0) {
+                    this.hideTOC();
+                } else {
+                    this.showTOC();
                 }
             }
         }
