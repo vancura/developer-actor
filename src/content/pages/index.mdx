@@ -1,6 +1,7 @@
 import { Picture } from 'astro:assets';
 import CodeExample from '../../components/CodeExample.astro';
 import CodeSwitcher from '../../components/CodeSwitcher.astro';
+import Diagram from '../../components/Diagram.astro';
 import GitHubHeader from '../../components/GitHubHeader.astro';
 import illuApifyStore from './illu-apify-store@2x.png';
 import illuAPIGetInput from './illu-get-input@2x.png';
@@ -21,7 +22,8 @@ import illuDefinitionFilesInputSchemaFile from './illu-definition-files-input-sc
 import illuDefinitionFilesOutputSchemaFile from './illu-definition-files-output-schema-file@2x.png';
 import illuDevelopmentDeployment from './illu-development-deployment@2x.png';
 import illuDevelopmentLocal from './illu-development-local@2x.png';
-import illuDiagram from './illu-diagram@2x.png';
+import illuDiagramHoriz from './illu-diagram-horiz@2x.png';
+import illuDiagramVert from './illu-diagram-vert@2x.png';
 import illuPhilosophyWhyTheName from './illu-philosophy-why-the-name@2x.png';
 import illuSharingChargingMoney from './illu-sharing-charging-money@2x.gif';
 import illuSharingMonetization from './illu-sharing-monetization@2x.png';
@@ -66,7 +68,7 @@ Actors have the following elements:
 
 The documentation and the input/output schemas make it possible for people to easily understand what the Actor does, enter the required inputs both in user interface or API, and integrate the results of the Actor into their other workflows. Actors can easily call and interact with each other, enabling building more complex systems on top of simple ones.
 
-<Picture src={illuDiagram} alt="Actor drawing" formats={['avif', 'webp']} />
+<Diagram horizontal={illuDiagramHoriz} vertical={illuDiagramVert} alt="Actor drawing" />
 
 ### Apify platform
 
