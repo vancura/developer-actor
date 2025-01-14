@@ -28,6 +28,7 @@
         "typescript": "^5.7.2"
     },
     "devDependencies": {
+        "@apify/eslint-config-ts": "^0.4.1",
         "@astrojs/check": "^0.9.4",
         "@astrojs/mdx": "^4.0.2",
         "@astrojs/rss": "4.0.10",
