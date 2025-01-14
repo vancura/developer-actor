@@ -2078,11 +2078,11 @@ __metadata:
   linkType: hard
 
 "@iconify-json/solar@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@iconify-json/solar@npm:1.2.1"
+  version: 1.2.2
+  resolution: "@iconify-json/solar@npm:1.2.2"
   dependencies:
     "@iconify/types": "npm:*"
-  checksum: 10c0/f0a3769689b3eb5ffc8c336bfebfdd94ec3a394b7d450aa8d75dfafdffd4497c60c7c30e97dae954e4a0c0976f30e052df39728e89a037e4e7f933022912f071
+  checksum: 10c0/7d8eb831fd561d199e5888c4129dfa4e97a1a4365dedc76363853590aef107c0937dd9b7d62ddd7fff715488959ba88b3211580b96d489728f6434a3f6a9a3ab
   languageName: node
   linkType: hard
 
