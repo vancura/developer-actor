@@ -60,11 +60,11 @@ Basically, Actors are programs packaged as Docker images, which accept a well-de
 
 Actors have the following elements:
 
--   **Dockerfile** which specifies where is the Actor's source code, how to build it, and run it.
--   **Documentation** in a form of README.md file.
--   **Input and output schemas** that describe what input the Actor requires, and what results it produces.
--   Access to an out-of-box **storage system** for Actor data, results, and files.
--   **Metadata** such as the Actor name, description, author, and version.
+- **Dockerfile** which specifies where is the Actor's source code, how to build it, and run it.
+- **Documentation** in a form of README.md file.
+- **Input and output schemas** that describe what input the Actor requires, and what results it produces.
+- Access to an out-of-box **storage system** for Actor data, results, and files.
+- **Metadata** such as the Actor name, description, author, and version.
 
 The documentation and the input/output schemas make it possible for people to easily understand what the Actor does, enter the required inputs both in user interface or API, and integrate the results of the Actor into their other workflows. Actors can easily call and interact with each other, enabling building more complex systems on top of simple ones.
 
@@ -256,10 +256,10 @@ The following table shows equivalents of key concepts of UNIX programs and Actor
 
 ### Design principles
 
--   Each Actor should do just one thing, and do it well.
--   Optimize for the users of the Actors, help them understand what the Actor does, easily run it, and integrate.
--   Also optimize for interoperability, to make it ever easier to connect Actors with other systems. Expect objects your work with might contain additional not-yet-known fields.
--   Keep the API as simple as possible and write a great documentation, so that Actors can be built and used by >90% of software developers, even ones using no-code tools (yes, that's also software development!).
+- Each Actor should do just one thing, and do it well.
+- Optimize for the users of the Actors, help them understand what the Actor does, easily run it, and integrate.
+- Also optimize for interoperability, to make it ever easier to connect Actors with other systems. Expect objects your work with might contain additional not-yet-known fields.
+- Keep the API as simple as possible and write a great documentation, so that Actors can be built and used by >90% of software developers, even ones using no-code tools (yes, that's also software development!).
 
 ### Relation to the Actor model
 
@@ -633,9 +633,9 @@ In case of non-zero exit code, the system automatically sets the Actor [status m
 
 A preferred way to exit an Actor intentionally is using the `exit` or `fail` functions in SDK, as shown below. This has several advantages:
 
--   You can provide a custom status message for users to tell them what the Actor achieved, or why it failed and how they can fix it. This greatly improves user experience.
--   When using `fail` to fail the Actor, the system considers the error permanent and will not attempt to restart the Actor.
--   The SDK emits the `exit` event, which can be listened to and used by various components of the Actor to perform a cleanup, persist state, etc. Note that the caller of exit can specify how long should the system wait for all `exit` event handlers to complete before closing the process, using the `timeoutSecs` option. For details, see [System Events](#system-events).
+- You can provide a custom status message for users to tell them what the Actor achieved, or why it failed and how they can fix it. This greatly improves user experience.
+- When using `fail` to fail the Actor, the system considers the error permanent and will not attempt to restart the Actor.
+- The SDK emits the `exit` event, which can be listened to and used by various components of the Actor to perform a cleanup, persist state, etc. Note that the caller of exit can specify how long should the system wait for all `exit` event handlers to complete before closing the process, using the `timeoutSecs` option. For details, see [System Events](#system-events).
 
 <CodeSwitcher>
 
@@ -705,28 +705,28 @@ A preferred way to exit an Actor intentionally is using the `exit` or `fail` fun
 
 Actors have access to standard process environment variables. The Apify platform uses environment variables prefixed with `ACTOR_` to pass the Actors information about the execution context.
 
-| Environment variable               | Description                                                                                                                                                                                                                |
-|------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `ACTOR_ID`                         | ID of the Actor.                                                                                                                                                                                                           |
-| `ACTOR_FULL_NAME`                  | Full technical name of the Actor, in the format `owner-username/actor-name`.                                                                                                                                               |
-| `ACTOR_RUN_ID`                     | ID of the Actor run.                                                                                                                                                                                                       |
-| `ACTOR_BUILD_ID`                   | ID of the Actor build.                                                                                                                                                                                                     |
-| `ACTOR_BUILD_NUMBER`               | A string representing the version of the current Actor build.                                                                                                                                                              |
-| `ACTOR_BUILD_TAGS`                 | A comma-separated list of tags of the Actor build used in the run. Note that this environment variable is assigned at the time of start of the Actor and doesn't change over time, even if the assigned build tags change. |
-| `ACTOR_TASK_ID`                    | ID of the saved Actor task.                                                                                                                                                                                                |
-| `ACTOR_DEFAULT_KEY_VALUE_STORE_ID` | ID of the key-value store where the Actor's input and output data are stored.                                                                                                                                              |
-| `ACTOR_DEFAULT_DATASET_ID`         | ID of the dataset where you can push the data.                                                                                                                                                                             |
-| `ACTOR_DEFAULT_REQUEST_QUEUE_ID`   | ID of the request queue that stores and handles requests that you enqueue.                                                                                                                                                 |
-| `ACTOR_INPUT_KEY`                  | The key of the record in the default key-value store that holds the Actor input. Typically it's `INPUT`, but it might be something else.                                                                                   |
-| `ACTOR_MEMORY_MBYTES`              | Indicates the size of memory allocated for the Actor run, in megabytes (1,000,000 bytes). It can be used by Actors to optimize their memory usage.                                                                         |
-| `ACTOR_STARTED_AT`                 | Date when the Actor was started, in ISO 8601 format. For example, `2022-01-02T03:04:05.678`.                                                                                                                               |
-| `ACTOR_TIMEOUT_AT`                 | Date when the Actor will time out, in ISO 8601 format.                                                                                                                                                                     |
-| `ACTOR_EVENTS_WEBSOCKET_URL`       | Websocket URL where Actor may listen for events from Actor platform. See [System events](#system-events) for details.                                                                                                      |
-| `ACTOR_WEB_SERVER_PORT`            | TCP port on which the Actor can start a HTTP server to receive messages from the outside world, either as [Live view web server](#live-view-web-server) or in the [Standby mode](#standby-mode).                           |
-| `ACTOR_WEB_SERVER_URL`             | A unique hard-to-guess URL under which the current Actor run's web server is accessible from the outside world. See [Live view web server](#live-view-web-server) section for details.                                     |
-| `ACTOR_STANDBY_URL`                | A general public URL under which the Actor can be started and its web server accessed in the [Standby mode](#standby-mode).                                                                                                |
-| `ACTOR_MAX_PAID_DATASET_ITEMS`     | A maximum number of results that will be charged to the user using a pay-per-result Actor.                                                                                                                                 |
-| `ACTOR_MAX_TOTAL_CHARGE_USD`       | The maximum amount of money in USD an Actor can charge its user. See [Charging money](#charging-money) for details.                                                                                                        |
+| Environment variable | Description |
+| --- | --- |
+| `ACTOR_ID` | ID of the Actor. |
+| `ACTOR_FULL_NAME` | Full technical name of the Actor, in the format `owner-username/actor-name`. |
+| `ACTOR_RUN_ID` | ID of the Actor run. |
+| `ACTOR_BUILD_ID` | ID of the Actor build. |
+| `ACTOR_BUILD_NUMBER` | A string representing the version of the current Actor build. |
+| `ACTOR_BUILD_TAGS` | A comma-separated list of tags of the Actor build used in the run. Note that this environment variable is assigned at the time of start of the Actor and doesn't change over time, even if the assigned build tags change. |
+| `ACTOR_TASK_ID` | ID of the saved Actor task. |
+| `ACTOR_DEFAULT_KEY_VALUE_STORE_ID` | ID of the key-value store where the Actor's input and output data are stored. |
+| `ACTOR_DEFAULT_DATASET_ID` | ID of the dataset where you can push the data. |
+| `ACTOR_DEFAULT_REQUEST_QUEUE_ID` | ID of the request queue that stores and handles requests that you enqueue. |
+| `ACTOR_INPUT_KEY` | The key of the record in the default key-value store that holds the Actor input. Typically it's `INPUT`, but it might be something else. |
+| `ACTOR_MEMORY_MBYTES` | Indicates the size of memory allocated for the Actor run, in megabytes (1,000,000 bytes). It can be used by Actors to optimize their memory usage. |
+| `ACTOR_STARTED_AT` | Date when the Actor was started, in ISO 8601 format. For example, `2022-01-02T03:04:05.678`. |
+| `ACTOR_TIMEOUT_AT` | Date when the Actor will time out, in ISO 8601 format. |
+| `ACTOR_EVENTS_WEBSOCKET_URL` | Websocket URL where Actor may listen for events from Actor platform. See [System events](#system-events) for details. |
+| `ACTOR_WEB_SERVER_PORT` | TCP port on which the Actor can start a HTTP server to receive messages from the outside world, either as [Live view web server](#live-view-web-server) or in the [Standby mode](#standby-mode). |
+| `ACTOR_WEB_SERVER_URL` | A unique hard-to-guess URL under which the current Actor run's web server is accessible from the outside world. See [Live view web server](#live-view-web-server) section for details. |
+| `ACTOR_STANDBY_URL` | A general public URL under which the Actor can be started and its web server accessed in the [Standby mode](#standby-mode). |
+| `ACTOR_MAX_PAID_DATASET_ITEMS` | A maximum number of results that will be charged to the user using a pay-per-result Actor. |
+| `ACTOR_MAX_TOTAL_CHARGE_USD` | The maximum amount of money in USD an Actor can charge its user. See [Charging money](#charging-money) for details. |
 
 The Actor developer can also define custom environment variables that are then passed to the Actor process both in local development environment or on the Apify platform. These variables are defined in the [Actor file](#actor-file) at `.actor/actor.json` using the `environmentVariables` directive, or manually in the user interface in Apify Console.
 
@@ -1492,10 +1492,10 @@ Actors accept an [input](#input) JSON object on start, whose schema can be defin
 
 The input schema file defines properties accepted by Actor on input. It is used by the system to:
 
--   Validate the passed input JSON object on Actor run, so that Actors don't need to perform input validation and error handling in their code.
--   Render user interface for Actors to make it easy for users to run and test them manually.
--   Generate Actor API documentation and integration code examples on the web or in CLI, making Actors easy to integrate for users.
--   Simplify integration of Actors into automation workflows such as Zapier or Make, by providing smart connectors that smartly pre-populate and link Actor input properties.
+- Validate the passed input JSON object on Actor run, so that Actors don't need to perform input validation and error handling in their code.
+- Render user interface for Actors to make it easy for users to run and test them manually.
+- Generate Actor API documentation and integration code examples on the web or in CLI, making Actors easy to integrate for users.
+- Simplify integration of Actors into automation workflows such as Zapier or Make, by providing smart connectors that smartly pre-populate and link Actor input properties.
 
 For details, see [Actor input schema file specification](/input-schema).
 
@@ -1542,9 +1542,9 @@ Similarly to input, Actors can generate an [output](#output) JSON object, which 
 
 The output schema describes how the Actor stores its results, and it is used by the other systems:
 
--   Generate API documentation for users of Actors to figure where to find results.
--   Publish OpenAPI specification to make it easy for callers of Actors to figure where to find results.
--   Enable integrating Actors with external systems and automated workflows.
+- Generate API documentation for users of Actors to figure where to find results.
+- Publish OpenAPI specification to make it easy for callers of Actors to figure where to find results.
+- Enable integrating Actors with external systems and automated workflows.
 
 For details, see [Actor output schema file specification](/output-schema).
 
@@ -1581,9 +1581,9 @@ This is an example of the output schema file for the `bob/screenshot-taker` Acto
 
 Both main Actor file and input and output schema files can additionally reference schema files for specific storages. These files have custom JSON-based formats, see:
 
--   [Dataset schema file](/dataset-schema)
--   [Key-value store schema file](/key-value-store-schema)
--   [Request queue schema file](/request-queue-schema)
+- [Dataset schema file](/dataset-schema)
+- [Key-value store schema file](/key-value-store-schema)
+- [Request queue schema file](/request-queue-schema)
 
 These storage schemas are used to ensure that stored objects or files fulfil specific criteria, their fields have certain types, etc. On the Apify platform, the schemas can be applied to the storages directly, without Actors.
 
@@ -1749,10 +1749,10 @@ For more details, read our essay [Make passive income developing web automation 
 
 The goal of this whitepaper is to introduce the Actors philosophy and programming model to the public, to receive feedback, and to open the way for making Actors an open standard. To create an open standard, however, there is more work, including:
 
--   Finalize specification of all the schema files, including [output](#output-schema-file) and [storage](#storage-schema-files) schema files.
--   Clearly separate what is the part of the standard and what is up to discretion of the implementations.
--   Define standardized low-level HTTP REST API interface to the Actor system, to separate "frontend" and "backend" Actor programming model implementations. For example, if somebody wants to build a support for Actor programming model in Rust, they should need to just write a Rust "frontend" translating the commands to HTTP API calls, rather than having to implement the entire system. And equally, if one decides to develop a new Actor "backend", all existing client libraries for Rust or other languages should work with it.
+- Finalize specification of all the schema files, including [output](#output-schema-file) and [storage](#storage-schema-files) schema files.
+- Clearly separate what is the part of the standard and what is up to discretion of the implementations.
+- Define standardized low-level HTTP REST API interface to the Actor system, to separate "frontend" and "backend" Actor programming model implementations. For example, if somebody wants to build a support for Actor programming model in Rust, they should need to just write a Rust "frontend" translating the commands to HTTP API calls, rather than having to implement the entire system. And equally, if one decides to develop a new Actor "backend", all existing client libraries for Rust or other languages should work with it.
 
 ## Links
 
--   [Open-source Actors on GitHub](https://github.com/search?q=path%3A.actor%2Factor.json+&type=code)
+- [Open-source Actors on GitHub](https://github.com/search?q=path%3A.actor%2Factor.json+&type=code)
