@@ -131,9 +131,9 @@
                 logger.error('Failed to update browser history', error);
             }
 
-            navigator.clipboard.writeText(url.toString()).catch((error) => {
-                logger.error('Failed to copy URL to clipboard', error);
-            });
+            navigator.clipboard
+                .writeText(url.toString())
+                .catch((error) => logger.error('Failed to copy URL to clipboard', error));
         };
 
         /**
@@ -228,17 +228,13 @@
                 const manager = new HeadingLinksManager();
                 manager.refresh();
 
-                document.addEventListener('astro:page-load', () => {
-                    manager.refresh();
-                });
+                document.addEventListener('astro:page-load', () => manager.refresh());
             });
         } else {
             const manager = new HeadingLinksManager();
             manager.refresh();
 
-            document.addEventListener('astro:page-load', () => {
-                manager.refresh();
-            });
+            document.addEventListener('astro:page-load', () => manager.refresh());
         }
     } catch (error) {
         logger.error('Failed to initialize heading links manager', error);

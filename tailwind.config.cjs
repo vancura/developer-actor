@@ -42,7 +42,7 @@ module.exports = {
                 illustration: '#f3c3de',
                 'illustration-dark': '#684358',
                 'hero-mobile': 'rgba(245, 245, 245, 0.66)',
-                'banner': 'white',
+                banner: 'white',
                 'banner-dark': '#171717'
             },
 

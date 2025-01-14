@@ -69,7 +69,5 @@
 
     const manager = new SmoothScrollManager();
 
-    document.addEventListener('astro:before-preparation', () => {
-        manager.cleanup();
-    });
+    document.addEventListener('astro:before-preparation', () => manager.cleanup());
 </script>

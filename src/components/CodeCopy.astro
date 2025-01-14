@@ -84,7 +84,5 @@
 
     const manager = new CodeCopyManager();
 
-    document.addEventListener('astro:before-preparation', () => {
-        manager.cleanup();
-    });
+    document.addEventListener('astro:before-preparation', () => manager.cleanup());
 </script>

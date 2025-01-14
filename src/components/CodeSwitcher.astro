@@ -43,9 +43,9 @@ const { class: className } = Astro.props;
 
             CodeSwitcherManager.instances.push(this);
 
-            this.tabs.forEach((tab) => {
-                tab.addEventListener('click', () => this.handleTabClick(tab.textContent?.trim() || ''));
-            });
+            this.tabs.forEach((tab) =>
+                tab.addEventListener('click', () => this.handleTabClick(tab.textContent?.trim() || ''))
+            );
 
             if (this.tabs.length > 0) {
                 this.switchTab(0);
@@ -108,12 +108,8 @@ const { class: className } = Astro.props;
     }
 
     /** Initialize all code switchers. */
-    document.querySelectorAll('.code-switcher').forEach((switcher) => {
-        new CodeSwitcherManager(switcher as HTMLElement);
-    });
+    document.querySelectorAll('.code-switcher').forEach((switcher) => new CodeSwitcherManager(switcher as HTMLElement));
 
     /** Cleanup code switchers when the page is reloaded. */
-    document.addEventListener('astro:before-preparation', () => {
-        CodeSwitcherManager.cleanup();
-    });
+    document.addEventListener('astro:before-preparation', () => CodeSwitcherManager.cleanup());
 </script>

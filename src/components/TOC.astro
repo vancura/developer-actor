@@ -339,9 +339,9 @@
         private updateAriaLabels(): void {
             const links = document.querySelectorAll('.toc-item a');
 
-            links.forEach((link) => {
-                link.setAttribute('aria-current', link.getAttribute('href') === `#${this.activeId}` ? 'true' : 'false');
-            });
+            links.forEach((link) =>
+                link.setAttribute('aria-current', link.getAttribute('href') === `#${this.activeId}` ? 'true' : 'false')
+            );
         }
 
         /**
@@ -455,7 +455,7 @@
             if (!this.rafId) {
                 this.state.isScrolling = true;
 
-                this.rafId = requestAnimationFrame(() => {
+                this.rafId = requestAnimationFrame(() =>
                     safeExecute(
                         () => {
                             const headings = headingStore.get();
@@ -483,8 +483,8 @@
                         },
                         undefined,
                         'Failed to handle scroll event'
-                    );
-                });
+                    )
+                );
             }
         }
 
@@ -552,9 +552,9 @@
                     window.removeEventListener('scroll', this.scrollRefresh);
                     window.removeEventListener('mousemove', this.mouseMoveRefresh);
 
-                    document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((heading) => {
-                        this.observer.unobserve(heading);
-                    });
+                    document
+                        .querySelectorAll('h1, h2, h3, h4, h5, h6')
+                        .forEach((heading) => this.observer.unobserve(heading));
 
                     this.elements.tocList?.removeEventListener('click', this.linkClick);
 
@@ -573,9 +573,9 @@
         public initialize(): void {
             safeExecute(
                 () => {
-                    document.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((heading) => {
-                        this.observer.unobserve(heading);
-                    });
+                    document
+                        .querySelectorAll('h1, h2, h3, h4, h5, h6')
+                        .forEach((heading) => this.observer.unobserve(heading));
 
                     headingStore.get().forEach((heading) => {
                         const element = document.getElementById(heading.id);
@@ -614,7 +614,7 @@
                 const targetId = link.getAttribute('href')?.substring(1);
 
                 if (targetId) {
-                    smoothScrollTo({ targetId: targetId });
+                    smoothScrollTo({ targetId });
 
                     // Hide the TOC if the screen is narrow.
                     if (window.innerWidth < TOC.WIDE_SCREEN_WIDTH) {
