@@ -93,9 +93,7 @@ const { repoUrl } = Astro.props;
      *
      * @returns A random number between 50 and 500.
      */
-    const getMockStarCount = (): number => {
-        return Math.floor(Math.random() * (500 - 50 + 1)) + 50;
-    };
+    const getMockStarCount = (): number => Math.floor(Math.random() * (500 - 50 + 1)) + 50;
 
     /**
      * Updates the star count for a given GitHub repository.
@@ -165,21 +163,18 @@ const { repoUrl } = Astro.props;
 
             // Update star count periodically (every three minutes).
             const intervalId = setInterval(
-                () => {
+                () =>
                     document.querySelectorAll('[data-repo-url]').forEach((element) => {
                         const repoUrl = element.getAttribute('data-repo-url');
                         if (repoUrl) {
                             updateStarCount(repoUrl);
                         }
-                    });
-                },
+                    }),
                 3 * 60 * 1000
             );
 
             // Cleanup interval on page navigation.
-            document.addEventListener('astro:before-preparation', () => {
-                clearInterval(intervalId);
-            });
+            document.addEventListener('astro:before-preparation', () => clearInterval(intervalId));
         },
         undefined,
         'Failed to setup GitHub star count'

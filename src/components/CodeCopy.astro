@@ -64,7 +64,13 @@
             const button = target.closest('.copy-button');
 
             if (button instanceof HTMLButtonElement) {
-                const pre = button.closest('pre');
+                const pre = button.parentElement?.querySelector('pre');
+
+                if (!pre) {
+                    logger.error('No <pre> element found');
+                    return;
+                }
+
                 const code = pre?.querySelector('code')?.textContent || '';
 
                 e.preventDefault();
@@ -84,7 +90,5 @@
 
     const manager = new CodeCopyManager();
 
-    document.addEventListener('astro:before-preparation', () => {
-        manager.cleanup();
-    });
+    document.addEventListener('astro:before-preparation', () => manager.cleanup());
 </script>

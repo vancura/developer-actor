@@ -60,9 +60,9 @@ To make Actors easier to pipeline, we could add e.g. `dataset`, `keyValueStore` 
 
 Another idea is to add type `actor`. The use case could be for example a testing Actor with 3 inputs:
 
--   Actor to be tested
--   test function containing for example Jest unit test over the output
--   input for the Actor
+- Actor to be tested
+- test function containing for example Jest unit test over the output
+- input for the Actor
 
 ...and the testing Actor would call the given Actor with a given output and in the end execute tests if the results are correct.
 

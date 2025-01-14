@@ -29,7 +29,6 @@ This repository contains the documentation website for the Actor Programming Mod
 ## Prerequisites
 
 - Node.js v16+ (recommended: v18.0 or higher)
-- Yarn v1.22 or later
 
 ## Installation
 
@@ -43,24 +42,24 @@ cd developer-actor
 2. Install dependencies:
 
 ```bash
-yarn install
+npm install
 ```
 
 3. Start the development server:
 
 ```bash
-yarn dev
+npm run dev
 ```
 
 ## Available Scripts
 
-- `yarn dev` - Start development server with host access
-- `yarn build` - Build for production
-- `yarn preview` - Preview production build
-- `yarn clean` - Clean dist and node_modules directories
-- `yarn format` - Format code with Prettier
-- `yarn lint` - Run ESLint checks
-- `yarn lint:fix` - Fix ESLint issues and format code
+- `npm run dev` - Start development server with host access
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run clean` - Clean dist and node_modules directories
+- `npm run format` - Format code with Prettier
+- `npm run lint` - Run ESLint checks
+- `npm run lint:fix` - Fix ESLint issues and format code
 
 ## Project Structure
 

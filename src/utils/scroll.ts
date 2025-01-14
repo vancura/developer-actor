@@ -38,12 +38,12 @@ export const smoothScrollTo = async ({ targetId, offset = 0, onComplete }: Scrol
             window.scrollBy(0, offset);
         }
 
-        return new Promise((resolve) => {
+        return new Promise((resolve) =>
             setTimeout(() => {
                 onComplete?.();
                 resolve({ success: true, element });
-            }, 1000);
-        });
+            }, 1000)
+        );
     }
 
     return { success: false, element: null };

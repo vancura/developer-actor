@@ -21,6 +21,7 @@ module.exports = [
             '.astro/**',
             '.git/**',
             '.vscode/**',
+            '.yarn/**',
             '*.min.*',
             '**/*.json',
             '**/*.jsonc',
@@ -78,17 +79,51 @@ module.exports = [
             }
         },
         rules: {
-            // Base ESLint recommended rules
+            // Base configurations
             ...eslint.configs.recommended.rules,
-
-            // TypeScript recommended rules
             ...tseslintPlugin.configs.recommended.rules,
             ...tseslintPlugin.configs['recommended-requiring-type-checking'].rules,
             ...tseslintPlugin.configs.strict.rules,
-
-            // Plugin recommended rules
             ...astroPlugin.configs.recommended.rules,
             ...importPlugin.configs.recommended.rules,
+
+            // Apify TypeScript rules (from @apify/eslint-config-ts)
+            'no-unused-vars': 'off',
+            'import/extensions': 'off',
+            '@typescript-eslint/no-unused-vars': ['error'],
+            '@typescript-eslint/no-extra-semi': 'off',
+            'no-shadow': 'off',
+            '@typescript-eslint/no-shadow': ['error'],
+            '@typescript-eslint/no-non-null-assertion': 'off',
+            'no-useless-constructor': 'off',
+            '@typescript-eslint/no-useless-constructor': 'error',
+            'default-param-last': 'off',
+            '@typescript-eslint/default-param-last': 'error',
+            'space-before-function-paren': 'off',
+            '@typescript-eslint/space-before-function-paren': [
+                'error',
+                {
+                    anonymous: 'always',
+                    named: 'never',
+                    asyncArrow: 'always'
+                }
+            ],
+            'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
+            '@typescript-eslint/no-floating-promises': 'error',
+            '@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
+            '@typescript-eslint/await-thenable': 'error',
+            '@typescript-eslint/no-misused-promises': [
+                'error',
+                {
+                    checksVoidReturn: {
+                        arguments: false,
+                        attributes: false
+                    }
+                }
+            ],
+            '@typescript-eslint/promise-function-async': 'error',
+
+            // Plugin recommended rules
             ...promisePlugin.configs.recommended.rules,
             ...sonarjsPlugin.configs.recommended.rules,
             ...securityPlugin.configs.recommended.rules,
@@ -97,47 +132,30 @@ module.exports = [
             // General Rules
             'no-console': ['warn', { allow: ['warn', 'error'] }],
             'no-debugger': 'error',
-            'no-unused-vars': 'off', // Disabled in favor of @typescript-eslint/no-unused-vars
             'max-len': ['warn', { code: 120 }],
             complexity: ['error', { max: 10 }],
 
             // TypeScript Specific Rules
-            '@typescript-eslint/no-unused-expressions': 'off',
-            '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
             '@typescript-eslint/no-explicit-any': 'warn',
-            '@typescript-eslint/explicit-function-return-type': 'warn',
-            '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
-            '@typescript-eslint/no-unnecessary-condition': 'warn',
-            '@typescript-eslint/strict-boolean-expressions': 'warn',
-            '@typescript-eslint/no-unnecessary-type-assertion': 'warn',
-            '@typescript-eslint/prefer-nullish-coalescing': 'warn',
             '@typescript-eslint/no-unsafe-assignment': 'warn',
             '@typescript-eslint/no-unsafe-member-access': 'warn',
             '@typescript-eslint/no-unsafe-call': 'warn',
             '@typescript-eslint/no-unsafe-return': 'warn',
-            '@typescript-eslint/explicit-member-accessibility': ['warn', { accessibility: 'explicit' }],
-            '@typescript-eslint/member-ordering': 'warn',
-            '@typescript-eslint/method-signature-style': ['warn', 'property'],
-            '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
-            '@typescript-eslint/prefer-optional-chain': 'warn',
-            '@typescript-eslint/no-non-null-assertion': 'warn',
-            '@typescript-eslint/no-floating-promises': 'warn',
-            '@typescript-eslint/naming-convention': [
-                'warn',
-                { selector: 'default', format: ['camelCase', 'PascalCase'] },
-                { selector: 'variable', format: ['camelCase', 'UPPER_CASE', 'PascalCase'] },
-                { selector: 'parameter', format: ['camelCase'], leadingUnderscore: 'allow' },
-                { selector: 'property', format: ['camelCase', 'UPPER_CASE'], leadingUnderscore: 'allow' },
-                { selector: 'typeProperty', format: ['camelCase', 'UPPER_CASE'] },
-                { selector: 'enumMember', format: ['PascalCase', 'UPPER_CASE'] },
-                { selector: 'typeLike', format: ['PascalCase'] },
-                {
-                    selector: 'interface',
-                    format: ['PascalCase'],
-                    prefix: ['I'],
-                    filter: { regex: '^Props$', match: false }
-                }
-            ],
+
+            // SonarJS
+            'sonarjs/cognitive-complexity': 'error',
+            'sonarjs/no-duplicate-string': ['error', { threshold: 5 }],
+            'sonarjs/no-identical-functions': 'error',
+            'sonarjs/no-empty-function': 'off',
+            'sonarjs/no-unused-expressions': 'off',
+
+            // Promise
+            'promise/always-return': 'error',
+            'promise/no-return-wrap': 'error',
+            'promise/param-names': 'error',
+            'promise/catch-or-return': 'error',
+            'promise/no-native': 'off',
+            'promise/no-callback-in-promise': 'warn',
 
             // Import Rules
             'import/prefer-default-export': 'off',
@@ -156,21 +174,6 @@ module.exports = [
 
             // Regex
             'optimize-regex/optimize-regex': 'warn',
-
-            // SonarJS
-            'sonarjs/cognitive-complexity': 'error',
-            'sonarjs/no-duplicate-string': ['error', { threshold: 5 }],
-            'sonarjs/no-identical-functions': 'error',
-            'sonarjs/no-empty-function': 'off',
-            'sonarjs/no-unused-expressions': 'off',
-
-            // Promise
-            'promise/always-return': 'error',
-            'promise/no-return-wrap': 'error',
-            'promise/param-names': 'error',
-            'promise/catch-or-return': 'error',
-            'promise/no-native': 'off',
-            'promise/no-callback-in-promise': 'warn',
 
             // Security
             'security/detect-object-injection': 'warn',
@@ -219,7 +222,7 @@ module.exports = [
 
     // TypeScript and JavaScript Files Configuration
     {
-        files: ['**/*.{js,ts,jsx,tsx,mjs,cjs}'],
+        files: ['**/*.{js,ts,mjs,cjs}'],
         languageOptions: {
             parser: tsParser,
             parserOptions: {
