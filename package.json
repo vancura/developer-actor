@@ -11,7 +11,7 @@
         "astro": "astro",
         "format": "prettier --write \"**/*.{js,ts,mjs,astro,json,yml,yaml,md,mdx}\"",
         "lint": "eslint .",
-        "lint:fix": "eslint . --fix && yarn format"
+        "lint:fix": "eslint . --fix && npm run format"
     },
     "dependencies": {
         "@nanostores/persistent": "^0.10.2",
@@ -61,6 +61,5 @@
         "prettier-plugin-organize-imports": "^4.1.0",
         "prettier-plugin-tailwindcss": "^0.6.9",
         "yaml-eslint-parser": "^1.2.3"
-    },
-    "packageManager": "yarn@4.5.3"
+    }
 }
