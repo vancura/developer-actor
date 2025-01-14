@@ -1206,13 +1206,6 @@ Normally, if an Actor crashes, the system restarts its container too, but if tha
 
 ### Actor web server
 
-<Illustration
-    description="An Actor can launch an HTTP web server that is exposed to the outer world to handle requests. This enables Actors to provide a custom HTTP API to integrate with other systems, to provide a web application for human users, to show Actor run details, diagnostics, charts, or to run an arbitrary web app."
-    position="right"
-    image={illuAPIWebServer}
-    noCaption
-/>
-
 An Actor can launch an HTTP web server that is exposed to the outer world to handle requests. This enables Actors to provide a custom HTTP API to integrate with other systems, to provide a web application for human users, to show Actor run details, diagnostics, charts, or to run an arbitrary web app.
 
 The port on which the Actor can launch the web server is specified by the `ACTOR_WEB_SERVER_PORT` environment variable.
@@ -1224,6 +1217,13 @@ https://hard-to-guess-identifier.runs.apify.net
 ```
 
 The live view URL has a unique hostname, which is practically impossible to guess. This lets you keep the web server hidden from public yet accessible from the external internet by the parties, with whom you share the URL.
+
+<Illustration
+    description="An Actor can launch an HTTP web server that is exposed to the outer world to handle requests. This enables Actors to provide a custom HTTP API to integrate with other systems, to provide a web application for human users, to show Actor run details, diagnostics, charts, or to run an arbitrary web app."
+    position="left"
+    image={illuAPIWebServer}
+    noCaption
+      />
 
 <div class="clear-both" />
 
@@ -1660,13 +1660,6 @@ $ echo '{"bar": "foo"}' | actor run -o -s
 
 ### Deployment to Apify platform
 
-<Illustration
-    description="The `apify push` CLI command takes information from the `.actor` directory and builds an Actor on the Apify platform, so that you can run it remotely."
-    position="right"
-    image={illuDevelopmentDeployment}
-    noCaption
-/>
-
 The `apify push` CLI command takes information from the `.actor` directory and builds an Actor on the Apify platform, so that you can run it remotely.
 
 ```bash
@@ -1675,6 +1668,13 @@ $ apify login
 ❯ Through Apify Console in your default browser
 $ apify push
 ```
+
+<Illustration
+    description="The `apify push` CLI command takes information from the `.actor` directory and builds an Actor on the Apify platform, so that you can run it remotely."
+    position="left"
+    image={illuDevelopmentDeployment}
+    noCaption
+/>
 
 ### Continuous integration and delivery
 
