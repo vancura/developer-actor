@@ -6,5 +6,5 @@
 # TECHNOLOGY COLOPHON
 
     Engine: Astro
-    Server: Vercel
+    Server: GitHub Pages
     Repo: GitHub
