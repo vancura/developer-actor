@@ -6,14 +6,16 @@ This repository contains the documentation website for the Actor Programming Mod
 
 - Built with Astro for optimal static site generation
 - Responsive design with Tailwind CSS
-- Interactive Table of Contents with progress tracking
+- Interactive Table of Contents with progress tracking and filtering
 - Code syntax highlighting with copy functionality
 - Dark mode support
 - MDX content support with custom components
-- Modal-based navigation system for internal links
+- Enhanced modal-based navigation system with nested states
 - Smooth scroll behavior for navigation
 - Banner component for improved inner page context
 - Automatic sitemap generation for improved SEO
+- GitHub integration with real-time star count
+- Analytics integration with Plausible
 
 ## Tech Stack
 
@@ -24,7 +26,7 @@ This repository contains the documentation website for the Actor Programming Mod
 - [Sharp](https://sharp.pixelplumbing.com/) - Image optimization
 - [ESLint](https://eslint.org/) - Code linting
 - [Prettier](https://prettier.io/) - Code formatting
-- [Vercel](https://vercel.com) - Deployment
+- [GitHub Pages](https://pages.github.com) - Deployment
 
 ## Prerequisites
 
@@ -63,7 +65,7 @@ npm run dev
 
 ## Project Structure
 
-```
+```text
 src/
    ├── components/ # Reusable UI components
    ├── config/ # Configuration files
@@ -103,9 +105,13 @@ SEO configuration can be found in the BaseHead component: [src/components/BaseHe
 The site implements various performance optimizations:
 
 - Image optimization with Sharp
-- Asset caching through Vercel
+- Asset caching through GitHub Pages
 - CSS and JavaScript minification
 - Responsive images with multiple formats
+
+## Analytics
+
+The site uses Plausible Analytics for privacy-friendly website analytics in production environments. Analytics configuration can be found in the BaseHead component.
 
 ## Contributing
 

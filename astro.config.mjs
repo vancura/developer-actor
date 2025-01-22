@@ -6,7 +6,8 @@ import remarkGfm from 'remark-gfm';
 import remarkSmartypants from 'remark-smartypants';
 
 export default defineConfig({
-    site: 'https://whitepaper.actor',
+    site: 'https://apify.github.io',
+    base: 'actor-whitepaper-web',
     prefetch: true,
     devToolbar: { enabled: false },
 

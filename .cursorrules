@@ -209,7 +209,7 @@ You are an expert in TypeScript, Astro framework, Tailwind CSS, and modern web d
     -   Use environment variables for configuration.
     -   Access variables securely in Astro using `import.meta.env`.
 -   **Static Hosting**:
-    -   Deploy to platforms like Netlify, Vercel, or Cloudflare Pages.
+    -   Deploy to platforms like Netlify, Vercel, GitHub Pages, or Cloudflare Pages.
     -   Ensure your build command is correctly set (usually `astro build`).
 -   **Continuous Integration/Continuous Deployment (CI/CD)**:
     -   Set up automated builds and tests in your CI/CD pipeline.
