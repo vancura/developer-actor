@@ -60,7 +60,7 @@ export default defineConfig({
         tailwind(),
 
         (await import('@playform/compress')).default({
-            Exclude: [],
+            Exclude: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif', 'svg'],
             CSS: false,
             HTML: {
                 'html-minifier-terser': {
