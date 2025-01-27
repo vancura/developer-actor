@@ -1,7 +1,7 @@
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
-import { defineConfig, sharpImageService } from 'astro/config';
+import { defineConfig } from 'astro/config';
 import remarkGfm from 'remark-gfm';
 import remarkSmartypants from 'remark-smartypants';
 
@@ -11,7 +11,9 @@ export default defineConfig({
     devToolbar: { enabled: false },
 
     image: {
-        service: sharpImageService()
+        service: {
+            entrypoint: 'astro/assets/services/noop'
+        }
     },
 
     integrations: [

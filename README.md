@@ -23,7 +23,6 @@ This repository contains the documentation website for the Actor Programming Mod
 - [Tailwind CSS](https://tailwindcss.com) - Styling
 - [MDX](https://mdxjs.com) - Content
 - [TypeScript](https://www.typescriptlang.org) - Type Safety
-- [Sharp](https://sharp.pixelplumbing.com/) - Image optimization
 - [ESLint](https://eslint.org/) - Code linting
 - [Prettier](https://prettier.io/) - Code formatting
 - [GitHub Pages](https://pages.github.com) - Deployment
@@ -104,7 +103,6 @@ SEO configuration can be found in the BaseHead component: [src/components/BaseHe
 
 The site implements various performance optimizations:
 
-- Image optimization with Sharp
 - Asset caching through GitHub Pages
 - CSS and JavaScript minification
 - Responsive images with multiple formats
