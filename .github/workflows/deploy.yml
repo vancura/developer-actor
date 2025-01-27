@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
     # Trigger the workflow every time you push to the `main` branch
     push:
-        branches: [ main, 'bug/gh-69-github-styling' ]
+        branches: [main]
     # Allows you to run this workflow manually from the Actions tab on GitHub.
     workflow_dispatch:
 
@@ -22,9 +22,9 @@ jobs:
             - name: Install, build, and upload your site
               uses: withastro/action@v3
               with:
-                path: .
-                node-version: 20
-                package-manager: npm@latest
+                  path: .
+                  node-version: 20
+                  package-manager: npm@latest
 
     deploy:
         needs: build
